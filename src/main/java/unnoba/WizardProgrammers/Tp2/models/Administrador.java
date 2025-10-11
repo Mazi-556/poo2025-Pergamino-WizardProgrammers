@@ -1,18 +1,38 @@
 package unnoba.WizardProgrammers.Tp2.models;
 import lombok.Setter;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import lombok.AllArgsConstructor;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Administrador{
     
+    @Id
+    @GeneratedValue
+    private int idAdministrador;
+
+    @OneToMany(mappedBy = "administrador")
+    private List<Torneo> torneos;
+    // Este es el atributo más importante para entender la relación.
+    // ¿Qué hace?: Le dice a JPA: "Yo soy el lado 'uno' de la relación, 
+    // pero no soy el dueño de ella. La responsabilidad de gestionar la clave foránea en la base de datos la
+    // tiene la clase Torneo, específicamente en el campo llamado administrador".
+
     private String email;
     private String password;
     private String nombre;
+
 
     private void crearTorneo() {
         //Lógica para crear un torneo
