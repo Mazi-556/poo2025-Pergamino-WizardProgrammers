@@ -1,13 +1,19 @@
 package unnoba.WizardProgrammers.Tp2.models;
 import lombok.Setter;
 import lombok.Getter;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class Administrador extends Usuario {
+@Entity
+public class Administrador{
     
+    private String email;
+    private String password;
+    private String nombre;
+
     private void crearTorneo() {
         //Lógica para crear un torneo
     }
