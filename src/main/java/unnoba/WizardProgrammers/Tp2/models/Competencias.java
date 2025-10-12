@@ -39,7 +39,7 @@ public class Competencias {
     private int cupo;
 
 
-
+    
 
 
 

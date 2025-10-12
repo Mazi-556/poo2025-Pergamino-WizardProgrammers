@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import lombok.AllArgsConstructor;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Getter
@@ -20,8 +21,9 @@ public class Administrador{
     
     @Id
     @GeneratedValue
-    private int idAdministrador;
+    private int idAdministrador;    //Clave primaria
 
+    //Relación uno a muchos con Torneo
     @OneToMany(mappedBy = "administrador_id")
     private List<Torneo> torneos;
     // Este es el atributo más importante para entender la relación.
