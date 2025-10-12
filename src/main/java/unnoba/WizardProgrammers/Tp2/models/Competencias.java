@@ -31,7 +31,7 @@ public class Competencias {
     @JoinColumn(name="torneo_id", nullable=false)
     private Torneo torneo_id;
 
-    @OneToMany(mappedBy = "competencia")
+    @OneToMany(mappedBy = "competencia_id")
     private List<Inscripcion> inscripciones;
 
     private String nombre;

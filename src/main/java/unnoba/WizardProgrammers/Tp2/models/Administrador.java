@@ -22,12 +22,12 @@ public class Administrador{
     @GeneratedValue
     private int idAdministrador;
 
-    @OneToMany(mappedBy = "administrador")
+    @OneToMany(mappedBy = "administrador_id")
     private List<Torneo> torneos;
     // Este es el atributo más importante para entender la relación.
     // ¿Qué hace?: Le dice a JPA: "Yo soy el lado 'uno' de la relación, 
-    // pero no soy el dueño de ella. La responsabilidad de gestionar la clave foránea en la base de datos la
-    // tiene la clase Torneo, específicamente en el campo llamado administrador".
+    // pero no soy el dueño de ella. La responsabilidad de gestionar la clave foránea en 
+    // la base de datos la tiene la clase Torneo, específicamente en el campo llamado administrador".
 
     private String email;
     private String password;
