@@ -1,18 +1,14 @@
-package unnoba.WizardProgrammers.Tp2.models;
-import jakarta.annotation.Generated;
+package unnoba.WizardProgrammers.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import lombok.Setter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 import java.util.List;
 
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import lombok.AllArgsConstructor;
 

@@ -1,4 +1,4 @@
-package unnoba.WizardProgrammers.Tp2.models;
+package unnoba.WizardProgrammers.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,7 +28,7 @@ public class Inscripcion {
 
     @ManyToOne
     @JoinColumn(name="competencia_id", nullable=false)
-    private Competencias competencia_id;
+    private Competencia competencia_id;
     @ManyToOne
     @JoinColumn(name="participante_id", nullable=false)
     private Participante participante_id;

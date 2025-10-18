@@ -1,4 +1,4 @@
-package unnoba.WizardProgrammers.Tp2.models;
+package unnoba.WizardProgrammers.models;
 import lombok.Setter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import lombok.AllArgsConstructor;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Getter

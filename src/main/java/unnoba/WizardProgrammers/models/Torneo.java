@@ -1,4 +1,4 @@
-package unnoba.WizardProgrammers.Tp2.models;
+package unnoba.WizardProgrammers.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,11 +30,11 @@ public class Torneo {
 
     @ManyToOne
     @JoinColumn(name="competencia_id", nullable=false)
-    private Competencias competencia_id;
+    private Competencia competencia_id;
 
 
     @OneToMany(mappedBy = "torneo_id")
-    private List<Competencias> competencias;
+    private List<Competencia> competencias;
 
     
     private String nombre;

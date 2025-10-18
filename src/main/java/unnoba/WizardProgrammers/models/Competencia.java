@@ -1,15 +1,13 @@
-package unnoba.WizardProgrammers.Tp2.models;
+package unnoba.WizardProgrammers.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
-import org.hibernate.annotations.ManyToAny;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -21,7 +19,7 @@ import jakarta.persistence.GeneratedValue;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Competencias {
+public class Competencia {
 
     @Id
     @GeneratedValue
