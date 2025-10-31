@@ -1,4 +1,4 @@
-package unnoba.WizardProgrammers.models;
+package ar.edu.unnoba.poo2025.torneos.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Setter;

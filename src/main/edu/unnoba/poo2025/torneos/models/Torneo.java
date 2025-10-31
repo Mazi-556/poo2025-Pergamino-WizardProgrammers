@@ -1,4 +1,4 @@
-package unnoba.WizardProgrammers.models;
+package ar.edu.unnoba.poo2025.torneos.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
