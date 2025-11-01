@@ -10,12 +10,14 @@ import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Table;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "inscripcion")
 public class Inscripcion {
     
     @Id

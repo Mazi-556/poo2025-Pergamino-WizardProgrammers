@@ -13,12 +13,14 @@ import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Table;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "competencia")
 public class Competencia {
 
     @Id
