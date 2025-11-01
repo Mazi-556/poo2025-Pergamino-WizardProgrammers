@@ -41,4 +41,17 @@ public class Participante{
     private void inscribirseACompetencia() {
         //Lógica para inscribirse a una competencia
     }
+    public String getPassword() {
+        return contraseña;
+    }
+    public void setPassword(String contraseña) {
+        this.contraseña = contraseña;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }
