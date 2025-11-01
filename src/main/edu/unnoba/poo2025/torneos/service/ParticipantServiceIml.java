@@ -24,6 +24,7 @@ public class ParticipantServiceIml implements ParticipanteService{
         this.participantRepository = participantRepository;
     }
     
+    //Aca no puse Autowired. esta bien?
     private final ParticipanteRepository participantRepository;
 
 
@@ -35,7 +36,10 @@ public class ParticipantServiceIml implements ParticipanteService{
             throw new Exception("Ya existe participante con el email: " + participant.getEmail());
         }
 
+        //Aca iria lo de hashear la contrase;a, por lo que debo esperar al se;or Ceniza
+        //expresion regular para la contrase;a
 
+        participantRepository.save(participant);//Se guarda en la base de datos
     }
 
 }
