@@ -25,8 +25,11 @@ public class ParticipanteResource {
     public ResponseEntity<?> create(@RequestBody CreateParticipanteRequestDTO dto) {
     try {
         Participante p = new Participante();
+        p.setNombre(dto.getNombre());
+        p.setApellido(dto.getApellido());
+        p.setDni(dto.getDni());
         p.setEmail(dto.getEmail());
-        p.setPassword(dto.getPassword());
+        p.setPassword(dto.getContraseña());
 
         participanteService.create(p);
 
@@ -35,7 +38,9 @@ public class ParticipanteResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", e.getMessage()); 
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
     }
 }

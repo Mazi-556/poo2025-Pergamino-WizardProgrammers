@@ -23,6 +23,18 @@ public class ParticipanteServiceImp implements ParticipanteService {
             throw new Exception("Ya existe un participante con ese email.");
         }
 
+        // Verificar si el DNI es válido, o si en Postman se está enviando como "DNI" en mayúsculas
+        if (participante.getDni() == 0) {
+            throw new Exception("El DNI es inválido o nulo. Asegúrate de que la clave en el JSON sea 'dni' (en minúscula).");
+        }
+
+        // Verificar si el DNI ya existe
+        Participante existenteDNI = participanteRepository.findByDNI(participante.getDni());
+        if (existenteDNI != null) {
+            // Si encontramos uno, lanzamos una excepción
+            throw new Exception("Ya existe un participante con ese DNI.");
+        }
+
         // Hashear la contraseña
         String hashedPassword = passwordEncoder.encode(participante.getPassword());
         participante.setPassword(hashedPassword);

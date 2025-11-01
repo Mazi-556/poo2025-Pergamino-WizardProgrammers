@@ -8,6 +8,12 @@ import unnoba.WizardProgrammers.models.Participante;
 
 @Repository
 public interface ParticipanteRepository extends JpaRepository<Participante, Integer> {
+
     @Query("SELECT p FROM Participante p WHERE p.email = :email")
     Participante findByEmail(@Param("email") String email);
+
+
+    @Query("SELECT p FROM Participante p WHERE p.dni = :dni")
+    Participante findByDNI(@Param("dni") int dni);
+
 }

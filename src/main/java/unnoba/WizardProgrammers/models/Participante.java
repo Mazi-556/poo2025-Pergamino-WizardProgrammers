@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
 import java.util.List;
 
@@ -28,26 +29,23 @@ public class Participante{
 
     private String nombre;
     private String apellido;
-    private int DNI;
+
+    @Column(name = "dni", unique = true)
+    private int dni;
+    
+    @Column(unique = true)
     private String email;
-    private String contraseña;
+    
+    private String password;
 
     @OneToMany(mappedBy = "participante_id")
     private List<Inscripcion> inscripciones;
 
-
-
-    private void registrarseACompetencia() {
-        //Lógica para registrarse a una competencia
-    }
-    private void inscribirseACompetencia() {
-        //Lógica para inscribirse a una competencia
-    }
     public String getPassword() {
-        return contraseña;
+        return password;
     }
-    public void setPassword(String contraseña) {
-        this.contraseña = contraseña;
+    public void setPassword(String password) {
+        this.password = password;
     }
     public String getEmail() {
         return email;
@@ -56,4 +54,27 @@ public class Participante{
         this.email = email;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public int getDni() {
+        return dni;
+    }
+
+    public void setDni(int dni) {
+        this.dni = dni;
+    }
 }
