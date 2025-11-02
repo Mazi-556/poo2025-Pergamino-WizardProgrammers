@@ -38,7 +38,7 @@ public class Participant{
     
     private String password;
 
-    @OneToMany(mappedBy = "participante_id")
+    @OneToMany(mappedBy = "participant_id")
     private List<Registration> registrations;
 
     public String getPassword() {

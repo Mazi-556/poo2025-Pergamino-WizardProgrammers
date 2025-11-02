@@ -9,11 +9,11 @@ import ar.edu.unnoba.poo2025.torneos.models.Participant;
 @Repository
 public interface ParticipantRepository extends JpaRepository<Participant, Integer> {
 
-    @Query("SELECT p FROM Participante p WHERE p.email = :email")
+    @Query("SELECT p FROM Participant p WHERE p.email = :email")
     Participant findByEmail(@Param("email") String email);
 
 
-    @Query("SELECT p FROM Participante p WHERE p.dni = :dni")
+    @Query("SELECT p FROM Participant p WHERE p.dni = :dni")
     Participant findByDNI(@Param("dni") int dni);
 
 }

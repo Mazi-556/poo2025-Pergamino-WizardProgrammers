@@ -16,15 +16,15 @@ import jakarta.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "administrador")
-public class Administrador{
+@Table(name = "admin")
+public class Admin{
     
     @Id
     @GeneratedValue
-    private int idAdministrador;    //Clave primaria
+    private int idAdmin;    //Clave primaria
 
     //Relación uno a muchos con Torneo
-    @OneToMany(mappedBy = "administrador_id")
+    @OneToMany(mappedBy = "admin_id")
     private List<Tournament> tournaments;
     // Este es el atributo más importante para entender la relación.
     // ¿Qué hace?: Le dice a JPA: "Yo soy el lado 'uno' de la relación, 
@@ -33,25 +33,25 @@ public class Administrador{
 
     private String email;
     private String password;
-    private String nombre;
+    private String name;
 
 
-    private void crearTorneo() {
+    private void createTournament() {
         //Lógica para crear un torneo
     }
-    private void crearCompetencia() {
+    private void createCompetition() {
         //Lógica para crear una competencia
     }
 
-    private void editarTorneo() {
+    private void editTournament() {
         //Lógica para editar un torneo
     }
 
-    private void eliminarTorneo() {
+    private void deleteTournament() {
         //Lógica para eliminar un torneo
     }
 
-    private void crearAdministrador() {
+    private void createAdmin() {
         //Lógica para crear un administrador
     }
 }

@@ -20,7 +20,7 @@ import jakarta.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "competencia")
+@Table(name = "competition")
 public class Competition {
 
     @Id
@@ -28,10 +28,10 @@ public class Competition {
     private int idCompetition;
 
     @ManyToOne
-    @JoinColumn(name="torneo_id", nullable=false)
+    @JoinColumn(name="tournament_id", nullable=false)
     private Tournament tournament_id;
 
-    @OneToMany(mappedBy = "competencia_id")
+    @OneToMany(mappedBy = "competition_id")
     private List<Registration> registrations;
 
     private String name;

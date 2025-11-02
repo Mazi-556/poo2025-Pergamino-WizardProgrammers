@@ -34,6 +34,7 @@ public class ParticipantServiceImp implements ParticipantService {
             // Si encontramos uno, lanzamos una excepción
             throw new Exception("Ya existe un participante con ese DNI.");
         }
+        
 
         // Hashear la contraseña
         String hashedPassword = passwordEncoder.encode(participant.getPassword());
