@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Map;
 
-import ar.edu.unnoba.poo2025.torneos.dto.CreateParticipanteRequestDTO;
+import ar.edu.unnoba.poo2025.torneos.dto.CreateParticipantRequestDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Participant;
 import ar.edu.unnoba.poo2025.torneos.service.ParticipantService;
 
@@ -22,7 +22,7 @@ public class ParticipantResource {
     private ParticipantService participantService;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody CreateParticipanteRequestDTO dto) {
+    public ResponseEntity<?> create(@RequestBody CreateParticipantRequestDTO dto) {
     try {
         Participant p = new Participant();
         p.setName(dto.getName());

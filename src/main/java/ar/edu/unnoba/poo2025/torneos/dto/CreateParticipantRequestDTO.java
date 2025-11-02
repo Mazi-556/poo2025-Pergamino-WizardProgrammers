@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Getter
 @Setter
-public class CreateParticipanteRequestDTO {
+public class CreateParticipantRequestDTO {
     
     private String name;
     private String surname;
@@ -14,10 +14,10 @@ public class CreateParticipanteRequestDTO {
     private String email;
     private String password;
 
-    public CreateParticipanteRequestDTO() {
+    public CreateParticipantRequestDTO() {
     }
 
-    public String getName() {
+/*     public String getName() {            Segun vi, la libreria Lombok ya hace esto de los getters y setters
         return name;
     }
 
@@ -55,5 +55,5 @@ public class CreateParticipanteRequestDTO {
 
     public void setPassword(String password) {
         this.password = password;
-    }
+    } */
 }

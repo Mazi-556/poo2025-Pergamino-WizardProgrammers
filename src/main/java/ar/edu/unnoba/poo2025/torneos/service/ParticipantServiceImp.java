@@ -13,7 +13,7 @@ public class ParticipantServiceImp implements ParticipantService {
     private ParticipantRepository participantRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;    //Preguntar a nelson que es mejor (Esto o inyeccion por constructor)
 
     @Override
     public void create(Participant participant) throws Exception {
