@@ -54,19 +54,19 @@ public class Participant{
         this.email = email;
     }
 
-    public String getNombre() {
+    public String getName() {
         return name;
     }
 
-    public void setNombre(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getApellido() {
+    public String getSurname() {
         return surname;
     }
 
-    public void setApellido(String surname) {
+    public void setSurname(String surname) {
         this.surname = surname;
     }
 

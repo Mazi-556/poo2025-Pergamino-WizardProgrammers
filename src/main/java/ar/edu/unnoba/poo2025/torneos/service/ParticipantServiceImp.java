@@ -26,7 +26,7 @@ public class ParticipantServiceImp implements ParticipantService {
         // Verificar si el DNI es válido, o si en Postman se está enviando como "DNI" en mayúsculas
         if (participant.getDni() == 0) {
             throw new Exception("El DNI es inválido o nulo. Asegúrate de que la clave en el JSON sea 'dni' (en minúscula).");
-        }
+        }  
 
         // Verificar si el DNI ya existe
         Participant existingParticipantDNI = participantRepository.findByDNI(participant.getDni());

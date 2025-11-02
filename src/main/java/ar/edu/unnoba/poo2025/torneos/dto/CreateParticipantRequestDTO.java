@@ -1,7 +1,8 @@
 package ar.edu.unnoba.poo2025.torneos.dto;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Getter;
 import lombok.Setter;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Getter
 @Setter
@@ -9,15 +10,13 @@ public class CreateParticipantRequestDTO {
     
     private String name;
     private String surname;
-    @JsonProperty("dni")// Esto sirve para que con Postman al mandar el post, solo acepte "dni" en minusculas, ya que en mayusculas provoca errores.
     private int dni;
     private String email;
     private String password;
 
     public CreateParticipantRequestDTO() {
     }
-
-/*     public String getName() {            Segun vi, la libreria Lombok ya hace esto de los getters y setters
+     public String getName() {           
         return name;
     }
 
@@ -55,5 +54,5 @@ public class CreateParticipantRequestDTO {
 
     public void setPassword(String password) {
         this.password = password;
-    } */
+    }
 }
