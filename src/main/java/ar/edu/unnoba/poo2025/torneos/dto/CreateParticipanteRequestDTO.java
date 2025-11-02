@@ -1,4 +1,4 @@
-package unnoba.WizardProgrammers.dto;
+package ar.edu.unnoba.poo2025.torneos.dto;
 import lombok.Getter;
 import lombok.Setter;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,30 +7,30 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Setter
 public class CreateParticipanteRequestDTO {
     
-    private String nombre;
-    private String apellido;
+    private String name;
+    private String surname;
     @JsonProperty("dni")// Esto sirve para que con Postman al mandar el post, solo acepte "dni" en minusculas, ya que en mayusculas provoca errores.
     private int dni;
     private String email;
-    private String contraseña;
+    private String password;
 
     public CreateParticipanteRequestDTO() {
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public int getDni() {
@@ -49,11 +49,11 @@ public class CreateParticipanteRequestDTO {
         this.email = email;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

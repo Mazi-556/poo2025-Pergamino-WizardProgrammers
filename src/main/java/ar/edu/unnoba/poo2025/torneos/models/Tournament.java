@@ -1,4 +1,4 @@
-package unnoba.WizardProgrammers.models;
+package ar.edu.unnoba.poo2025.torneos.models; 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,30 +20,30 @@ import jakarta.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "torneo")
-public class Torneo {
+public class Tournament {
 
     @Id
     @GeneratedValue
-    private int idTorneo;
+    private int idTournament;
 
     @ManyToOne
     @JoinColumn(name="administrador_id", nullable=false)
-    private Administrador administrador_id;
+    private Administrador admin_id;
 
     @ManyToOne
     @JoinColumn(name="competencia_id", nullable=false)
-    private Competencia competencia_id;
+    private Competition competition_id;
 
 
     @OneToMany(mappedBy = "torneo_id")
-    private List<Competencia> competencias;
+    private List<Competition> competition;
 
     
-    private String nombre;
-    private String descripcion;
-    private Date fechaInicio;
-    private Date fechaFin;
-    private boolean activo;
+    private String name;
+    private String descripction;
+    private Date startDate;
+    private Date endDate;
+    private boolean active;
 
 
 }

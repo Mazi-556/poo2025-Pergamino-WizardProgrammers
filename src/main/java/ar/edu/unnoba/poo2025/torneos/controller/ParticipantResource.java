@@ -1,4 +1,4 @@
-package unnoba.WizardProgrammers.resource;
+package ar.edu.unnoba.poo2025.torneos.controller;
 
 import java.util.HashMap;
 
@@ -7,31 +7,31 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import unnoba.WizardProgrammers.dto.CreateParticipanteRequestDTO;
-import unnoba.WizardProgrammers.models.Participante;
-import unnoba.WizardProgrammers.service.ParticipanteService;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Map;
 
+import ar.edu.unnoba.poo2025.torneos.dto.CreateParticipanteRequestDTO;
+import ar.edu.unnoba.poo2025.torneos.models.Participant;
+import ar.edu.unnoba.poo2025.torneos.service.ParticipantService;
 
 @RestController
 @RequestMapping("/participant")
-public class ParticipanteResource {
+public class ParticipantResource {
     @Autowired
-    private ParticipanteService participanteService;
+    private ParticipantService participantService;
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody CreateParticipanteRequestDTO dto) {
     try {
-        Participante p = new Participante();
-        p.setNombre(dto.getNombre());
-        p.setApellido(dto.getApellido());
+        Participant p = new Participant();
+        p.setName(dto.getName());
+        p.setSurname(dto.getSurname());
         p.setDni(dto.getDni());
         p.setEmail(dto.getEmail());
-        p.setPassword(dto.getContraseña());
+        p.setPassword(dto.getPassword());
 
-        participanteService.create(p);
+        participantService.create(p);
 
         Map<String, String> response = new HashMap<>();
         response.put("mensaje", "Participante creado correctamente");

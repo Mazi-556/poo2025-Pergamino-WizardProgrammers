@@ -1,10 +1,10 @@
-package unnoba.WizardProgrammers;
+package ar.edu.unnoba.poo2025.torneos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import unnoba.WizardProgrammers.Util.PasswordEncoder;
+import ar.edu.unnoba.poo2025.torneos.Util.PasswordEncoder;
 
 @SpringBootApplication
 public class Tp2Application {

@@ -1,4 +1,4 @@
-package unnoba.WizardProgrammers.models;
+package ar.edu.unnoba.poo2025.torneos.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,22 +18,22 @@ import jakarta.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "inscripcion")
-public class Inscripcion {
+public class Registration {
     
     @Id
     @GeneratedValue
-    private int idInscripcion;
+    private int idregistration;
 
-    private Float precio;
-    private Date fecha;
+    private Float price;
+    private Date date;
 
 
     @ManyToOne
     @JoinColumn(name="competencia_id", nullable=false)
-    private Competencia competencia_id;
+    private Competition competition_id;
     @ManyToOne
     @JoinColumn(name="participante_id", nullable=false)
-    private Participante participante_id;
+    private Participant participant_id;
 
 
 }

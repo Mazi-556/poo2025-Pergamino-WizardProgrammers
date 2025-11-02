@@ -1,4 +1,4 @@
-package unnoba.WizardProgrammers.models;
+package ar.edu.unnoba.poo2025.torneos.models;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -25,7 +25,7 @@ public class Administrador{
 
     //Relación uno a muchos con Torneo
     @OneToMany(mappedBy = "administrador_id")
-    private List<Torneo> torneos;
+    private List<Tournament> tournaments;
     // Este es el atributo más importante para entender la relación.
     // ¿Qué hace?: Le dice a JPA: "Yo soy el lado 'uno' de la relación, 
     // pero no soy el dueño de ella. La responsabilidad de gestionar la clave foránea en 

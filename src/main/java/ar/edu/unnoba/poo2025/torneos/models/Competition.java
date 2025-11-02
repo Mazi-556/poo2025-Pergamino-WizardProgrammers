@@ -1,11 +1,11 @@
-package unnoba.WizardProgrammers.models;
+package ar.edu.unnoba.poo2025.torneos.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
-
+import ar.edu.unnoba.poo2025.torneos.models.Registration;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -21,22 +21,22 @@ import jakarta.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "competencia")
-public class Competencia {
+public class Competition {
 
     @Id
     @GeneratedValue
-    private int idCompetencia;
+    private int idCompetition;
 
     @ManyToOne
     @JoinColumn(name="torneo_id", nullable=false)
-    private Torneo torneo_id;
+    private Tournament tournament_id;
 
     @OneToMany(mappedBy = "competencia_id")
-    private List<Inscripcion> inscripciones;
+    private List<Registration> registrations;
 
-    private String nombre;
-    private double precio_base;
-    private int cupo;
+    private String name;
+    private double base_price;
+    private int quota; //cupo
 
 
     

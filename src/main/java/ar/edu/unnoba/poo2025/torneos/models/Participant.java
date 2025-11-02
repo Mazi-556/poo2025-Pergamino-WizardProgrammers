@@ -1,4 +1,4 @@
-package unnoba.WizardProgrammers.models;
+package ar.edu.unnoba.poo2025.torneos.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Setter;
@@ -20,15 +20,15 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "participante")
-public class Participante{
+@Table(name = "participant")
+public class Participant{
 
     @Id
     @GeneratedValue
-    private int idParticipante;
+    private int idParticipant;
 
-    private String nombre;
-    private String apellido;
+    private String name;
+    private String surname;
 
     @Column(name = "dni", unique = true)
     private int dni;
@@ -39,7 +39,7 @@ public class Participante{
     private String password;
 
     @OneToMany(mappedBy = "participante_id")
-    private List<Inscripcion> inscripciones;
+    private List<Registration> registrations;
 
     public String getPassword() {
         return password;
@@ -55,19 +55,19 @@ public class Participante{
     }
 
     public String getNombre() {
-        return nombre;
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombre(String name) {
+        this.name = name;
     }
 
     public String getApellido() {
-        return apellido;
+        return surname;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setApellido(String surname) {
+        this.surname = surname;
     }
 
     public int getDni() {
