@@ -24,7 +24,7 @@ public class Tournament {
 
     @Id
     @GeneratedValue
-    private int idTournament;
+    private Long idTournament;
 
     @ManyToOne
     @JoinColumn(name="admin_id", nullable=false)
@@ -43,7 +43,7 @@ public class Tournament {
     private String descripction;
     private Date startDate;
     private Date endDate;
-    private boolean active;
+    private boolean published;
 
 
 }

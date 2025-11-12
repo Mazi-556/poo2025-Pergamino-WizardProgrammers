@@ -43,4 +43,8 @@ public class ParticipantServiceImp implements ParticipantService {
         // Guardar participante en la base de datos
         participantRepository.save(participant);
     }
+    @Override
+    public Participant findByEmail(String email) {
+        return participantRepository.findByEmail(email);
+    }
 }

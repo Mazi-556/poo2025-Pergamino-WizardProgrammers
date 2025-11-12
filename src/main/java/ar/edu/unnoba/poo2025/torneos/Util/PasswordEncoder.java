@@ -16,4 +16,8 @@ public class PasswordEncoder {
         return Password.check(rawPassword, encodedPassword)
                        .withBcrypt(); // Devuelve true si coincide
     }
+
+    //public boolean matches(String password, String password2) {
+        //throw new UnsupportedOperationException("Unimplemented method 'matches'"); //Esta comentada porque si no me tiraba error y no funcionaba 
+    //}
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import ar.edu.unnoba.poo2025.torneos.models.Participant;
 
 @Repository
-public interface ParticipantRepository extends JpaRepository<Participant, Integer> {
+public interface ParticipantRepository extends JpaRepository<Participant, Long> {
 
     @Query("SELECT p FROM Participant p WHERE p.email = :email")
     Participant findByEmail(@Param("email") String email);

@@ -11,15 +11,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Map;
 
+import ar.edu.unnoba.poo2025.torneos.dto.AuthenticationRequestDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.CreateParticipantRequestDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Participant;
+import ar.edu.unnoba.poo2025.torneos.service.AuthenticationService;
 import ar.edu.unnoba.poo2025.torneos.service.ParticipantService;
 
 @RestController
-@RequestMapping("/participant")
+@RequestMapping("/participants")
 public class ParticipantResource {
     @Autowired
     private ParticipantService participantService;
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody CreateParticipantRequestDTO dto) {
@@ -43,4 +47,18 @@ public class ParticipantResource {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
     }
+    
+    @PostMapping(path = "/auth", produces = "application/json")
+    public ResponseEntity<?> authentication(@RequestBody AuthenticationRequestDTO dto) {
+    try {
+        Participant tmp = new Participant();
+        tmp.setEmail(dto.getEmail());
+        tmp.setPassword(dto.getPassword());
+
+        String token = authenticationService.authenticate(tmp);
+        return ResponseEntity.ok(Map.of("token", token));
+    } catch (Exception e) {
+        return ResponseEntity.status(401).body(Map.of("error", e.getMessage()));
+    }
+  }
 }
