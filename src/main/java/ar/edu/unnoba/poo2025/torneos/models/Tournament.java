@@ -27,8 +27,8 @@ public class Tournament {
     private Long idTournament;
 
     @ManyToOne
-    @JoinColumn(name="admin_id", nullable=true)
-    private Admin admin_id;
+    @JoinColumn(name="admin_id", nullable=true) //Esto luego hay que cambiarlo a nullable=false cuando tengamos admins creados para el tp6.
+    private Admin admin_id;                     //Ahora lo cambie para probar
 
     // @ManyToOne
     // @JoinColumn(name="competition_id", nullable=false)

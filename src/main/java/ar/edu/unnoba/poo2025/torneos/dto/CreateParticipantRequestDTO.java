@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
+@Getter //Creo que esto de getter y setter no hace falta si ya estan los metodos
 @Setter
 public class CreateParticipantRequestDTO {
     
