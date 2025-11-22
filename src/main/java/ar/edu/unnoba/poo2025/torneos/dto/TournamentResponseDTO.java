@@ -6,6 +6,9 @@ public class TournamentResponseDTO {
     private String name;
     private String description;
 
+    public TournamentResponseDTO() {        
+    }
+
     public TournamentResponseDTO(Long id, String name, String description) {
         this.id = id;
         this.name = name;

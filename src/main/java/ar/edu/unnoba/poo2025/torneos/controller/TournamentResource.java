@@ -61,7 +61,8 @@ public class TournamentResource {
       return ResponseEntity.status(403).body(Map.of("error", e.getMessage()));
     }
     }
-    /*@PostMapping
+
+    @PostMapping
     public ResponseEntity<TournamentResponseDTO> createTournament(@RequestBody Tournament newTournament) {
     try {
         Tournament saved = tournamentService.saveTournament(newTournament);
@@ -69,7 +70,7 @@ public class TournamentResource {
         TournamentResponseDTO response = new TournamentResponseDTO(
             saved.getIdTournament(),
             saved.getName(),
-            saved.getDescription()
+            saved.getDescripction() //Este metodo esta mal escrito xddd. mb
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -77,5 +78,5 @@ public class TournamentResource {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(null);
     }
-}*/ //el post este lo hice para probar el postman pero me sigue sin funcionar para crear el torneo :)
+} //el post este lo hice para probar el postman pero me sigue sin funcionar para crear el torneo :)
 }

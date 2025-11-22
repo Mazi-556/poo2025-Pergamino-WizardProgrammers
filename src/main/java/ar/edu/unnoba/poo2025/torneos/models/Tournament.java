@@ -27,12 +27,13 @@ public class Tournament {
     private Long idTournament;
 
     @ManyToOne
-    @JoinColumn(name="admin_id", nullable=false)
+    @JoinColumn(name="admin_id", nullable=true)
     private Admin admin_id;
 
     // @ManyToOne
     // @JoinColumn(name="competition_id", nullable=false)
-    // private Competition competition_id;                 //Como dijo facundo, se crea un deadlock tremendo aca. El huevo o la gallina
+    // private Competition competition_id;                 
+    //Como dijo facundo, se crea un deadlock tremendo aca. El huevo o la gallina
 
 
     @OneToMany(mappedBy = "tournament_id")
@@ -45,5 +46,6 @@ public class Tournament {
     private Date endDate;
     private boolean published;
 
+    //Aca faltaria atributo "active", pero segun vi no se pide en ningun lado de las practicas este atributo. ඞ
 
 }
