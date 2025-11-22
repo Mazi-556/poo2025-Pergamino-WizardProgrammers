@@ -31,6 +31,7 @@ public class Registration {
     @ManyToOne
     @JoinColumn(name="competition_id", nullable=false)
     private Competition competition_id;
+    
     @ManyToOne
     @JoinColumn(name="participant_id", nullable=false)
     private Participant participant_id;

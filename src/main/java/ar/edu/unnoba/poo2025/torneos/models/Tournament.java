@@ -30,9 +30,9 @@ public class Tournament {
     @JoinColumn(name="admin_id", nullable=false)
     private Admin admin_id;
 
-    @ManyToOne
-    @JoinColumn(name="competition_id", nullable=false)
-    private Competition competition_id;
+    // @ManyToOne
+    // @JoinColumn(name="competition_id", nullable=false)
+    // private Competition competition_id;                 //Como dijo facundo, se crea un deadlock tremendo aca. El huevo o la gallina
 
 
     @OneToMany(mappedBy = "tournament_id")

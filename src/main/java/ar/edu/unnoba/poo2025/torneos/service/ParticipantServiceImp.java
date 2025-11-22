@@ -13,7 +13,7 @@ public class ParticipantServiceImp implements ParticipantService {
     private ParticipantRepository participantRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;    //Preguntar a nelson que es mejor (Esto o inyeccion por constructor)
+    private PasswordEncoder passwordEncoder;   
 
     @Override
     public void create(Participant participant) throws Exception {
@@ -27,6 +27,9 @@ public class ParticipantServiceImp implements ParticipantService {
         if (participant.getDni() == 0) {
             throw new Exception("El DNI es inválido o nulo. Asegúrate de que la clave en el JSON sea 'dni' (en minúscula).");
         }  
+
+        // TO DO
+        // Podriamos meter una validacion para que el DNI sea de 8 digitos
 
         // Verificar si el DNI ya existe
         Participant existingParticipantDNI = participantRepository.findByDNI(participant.getDni());
