@@ -49,4 +49,10 @@ public class JwtTokenUtil {
     if (token == null) return "";
     return token.startsWith("Bearer ") ? token.substring(7) : token;
   }
+
+
+  public void validateToken(String authenticationHeader) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'validateToken'");
+  }
 }

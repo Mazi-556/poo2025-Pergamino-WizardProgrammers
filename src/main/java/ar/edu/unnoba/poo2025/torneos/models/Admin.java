@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
 @Getter
 @Setter
@@ -31,11 +32,14 @@ public class Admin{
     // pero no soy el dueño de ella. La responsabilidad de gestionar la clave foránea en 
     // la base de datos la tiene la clase Torneo, específicamente en el campo llamado administrador".
 
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
     private String name;
-
-
+    
     private void createTournament() {
         //Lógica para crear un torneo
     }
