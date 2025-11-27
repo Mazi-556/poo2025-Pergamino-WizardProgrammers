@@ -1,18 +1,20 @@
 package ar.edu.unnoba.poo2025.torneos.models; 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.AllArgsConstructor;
-import java.sql.Date;
+
+import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id; // <-- AGREGA ESTA LÍNEA
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -24,28 +26,21 @@ public class Tournament {
 
     @Id
     @GeneratedValue
+    @Column(name = "id_tournament")
     private Long idTournament;
 
     @ManyToOne
-    @JoinColumn(name="admin_id", nullable=true) //Esto luego hay que cambiarlo a nullable=false cuando tengamos admins creados para el tp6.
-    private Admin admin_id;                     //Ahora lo cambie para probar
-
-    // @ManyToOne
-    // @JoinColumn(name="competition_id", nullable=false)
-    // private Competition competition_id;                 
-    //Como dijo facundo, se crea un deadlock tremendo aca. El huevo o la gallina
-
+    @JoinColumn(name="admin_id", nullable=true) 
+    private Admin admin_id;
 
     @OneToMany(mappedBy = "tournament_id")
     private List<Competition> competition;
-
     
     private String name;
-    private String descripction;
-    private Date startDate;
-    private Date endDate;
+    private String descripction; // Mantenemos tu variable tal cual está en el JSON
+    
+    private LocalDate startDate; // <-- CAMBIADO A LocalDate
+    private LocalDate endDate;   // <-- CAMBIADO A LocalDate
+    
     private boolean published;
-
-    //Aca faltaria atributo "active", pero segun vi no se pide en ningun lado de las practicas este atributo. ඞ
-
 }
