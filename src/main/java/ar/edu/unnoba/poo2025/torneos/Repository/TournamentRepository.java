@@ -7,5 +7,6 @@ import ar.edu.unnoba.poo2025.torneos.models.Tournament;
 
 @Repository
 public interface TournamentRepository extends JpaRepository<Tournament, Long> {
-    List<Tournament> findByPublishedTrue();
+    List<Tournament> findByPublishedTrue(); //participante
+    List<Tournament> findAllByOrderByStartDateDesc(); //admin, todos ordenados por fecha de inicio descendente
 }
