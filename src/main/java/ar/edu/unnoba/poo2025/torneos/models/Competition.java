@@ -38,11 +38,5 @@ public class Competition {
     private double base_price;
     private int quota; //cupo
 
-
-    
-
-
-
-
 }
 

@@ -2,7 +2,7 @@ package ar.edu.unnoba.poo2025.torneos.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -25,7 +25,7 @@ public class Registration {
     private int idregistration;
 
     private Float price;
-    private Date date;
+    private LocalDate date; // <-- CAMBIADO A LocalDate
 
 
     @ManyToOne
