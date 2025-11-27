@@ -1,14 +1,14 @@
 package ar.edu.unnoba.poo2025.torneos.Util;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
+import org.springframework.stereotype.Component;
+
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
-
-import org.springframework.stereotype.Component;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 
 @Component
 public class JwtTokenUtil {
@@ -51,8 +51,9 @@ public class JwtTokenUtil {
   }
 
 
-  public void validateToken(String authenticationHeader) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'validateToken'");
-  }
+  public void validateToken(String token) throws Exception {
+    if (!verify(token)) {
+        throw new Exception("Token inválido o expirado");
+    }
+}
 }
