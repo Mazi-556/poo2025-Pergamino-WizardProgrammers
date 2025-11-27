@@ -1,6 +1,7 @@
 package ar.edu.unnoba.poo2025.torneos.controller;
 
 import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unnoba.poo2025.torneos.Util.JwtTokenUtil;
 import ar.edu.unnoba.poo2025.torneos.dto.AuthenticationRequestDTO;
-import ar.edu.unnoba.poo2025.torneos.service.AdminService;
 import ar.edu.unnoba.poo2025.torneos.models.Admin;
+import ar.edu.unnoba.poo2025.torneos.service.AdminService;
 
 @RestController
 @RequestMapping ("/admin")
@@ -35,4 +36,15 @@ public class AdminAuthResource {
                     .body(Map.of("error", e.getMessage()));
         }
     }
+    @PostMapping("/register")
+        public ResponseEntity<?> create(@RequestBody Admin admin) {
+            try {
+                // Esto usa tu servicio existente que YA encripta la contraseña
+                Admin created = adminService.create(admin); 
+                return ResponseEntity.status(HttpStatus.CREATED).body(created);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(Map.of("error", e.getMessage()));
+            }
+        }
 }

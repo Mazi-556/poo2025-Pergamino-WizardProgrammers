@@ -26,5 +26,5 @@ public class AuthorizationServiceImp implements AuthorizationService{
     Participant p = participantService.findByEmail(email);
     if (p == null) throw new Exception("Usuario no autorizado");
         return p;
-    }    
+    }
 }
