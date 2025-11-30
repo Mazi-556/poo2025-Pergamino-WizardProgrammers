@@ -3,12 +3,15 @@ package ar.edu.unnoba.poo2025.torneos.dto;
 
 import java.time.LocalDate;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AdminCompetitionRegistrationDTO { //el admin reciba la lista de inscripciones de una competencia
 
     private Integer id;
@@ -20,16 +23,4 @@ public class AdminCompetitionRegistrationDTO { //el admin reciba la lista de ins
     private String participantSurname;
     private int participantDni;
 
-    public AdminCompetitionRegistrationDTO() {
-    }
-
-    public AdminCompetitionRegistrationDTO(Integer id, double base_price, LocalDate date, Integer participantId, String participantName, String participantSurname, int participantDni) {
-        this.id = id;
-        this.base_price = base_price;
-        this.date = date;
-        this.participantId = participantId;
-        this.participantName = participantName;
-        this.participantSurname = participantSurname;
-        this.participantDni = participantDni;
-    }
 }

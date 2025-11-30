@@ -3,11 +3,16 @@ package ar.edu.unnoba.poo2025.torneos.dto;
 //resumen para el listado
 import java.time.LocalDate;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class AdminTournamentSummaryDTO {
     private Long id;
     private String name;
@@ -15,12 +20,4 @@ public class AdminTournamentSummaryDTO {
     private LocalDate endDate;
     private boolean published;
 
-    public AdminTournamentSummaryDTO(Long id, String name, LocalDate startDate, LocalDate endDate, boolean published) {
-        this.id = id;
-        this.name = name;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.published = published;
-    }
-    public AdminTournamentSummaryDTO() {}
 }
