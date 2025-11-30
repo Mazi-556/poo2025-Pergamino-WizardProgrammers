@@ -1,19 +1,17 @@
 package ar.edu.unnoba.poo2025.torneos.models;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.Setter;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-
 import java.util.List;
 
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -31,7 +29,8 @@ public class Participant{
     private String surname;
 
     @Column(name = "dni", unique = true)
-    private int dni;
+    @NotNull (message= "El DNI es obligatorio")
+    private Integer dni;
     
     @Column(unique = true)
     private String email;
@@ -70,11 +69,11 @@ public class Participant{
         this.surname = surname;
     }
 
-    public int getDni() {
+    public Integer getDni() {
         return dni;
     }
 
-    public void setDni(int dni) {
+    public void setDni(Integer dni) {
         this.dni = dni;
     }
 }

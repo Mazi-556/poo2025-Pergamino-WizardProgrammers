@@ -1,21 +1,22 @@
 package ar.edu.unnoba.poo2025.torneos.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.util.Map;
+import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unnoba.poo2025.torneos.dto.AuthenticationRequestDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.CreateParticipantRequestDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Participant;
 import ar.edu.unnoba.poo2025.torneos.service.AuthenticationService;
 import ar.edu.unnoba.poo2025.torneos.service.ParticipantService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/participants")
@@ -26,7 +27,7 @@ public class ParticipantResource {
     private AuthenticationService authenticationService;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody CreateParticipantRequestDTO dto) {
+    public ResponseEntity<?> create(@Valid @RequestBody CreateParticipantRequestDTO dto) {
     try {
         Participant p = new Participant();
         p.setName(dto.getName());
