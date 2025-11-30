@@ -5,7 +5,7 @@ import java.util.List;
 import ar.edu.unnoba.poo2025.torneos.models.Admin;
 
 public interface AdminService {
-    Admin create(Admin admin) throws Exception;
+    Admin create(Admin admin);
     Admin authenticate(String email, String password) throws Exception;
     Admin findByEmail(String email);
     boolean existsByEmail(String email);

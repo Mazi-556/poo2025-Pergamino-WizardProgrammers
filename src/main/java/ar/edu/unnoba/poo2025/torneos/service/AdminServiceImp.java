@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ar.edu.unnoba.poo2025.torneos.Repository.AdminRepository;
 import ar.edu.unnoba.poo2025.torneos.Util.PasswordEncoder;
 import ar.edu.unnoba.poo2025.torneos.models.Admin;
+import ar.edu.unnoba.poo2025.torneos.exceptions.ResourceAlreadyExistsException;
 
 @Service
 public class AdminServiceImp implements AdminService {
@@ -18,9 +19,9 @@ public class AdminServiceImp implements AdminService {
     }
 
     @Override
-    public Admin create(Admin admin) throws Exception{
+    public Admin create(Admin admin){
         if (existsByEmail(admin.getEmail())) {
-            throw new Exception("Email ya utilizado por otro admin");
+            throw new ResourceAlreadyExistsException("Email ya utilizado por otro admin");
         }
         String hashed = passwordEncoder.encode(admin.getPassword());
         admin.setPassword(hashed);
