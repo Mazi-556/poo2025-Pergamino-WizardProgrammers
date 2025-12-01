@@ -16,6 +16,8 @@ public interface TournamentService {
 
     AdminTournamentDetailDTO getTournamentDetail(Long id) throws Exception;
 
+    void publish (Long id) throws Exception;
+
     //TODO: editar torneo
     //TODO: Revisar las exepciones de aqui
 }
