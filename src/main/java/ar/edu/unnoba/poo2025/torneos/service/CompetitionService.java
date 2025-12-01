@@ -2,6 +2,8 @@ package ar.edu.unnoba.poo2025.torneos.service;
 
 import java.util.List;
 
+import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionDetailDTO;
+import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionRegistrationDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Competition;
 import ar.edu.unnoba.poo2025.torneos.models.Registration;
 
@@ -13,9 +15,13 @@ public interface CompetitionService {
 
     Competition updateCompetition(Long tournamentId, Integer competitionId, String name, int quota, double basePrice) throws Exception;
     
+    Competition findByIdAndTournament(Long tournamentId, Integer competitionId) throws Exception;
+
     void deleteCompetition(Long tournamentId, Integer competitionId) throws Exception;
     
-    Competition findByIdAndTournament(Long tournamentId, Integer competitionId) throws Exception;
-    
     List<Registration> findRegistrationsByCompetition(Long tournamentId, Integer competitionId) throws Exception;
+
+    List<AdminCompetitionRegistrationDTO> getCompetitionRegistrations(Long tournamentId, Integer competitionId) throws Exception;
+
+    AdminCompetitionDetailDTO getCompetitionDetail(Long tournamentId, Integer competitionId) throws Exception;
 }

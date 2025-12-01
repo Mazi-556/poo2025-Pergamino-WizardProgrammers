@@ -85,20 +85,25 @@ public class AdminAccountResource {
 
 
 
+//nuevo
     @DeleteMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<?> delete(@RequestHeader("authentication") String authenticationHeader, @PathVariable("id") Integer id) {
-        try{
+    public ResponseEntity<?> delete(@RequestHeader("authentication") String authenticationHeader, 
+                                    @PathVariable("id") Integer id) {
+        try {
             Admin current = getCurrentAdmin(authenticationHeader);
 
-            if (current.getIdAdmin() == id) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", "No puedes borrarte a ti mismo"));
-            }
-            adminService.deleteById(id);                //TODO: Esto lo tiene que hacer el service del adminService, no el controller
-            return ResponseEntity.noContent().build();  //TODO: El controller solamente deberia 
+            //Delegar la acción al servicio
+            adminService.deleteAdmin(id, current.getIdAdmin());
+
+            return ResponseEntity.noContent().build();
+            
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+            HttpStatus status = e.getMessage().contains("No puedes eliminar") 
+                    ? HttpStatus.BAD_REQUEST 
+                    : HttpStatus.UNAUTHORIZED;
+
+            return ResponseEntity.status(status)
                     .body(Map.of("error", e.getMessage()));
         }
-    } 
+    }
 }

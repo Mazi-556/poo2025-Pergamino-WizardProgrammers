@@ -19,7 +19,19 @@ public interface RegistrationRepository extends JpaRepository<Registration, Inte
     @Query("SELECT COUNT(r) FROM Registration r WHERE r.competition_id.tournament_id.idTournament = :tournamentId")
     long countByTournamentId(@Param("tournamentId") Long tournamentId);
 
+    //nuevo
+    @Query("SELECT r FROM Registration r JOIN FETCH r.participant_id p WHERE r.competition_id.idCompetition = :competitionId")
+    List<Registration> findByCompetitionIdWithParticipant(@Param("competitionId") int competitionId);
+
 
     @Query("SELECT COALESCE(SUM(r.price), 0) FROM Registration r WHERE r.competition_id.tournament_id.idTournament = :tournamentId")
     Double sumPriceByTournamentId(@Param("tournamentId") Long tournamentId);
+
+    @Query("SELECT COUNT(r) FROM Registration r WHERE r.competition_id.idCompetition = :competitionId")
+    long countByCompetitionId(@Param("competitionId") Integer competitionId);
+
+    @Query("SELECT COALESCE(SUM(r.price), 0) FROM Registration r WHERE r.competition_id.idCompetition = :competitionId")
+    Double sumPriceByCompetitionId(@Param("competitionId") Integer competitionId);
+
+
 }

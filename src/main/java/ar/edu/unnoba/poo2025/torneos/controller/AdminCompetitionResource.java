@@ -53,25 +53,24 @@ public class AdminCompetitionResource {
         }
         return current;
     }
-    @GetMapping(produces = "application/json")
+
+
+
+    @GetMapping(produces = "application/json") //Por que estos son iguales? este y el de abajo?
     public ResponseEntity<?> getCompetitions(
             @RequestHeader("authentication") String authenticationHeader,
             @PathVariable("tournamentId") Long tournamentId) {
         try {
             getCurrentAdmin(authenticationHeader);
 
-            List<Competition> list = competitionService.findByTournamentId(tournamentId);
+            getCurrentAdmin(authenticationHeader);
 
-            List<AdminCompetitionSummaryDTO> dtoList = list.stream()
-                    .map(c -> new AdminCompetitionSummaryDTO(
-                            c.getIdCompetition(),
-                            c.getName(),
-                            c.getQuota(),
-                            c.getBase_price()
-                    ))
-                    .collect(Collectors.toList());
+        // El servicio ya devuelve la lista de DTOs optimizada y lista para enviar
+        List<AdminCompetitionRegistrationDTO> dtoList = competitionService.getCompetitionRegistrations(tournamentId, competitionId);
 
-            return ResponseEntity.ok(dtoList);
+        return ResponseEntity.ok(dtoList);
+
+
         } catch (Exception e) {
             HttpStatus status = (e.getMessage() != null &&
                     (e.getMessage().contains("no encontrado") || e.getMessage().contains("not found")))
@@ -81,6 +80,9 @@ public class AdminCompetitionResource {
                     .body(Map.of("error", e.getMessage()));
         }
     }
+
+
+
     @GetMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<?> getCompetition(
             @RequestHeader("authentication") String authenticationHeader,
@@ -121,6 +123,9 @@ public class AdminCompetitionResource {
                     .body(Map.of("error", e.getMessage()));
         }
     }
+
+
+
     @PostMapping(produces = "application/json")
     public ResponseEntity<?> createCompetition(
             @RequestHeader("authentication") String authenticationHeader,
@@ -153,6 +158,9 @@ public class AdminCompetitionResource {
                     .body(Map.of("error", e.getMessage()));
         }
     }
+
+
+
     @PutMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<?> updateCompetition(
             @RequestHeader("authentication") String authenticationHeader,
@@ -187,6 +195,9 @@ public class AdminCompetitionResource {
                     .body(Map.of("error", e.getMessage()));
         }
     }
+    
+    
+    
     @DeleteMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<?> deleteCompetition(
             @RequestHeader("authentication") String authenticationHeader,
@@ -207,6 +218,9 @@ public class AdminCompetitionResource {
                     .body(Map.of("error", e.getMessage()));
         }
     }
+
+
+
     @GetMapping(path = "/{competitionId}/inscripciones", produces = "application/json")
     public ResponseEntity<?> getCompetitionRegistrations(
             @RequestHeader("authentication") String authenticationHeader,
@@ -215,25 +229,10 @@ public class AdminCompetitionResource {
         try {
             getCurrentAdmin(authenticationHeader);
 
-            List<Registration> registrations =
-                    competitionService.findRegistrationsByCompetition(tournamentId, competitionId);
+                List<AdminCompetitionRegistrationDTO> dtoList = competitionService.getCompetitionRegistrations(tournamentId, competitionId);
 
-            List<AdminCompetitionRegistrationDTO> dtoList = registrations.stream()
-                    .map(r -> {
-                        Participant p = r.getParticipant_id();
-                        return new AdminCompetitionRegistrationDTO(
-                                r.getIdregistration(),
-                                r.getPrice() == null ? 0f : r.getPrice(),
-                                r.getDate(),
-                                p != null ? p.getIdParticipant() : null,
-                                p != null ? p.getName() : null,
-                                p != null ? p.getSurname() : null,
-                                p != null ? p.getDni() : 0
-                        );
-                    })
-                    .collect(Collectors.toList());
+                return ResponseEntity.ok(dtoList);
 
-            return ResponseEntity.ok(dtoList);
         } catch (Exception e) {
             HttpStatus status = (e.getMessage() != null &&
                     (e.getMessage().contains("no encontrado") || e.getMessage().contains("not found")))

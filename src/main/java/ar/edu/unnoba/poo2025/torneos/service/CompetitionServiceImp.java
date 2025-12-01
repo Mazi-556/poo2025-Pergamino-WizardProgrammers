@@ -1,13 +1,17 @@
 package ar.edu.unnoba.poo2025.torneos.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import ar.edu.unnoba.poo2025.torneos.Repository.CompetitionRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.RegistrationRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
+import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionDetailDTO;
+import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionRegistrationDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Competition;
+import ar.edu.unnoba.poo2025.torneos.models.Participant;
 import ar.edu.unnoba.poo2025.torneos.models.Registration;
 import ar.edu.unnoba.poo2025.torneos.models.Tournament;
 
@@ -94,10 +98,58 @@ public class CompetitionServiceImp implements CompetitionService {
 
         return c;
     }
+
+
+
     @Override
     public List<Registration> findRegistrationsByCompetition(Long tournamentId,
                                                              Integer competitionId) throws Exception {
         Competition c = findByIdAndTournament(tournamentId, competitionId);
         return registrationRepository.findByCompetitionId(c.getIdCompetition());
+    }
+
+
+    //nuevo
+    @Override
+    public List<AdminCompetitionRegistrationDTO> getCompetitionRegistrations(Long tournamentId, Integer competitionId) throws Exception {
+
+        Competition c = findByIdAndTournament(tournamentId, competitionId);
+
+        
+        List<Registration> registrations = registrationRepository.findByCompetitionIdWithParticipant(c.getIdCompetition());
+
+        return registrations.stream()
+                .map(r -> {
+                    Participant p = r.getParticipant_id();
+                    return new AdminCompetitionRegistrationDTO(
+                        r.getIdregistration(),
+                        r.getPrice(),
+                        r.getDate(),
+                        p.getIdParticipant(),
+                        p.getName(),
+                        p.getSurname(),
+                        p.getDni()
+                    );
+                })
+                .collect(Collectors.toList());
+    }
+
+    
+    //nuevo
+    @Override
+    public AdminCompetitionDetailDTO getCompetitionDetail(Long tournamentId, Integer competitionId) throws Exception {
+        Competition c = findByIdAndTournament(tournamentId, competitionId);
+
+        long totalRegistrations = registrationRepository.countByCompetitionId(competitionId);
+        double totalAmount = registrationRepository.sumPriceByCompetitionId(competitionId);
+
+        return new AdminCompetitionDetailDTO(
+                c.getIdCompetition(),
+                c.getName(),
+                c.getQuota(),
+                c.getBase_price(),
+                totalRegistrations,
+                totalAmount
+        );
     }
 }

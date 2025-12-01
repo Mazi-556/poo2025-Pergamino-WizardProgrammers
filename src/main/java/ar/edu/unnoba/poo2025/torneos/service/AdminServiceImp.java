@@ -54,7 +54,26 @@ public class AdminServiceImp implements AdminService {
         return adminRepository.findAll();
     }
     @Override
-    public void deleteById(Integer id) throws Exception {
+    public void deleteById(Integer id) throws Exception {   //TODO: exeption
         adminRepository.deleteById(id);
+    }
+
+
+
+// nuevo
+    @Override
+    public void deleteAdmin(Integer idToDelete, Integer requesterId) throws Exception { //TODO: exception
+        // 1. Regla de Negocio: Autoprotección
+        if (idToDelete.equals(requesterId)) {
+            throw new Exception("No puedes eliminar tu propia cuenta de administrador.");
+        }
+
+        // 2. Validación de existencia (opcional pero recomendada)
+        if (!adminRepository.existsById(idToDelete)) {
+            throw new Exception("El administrador a eliminar no existe.");
+        }
+
+        // 3. Acción
+        adminRepository.deleteById(idToDelete);
     }
 }
