@@ -62,12 +62,9 @@ public class AdminCompetitionResource {
             @PathVariable("tournamentId") Long tournamentId) {
         try {
             getCurrentAdmin(authenticationHeader);
-
-            getCurrentAdmin(authenticationHeader);
-
+            
         // El servicio ya devuelve la lista de DTOs optimizada y lista para enviar
-        List<AdminCompetitionRegistrationDTO> dtoList = competitionService.getCompetitionRegistrations(tournamentId, competitionId);
-
+        List<AdminCompetitionSummaryDTO> dtoList = competitionService.getCompetitionSummaries(tournamentId);
         return ResponseEntity.ok(dtoList);
 
 
@@ -90,30 +87,12 @@ public class AdminCompetitionResource {
             @PathVariable("id") Integer competitionId) {
         try {
             getCurrentAdmin(authenticationHeader);
-
-            Competition c = competitionService.findByIdAndTournament(tournamentId, competitionId);
-
-            long totalRegistrations = c.getRegistrations() == null
-                    ? 0
-                    : c.getRegistrations().size();
-
-            double totalAmount = 0.0;
-            if (c.getRegistrations() != null) {
-                totalAmount = c.getRegistrations().stream()
-                        .mapToDouble(r -> r.getPrice() == null ? 0.0 : r.getPrice())    //TODO: CRIMEN DE GUERRA
-                        .sum();
-            }
-
-            AdminCompetitionDetailDTO dto = new AdminCompetitionDetailDTO(
-                    c.getIdCompetition(),
-                    c.getName(),
-                    c.getQuota(),
-                    c.getBase_price(),
-                    totalRegistrations,
-                    totalAmount
-            );
-
+            
+            AdminCompetitionDetailDTO dto = competitionService.getCompetitionDetail(tournamentId, competitionId);
+            
             return ResponseEntity.ok(dto);
+
+
         } catch (Exception e) {
             HttpStatus status = (e.getMessage() != null &&
                     (e.getMessage().contains("no encontrado") || e.getMessage().contains("not found")))
