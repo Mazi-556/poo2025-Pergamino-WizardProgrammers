@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
+import io.micrometer.common.lang.Nullable;
 import jakarta.validation.constraints.NotNull;
 
 @Getter

@@ -18,7 +18,7 @@ public class ParticipantServiceImp implements ParticipantService {
     private PasswordEncoder passwordEncoder;   
 
     @Override
-    public void create(Participant participant) throws Exception {
+    public void create(Participant participant) {
         // Verificar si el email ya existe
         Participant existingParticipant = participantRepository.findByEmail(participant.getEmail());
         if (existingParticipant != null) {

@@ -78,5 +78,5 @@ public class TournamentResource {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(null);
     }
-} // //el post este lo hice para probar el postman pero me sigue sin funcionar para crear el torneo :)
+} 
 }

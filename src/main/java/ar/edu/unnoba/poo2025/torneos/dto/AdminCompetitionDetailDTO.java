@@ -1,10 +1,15 @@
 package ar.edu.unnoba.poo2025.torneos.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.AllArgsConstructor;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class AdminCompetitionDetailDTO { //detalle/resumen de una competencia de torneo
 
     private int id;
@@ -13,18 +18,5 @@ public class AdminCompetitionDetailDTO { //detalle/resumen de una competencia de
     private double base_price;
     private long totalRegistrations;
     private double totalAmount;
-
-
-    public AdminCompetitionDetailDTO() {
-    }
-
-
-    public AdminCompetitionDetailDTO(int id, String name, int quota, double base_price, long totalRegistrations, double totalAmount) {
-        this.id = id;
-        this.name = name;
-        this.quota = quota;
-        this.base_price = base_price;
-        this.totalRegistrations = totalRegistrations;
-        this.totalAmount = totalAmount;
-    }
+    //TO DO: Juntar los dtos similares
 }

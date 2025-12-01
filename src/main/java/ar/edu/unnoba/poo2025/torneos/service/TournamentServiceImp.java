@@ -1,19 +1,25 @@
 package ar.edu.unnoba.poo2025.torneos.service;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import ar.edu.unnoba.poo2025.torneos.Repository.RegistrationRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
+import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Tournament;
 
 @Service
 public class TournamentServiceImp implements TournamentService  {
     
     @Autowired
-    private TournamentRepository tournamentRepository;
+    private final TournamentRepository tournamentRepository;
+    private final RegistrationRepository registrationRepository;
 
-    public TournamentServiceImp(TournamentRepository tournamentRepository) {
+    public TournamentServiceImp(TournamentRepository tournamentRepository, RegistrationRepository registrationRepository) {
         this.tournamentRepository = tournamentRepository;
+        this.registrationRepository = registrationRepository;
     }
     // participante
     @Override
@@ -32,16 +38,38 @@ public class TournamentServiceImp implements TournamentService  {
     }
     //admin
     @Override
-    public Tournament findById(Long id) throws Exception{
+    public Tournament findById(Long id) throws Exception{ //TODO: Exception
         return tournamentRepository.findById(id)
                .orElseThrow(() -> new Exception("Torneo no encontrado")); 
     }
     //admin
     @Override
-    public void deleteTournament(Long id) throws Exception {
+    public void deleteTournament(Long id) throws Exception { //TODO: Exception
         if (!tournamentRepository.existsById(id)){
             throw new Exception("Torneo no encontrado");
         }
         tournamentRepository.deleteById(id);
+    }
+
+    //Nuevo
+    @Override
+    public AdminTournamentDetailDTO getTournamentDetail(Long id) throws Exception { //TODO: Exception
+        Tournament t = findById(id); 
+        
+        // En lugar de recorrer todas las listas de inscripciones, le pedimos a la base de datos que nos haga el conteo y la suma
+        //Gracias a esto nos ahorramos hacer 2 for anidados. Una verdadero crimen de guerra
+        long totalRegistrations = registrationRepository.countByTournamentId(id);
+        double totalAmount = registrationRepository.sumPriceByTournamentId(id);
+
+        return new AdminTournamentDetailDTO(
+            t.getIdTournament(),
+            t.getName(),
+            t.getDescripction(),
+            t.getStartDate(),
+            t.getEndDate(),
+            t.isPublished(),
+            totalRegistrations,
+            totalAmount
+        );
     }
 }

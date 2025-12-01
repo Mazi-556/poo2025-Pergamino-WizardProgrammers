@@ -40,6 +40,9 @@ public class AdminAccountResource {
         }
         return current;
     }
+
+
+
     @GetMapping(produces = "application/json")
     public ResponseEntity<?> getAll(@RequestHeader("authentication") String authenticationHeader){
         try {
@@ -54,6 +57,9 @@ public class AdminAccountResource {
                 .body(Map.of("error", e.getMessage()));
         }
     }
+
+
+
     @PostMapping(produces = "application/json")
     public ResponseEntity<?> create(@RequestHeader("authentication") String authenticationHeader, @RequestBody AuthenticationRequestDTO dto) {
         try {
@@ -76,6 +82,9 @@ public class AdminAccountResource {
                     .body(Map.of("error", e.getMessage()));
         }
     }
+
+
+
     @DeleteMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<?> delete(@RequestHeader("authentication") String authenticationHeader, @PathVariable("id") Integer id) {
         try{
@@ -85,8 +94,8 @@ public class AdminAccountResource {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(Map.of("error", "No puedes borrarte a ti mismo"));
             }
-            adminService.deleteById(id);
-            return ResponseEntity.noContent().build();
+            adminService.deleteById(id);                //TODO: Esto lo tiene que hacer el service del adminService, no el controller
+            return ResponseEntity.noContent().build();  //TODO: El controller solamente deberia 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("error", e.getMessage()));

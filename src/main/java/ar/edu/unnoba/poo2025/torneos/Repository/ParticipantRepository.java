@@ -16,4 +16,5 @@ public interface ParticipantRepository extends JpaRepository<Participant, Intege
     @Query("SELECT p FROM Participant p WHERE p.dni = :dni")
     Participant findByDNI(@Param("dni") int dni);
 
+
 }

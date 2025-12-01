@@ -39,8 +39,8 @@ public class Tournament {
     private String name;
     private String descripction; // Mantenemos tu variable tal cual está en el JSON
     
-    private LocalDate startDate; // <-- CAMBIADO A LocalDate
-    private LocalDate endDate;   // <-- CAMBIADO A LocalDate
+    private LocalDate startDate; 
+    private LocalDate endDate;   
     
     private boolean published;
 }

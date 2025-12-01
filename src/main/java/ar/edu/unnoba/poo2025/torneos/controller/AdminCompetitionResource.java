@@ -98,7 +98,7 @@ public class AdminCompetitionResource {
             double totalAmount = 0.0;
             if (c.getRegistrations() != null) {
                 totalAmount = c.getRegistrations().stream()
-                        .mapToDouble(r -> r.getPrice() == null ? 0.0 : r.getPrice())
+                        .mapToDouble(r -> r.getPrice() == null ? 0.0 : r.getPrice())    //TODO: CRIMEN DE GUERRA
                         .sum();
             }
 
