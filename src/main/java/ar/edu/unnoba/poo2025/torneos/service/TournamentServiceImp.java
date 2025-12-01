@@ -72,4 +72,15 @@ public class TournamentServiceImp implements TournamentService  {
             totalAmount
         );
     }
+    @Override
+    public void publish(Long id) throws Exception {
+        // 1. Buscamos el torneo (reutilizamos tu método findById que ya lanza excepción si no existe)
+        Tournament t = this.findById(id); 
+        
+        // 2. Aplicamos la lógica de negocio (cambiar estado)
+        t.setPublished(true);
+        
+        // 3. Guardamos los cambios
+        tournamentRepository.save(t);
+    }    
 }

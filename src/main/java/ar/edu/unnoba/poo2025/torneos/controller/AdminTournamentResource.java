@@ -215,30 +215,16 @@ public class AdminTournamentResource {
 
 
 
-    @PatchMapping(path = "/{id}/published", produces = "application/json")
-    public ResponseEntity<?> publish(@RequestHeader("authentication") String authenticationHeader, @PathVariable("id") Long id) {
-        try{
-            getCurrentAdmin(authenticationHeader);
-
-            Tournament t = tournamentService.findById(id);
-            t.setPublished(true);               //TODO: CRIMEN DE GUERRA, el controller no deberia tocar la logica de negocio
-            Tournament saved = tournamentService.saveTournament(t);
-
-            AdminTournamentSummaryDTO dto = new AdminTournamentSummaryDTO(
-                    saved.getIdTournament(),
-                    saved.getName(),
-                    saved.getStartDate(),
-                    saved.getEndDate(),
-                    saved.isPublished()
-            );
-
-            return ResponseEntity.ok(dto);
+@PatchMapping("/{id}/published")
+    public ResponseEntity<?> publishTournament(@PathVariable Long id) {
+        try {
+            // EL CONTROLLER YA NO PIENSA, SOLO DELEGA:
+            tournamentService.publish(id);
+            
+            return ResponseEntity.ok(Map.of("message", "Torneo publicado exitosamente"));
         } catch (Exception e) {
-            HttpStatus status = e.getMessage() != null && e.getMessage().contains("not found")
-                    ? HttpStatus.NOT_FOUND
-                    : HttpStatus.BAD_REQUEST;
-            return ResponseEntity.status(status)
-                    .body(Map.of("error", e.getMessage()));            
-        }    
-    } 
+            // Si el servicio falla (ej. no existe el ID), devolvemos error
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
+        }
+    }
 }
