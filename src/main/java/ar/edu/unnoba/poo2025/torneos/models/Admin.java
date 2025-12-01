@@ -40,23 +40,5 @@ public class Admin{
 
     private String name;
     
-    private void createTournament() {
-        //Lógica para crear un torneo
-    }
-    private void createCompetition() {
-        //Lógica para crear una competencia
-    }
-
-    private void editTournament() {
-        //Lógica para editar un torneo
-    }
-
-    private void deleteTournament() {
-        //Lógica para eliminar un torneo
-    }
-
-    private void createAdmin() {
-        //Lógica para crear un administrador
-    }
 }
 

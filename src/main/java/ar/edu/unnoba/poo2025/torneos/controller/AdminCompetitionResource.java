@@ -1,6 +1,5 @@
 package ar.edu.unnoba.poo2025.torneos.controller;
 
-import java.util.stream.Collectors;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +22,6 @@ import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionRegistrationDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionSummaryDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Admin;
 import ar.edu.unnoba.poo2025.torneos.models.Competition;
-import ar.edu.unnoba.poo2025.torneos.models.Participant;
-import ar.edu.unnoba.poo2025.torneos.models.Registration;
 import ar.edu.unnoba.poo2025.torneos.service.AdminService;
 import ar.edu.unnoba.poo2025.torneos.service.CompetitionService;
 
