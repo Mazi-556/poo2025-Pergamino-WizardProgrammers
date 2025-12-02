@@ -9,6 +9,7 @@ import ar.edu.unnoba.poo2025.torneos.Repository.RegistrationRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Tournament;
+import java.time.LocalDate;
 
 @Service
 public class TournamentServiceImp implements TournamentService  {
@@ -24,7 +25,7 @@ public class TournamentServiceImp implements TournamentService  {
     // participante
     @Override
     public List<Tournament> getPublishedTournaments() {
-        return tournamentRepository.findByPublishedTrue();
+        return tournamentRepository.findByPublishedTrueAndEndDateAfter(LocalDate.now());
     }
     // participante
     @Override
