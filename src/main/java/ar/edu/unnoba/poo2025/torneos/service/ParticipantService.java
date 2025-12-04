@@ -6,4 +6,6 @@ public interface ParticipantService {
     void create(Participant participant);
 
     Participant findByEmail(String email);
+
+    
 }

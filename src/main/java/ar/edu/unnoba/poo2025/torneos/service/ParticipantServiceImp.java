@@ -25,22 +25,18 @@ public class ParticipantServiceImp implements ParticipantService {
             throw new ResourceAlreadyExistsException("Ya existe un participante con ese email.");
         }
 
-        // TO DO
-        // Podriamos meter una validacion para que el DNI sea de 8 digitos
+        //TODO:Podriamos meter una validacion para que el DNI sea de 8 digitos
 
         // Verificar si el DNI ya existe
         Participant existingParticipantDNI = participantRepository.findByDNI(participant.getDni());
         if (existingParticipantDNI != null) {
-            // Si encontramos uno, lanzamos una excepción
             throw new ResourceAlreadyExistsException("Ya existe un participante con ese DNI.");
         }
         
 
-        // Hashear la contraseña
         String hashedPassword = passwordEncoder.encode(participant.getPassword());
         participant.setPassword(hashedPassword);
 
-        // Guardar participante en la base de datos
         participantRepository.save(participant);
     }
     @Override

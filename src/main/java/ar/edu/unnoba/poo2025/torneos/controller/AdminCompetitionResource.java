@@ -50,7 +50,7 @@ public class AdminCompetitionResource {
         String email = jwtTokenUtil.getSubject(authenticationHeader);
         Admin current = adminService.findByEmail(email);
         if (current == null) {
-            throw new Exception("Usuario administrador no encontrado");
+            throw new Exception("Usuario administrador no encontrado"); //TODO Reviar si esto debe ir en un service
         }
         return current;
     }

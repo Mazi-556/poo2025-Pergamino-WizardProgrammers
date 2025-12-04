@@ -16,11 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unnoba.poo2025.torneos.dto.RegistrationResponseDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.TournamentResponseDTO;
+import ar.edu.unnoba.poo2025.torneos.dto.CompetitionSummaryDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Participant;
 import ar.edu.unnoba.poo2025.torneos.models.Tournament;
+import ar.edu.unnoba.poo2025.torneos.models.Competition;
 import ar.edu.unnoba.poo2025.torneos.service.AuthorizationService;
 import ar.edu.unnoba.poo2025.torneos.service.TournamentService;
 import ar.edu.unnoba.poo2025.torneos.service.RegistrationService;
+import ar.edu.unnoba.poo2025.torneos.service.CompetitionService;
+import ar.edu.unnoba.poo2025.torneos.models.Competition;
 
 
 
@@ -31,18 +35,23 @@ public class TournamentResource {
     private final TournamentService tournamentService;
     private final ModelMapper modelMapper;
     private final RegistrationService registrationService;
+    private final CompetitionService competitionService;
 
     public TournamentResource(AuthorizationService authorizationService,
                             TournamentService tournamentService,
                             ModelMapper modelMapper,
-                            RegistrationService registrationService) {
+                            RegistrationService registrationService, 
+                            CompetitionService competitionService) {
     this.authorizationService = authorizationService;
     this.tournamentService = tournamentService;
     this.modelMapper = modelMapper;
     this.registrationService = registrationService;
+    this.competitionService = competitionService;
     }
 
-    @GetMapping(produces = "application/json")
+
+    //TODO ordenar los metodos por GetMapping, PostMapping, etc
+    @GetMapping(produces = "application/json") //TODO esto no tiene path, porque?
     public ResponseEntity<?> getTournaments(
         @RequestHeader(name = "Authorization", required = false) String authorizationHeader) {
 
@@ -88,9 +97,8 @@ public class TournamentResource {
 } 
 
 
-
-  @PostMapping(path = "/{tournamentId}/competitions/{competitionId}/inscription", produces = "application/json")
-  public ResponseEntity<?> registerToCompetition(
+    @PostMapping(path = "/{tournamentId}/competitions/{competitionId}/inscription", produces = "application/json")
+    public ResponseEntity<?> registerToCompetition(
           @RequestHeader("authentication") String authenticationHeader, // En el PDF dice "authentication" (a veces Authorization)
           @PathVariable("tournamentId") Long tournamentId,
           @PathVariable("competitionId") Integer competitionId) {
@@ -115,4 +123,47 @@ public class TournamentResource {
           return ResponseEntity.status(status).body(Map.of("error", e.getMessage()));
       }
   }
+
+
+
+    @GetMapping(path = "/{tournamentId}/competitions", produces = "application/json")
+    public ResponseEntity<?> getTournamentCompetitions(
+            @RequestHeader(name = "Authorization", required = false) String authorizationHeader,
+            @PathVariable("tournamentId") Long tournamentId) {
+        try {
+            authorizationService.authorize(authorizationHeader); 
+
+            List<CompetitionSummaryDTO> dtos = competitionService.getPublicCompetitions(tournamentId);
+            
+            return ResponseEntity.ok(dtos);
+
+        } catch (Exception e) {
+            HttpStatus status = HttpStatus.BAD_REQUEST;
+            if (e.getMessage().contains("no se encuentra disponible")) status = HttpStatus.FORBIDDEN;
+            
+            return ResponseEntity.status(status).body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @GetMapping(path = "/{tournamentId}/competitions/{competitionId}", produces = "application/json")
+    public ResponseEntity<?> getCompetitionDetail(
+            @RequestHeader(name = "Authorization", required = false) String authorizationHeader,
+            @PathVariable("tournamentId") Long tournamentId, //TODO aca me dice "Unnecessary variable 'tournamentId'." investigar
+            @PathVariable("competitionId") Integer competitionId) {
+        try {
+            authorizationService.authorize(authorizationHeader);
+
+            CompetitionSummaryDTO dto = competitionService.getPublicCompetitionDetail(tournamentId, competitionId);
+
+            return ResponseEntity.ok(dto);
+
+        } catch (Exception e) {
+            HttpStatus status = HttpStatus.BAD_REQUEST;
+            if (e.getMessage().contains("no encontrada")) status = HttpStatus.NOT_FOUND;
+            if (e.getMessage().contains("no se encuentra disponible")) status = HttpStatus.FORBIDDEN;
+
+            return ResponseEntity.status(status).body(Map.of("error", e.getMessage()));
+        }
+    }
+
 }

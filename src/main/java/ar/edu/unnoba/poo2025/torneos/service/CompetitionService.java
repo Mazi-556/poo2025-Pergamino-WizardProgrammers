@@ -25,4 +25,8 @@ public interface CompetitionService {
     List<CompetitionSummaryDTO> getCompetitionSummaries(Long tournamentId) throws Exception;
 
     AdminCompetitionDetailDTO getCompetitionDetail(Long tournamentId, Integer competitionId) throws Exception;
+
+    List<CompetitionSummaryDTO> getPublicCompetitions(Long tournamentId) throws Exception;
+
+    CompetitionSummaryDTO getPublicCompetitionDetail(Long tournamentId, Integer competitionId) throws Exception;
 }

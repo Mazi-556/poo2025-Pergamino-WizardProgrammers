@@ -32,17 +32,23 @@ public class TournamentServiceImp implements TournamentService  {
     public Tournament saveTournament(Tournament tournament) {
         return tournamentRepository.save(tournament);
     }
+    
+    
     //admin
     @Override
     public List<Tournament> getAllOrderByStartDateDesc() {
         return tournamentRepository.findAllByOrderByStartDateDesc();
     }
+
+
     //admin
     @Override
     public Tournament findById(Long id) throws Exception{ //TODO: Exception
         return tournamentRepository.findById(id)
                .orElseThrow(() -> new Exception("Torneo no encontrado")); 
     }
+    
+    
     //admin
     @Override
     public void deleteTournament(Long id) throws Exception { //TODO: Exception
@@ -52,7 +58,6 @@ public class TournamentServiceImp implements TournamentService  {
         tournamentRepository.deleteById(id);
     }
 
-    //Nuevo
     @Override
     public AdminTournamentDetailDTO getTournamentDetail(Long id) throws Exception { //TODO: Exception
         Tournament t = findById(id); 
@@ -73,6 +78,8 @@ public class TournamentServiceImp implements TournamentService  {
             totalAmount
         );
     }
+    
+    
     @Override
     public void publish(Long id) throws Exception {
         // 1. Buscamos el torneo (reutilizamos tu método findById que ya lanza excepción si no existe)

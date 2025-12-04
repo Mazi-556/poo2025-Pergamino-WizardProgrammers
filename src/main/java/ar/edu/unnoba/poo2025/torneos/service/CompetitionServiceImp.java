@@ -28,19 +28,25 @@ public class CompetitionServiceImp implements CompetitionService {
         this.competitionRepository = competitionRepository;
         this.registrationRepository = registrationRepository;
     }
+    
     private Tournament getTournamentOrThrow(Long tournamentId) throws Exception {
         return tournamentRepository.findById(tournamentId)
                 .orElseThrow(() -> new Exception("Torneo no encontrado"));
     }
+    
     private Competition getCompetitionOrThrow(Integer competitionId) throws Exception {
         return competitionRepository.findById(competitionId)
                 .orElseThrow(() -> new Exception("Competencia no encontrada"));
     }
+    
+    
     @Override
     public List<Competition> findByTournamentId(Long tournamentId) throws Exception {
         getTournamentOrThrow(tournamentId); // valida existencia
         return competitionRepository.findByTournamentId(tournamentId);
     }
+    
+    
     @Override
     public Competition createCompetition(Long tournamentId, String name, int quota, double basePrice) throws Exception {
         
@@ -72,6 +78,8 @@ public class CompetitionServiceImp implements CompetitionService {
 
         return competitionRepository.save(c);
     }
+    
+    
     @Override
     public void deleteCompetition(Long tournamentId, Integer competitionId) throws Exception {
         
@@ -86,6 +94,7 @@ public class CompetitionServiceImp implements CompetitionService {
         competitionRepository.delete(c);
     }
 
+    
     @Override
     public Competition findByIdAndTournament(Long tournamentId,
                                              Integer competitionId) throws Exception {
@@ -99,7 +108,6 @@ public class CompetitionServiceImp implements CompetitionService {
 
         return c;
     }
-
 
 
     @Override
@@ -126,6 +134,8 @@ public class CompetitionServiceImp implements CompetitionService {
                 totalAmount
         );
     }
+    
+    
     @Override
     public List<CompetitionSummaryDTO> getCompetitionSummaries(Long tournamentId) throws Exception {
 
@@ -141,5 +151,57 @@ public class CompetitionServiceImp implements CompetitionService {
                         c.getBase_price()
                 ))
                 .collect(Collectors.toList());
+    }
+
+
+
+    @Override
+    public List<CompetitionSummaryDTO> getPublicCompetitions(Long tournamentId) throws Exception {
+
+        Tournament t = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new Exception("Torneo no encontrado"));
+
+
+            if (!t.isPublished()) {
+            throw new Exception("El torneo no se encuentra disponible.");
+        }
+
+        List<Competition> list = competitionRepository.findByTournamentId(tournamentId);
+        
+        return list.stream()
+                .map(c -> new CompetitionSummaryDTO(
+                        c.getIdCompetition(),
+                        c.getName(),
+                        c.getQuota(),
+                        c.getBase_price()
+                ))
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public CompetitionSummaryDTO getPublicCompetitionDetail(Long tournamentId, Integer competitionId) throws Exception {
+
+        Tournament t = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new Exception("Torneo no encontrado"));
+
+        if (!t.isPublished()) {
+            throw new Exception("El torneo no se encuentra disponible.");
+        }
+
+        Competition c = competitionRepository.findById(competitionId)
+                .orElseThrow(() -> new Exception("Competencia no encontrada"));
+
+        //validar pertenencia
+        if (!c.getTournament_id().getIdTournament().equals(tournamentId)) {
+            throw new Exception("La competencia no pertenece al torneo indicado.");
+        }
+
+        return new CompetitionSummaryDTO(
+                c.getIdCompetition(),
+                c.getName(),
+                c.getQuota(),
+                c.getBase_price()
+        );
     }
 }
