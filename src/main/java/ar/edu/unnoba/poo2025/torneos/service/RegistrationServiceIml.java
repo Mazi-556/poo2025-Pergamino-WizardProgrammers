@@ -1,9 +1,12 @@
 package ar.edu.unnoba.poo2025.torneos.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import jakarta.transaction.Transactional;
 
 import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionRegistrationDTO;
+import ar.edu.unnoba.poo2025.torneos.dto.RegistrationResponseDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Competition;
 import ar.edu.unnoba.poo2025.torneos.models.Participant;
 import ar.edu.unnoba.poo2025.torneos.models.Registration;
@@ -12,6 +15,7 @@ import ar.edu.unnoba.poo2025.torneos.Repository.RegistrationRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.CompetitionRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
 import ar.edu.unnoba.poo2025.torneos.service.CompetitionServiceImp;
+
 
 
 public class RegistrationServiceIml implements RegistrationService {
@@ -29,7 +33,7 @@ public class RegistrationServiceIml implements RegistrationService {
         this.competitionRepository = competitionRepository;
     }
 
-    
+
    //Esto estaba en CompetitionServiceImp, pero me parecio mas apropiado moverlo aca, ya que el hecho de listar las inscripciones
    //corresponde mas al servicio de inscripciones que al de competencias.
     @Override
@@ -62,5 +66,71 @@ public class RegistrationServiceIml implements RegistrationService {
                 })
                 .collect(Collectors.toList());
     }
+
+    
+    @Override
+    @Transactional
+    public RegistrationResponseDTO registerParticipant(Long tournamentId, Integer competitionId, Participant participant) throws Exception {
+        
+        //Validar existencia de Torneo y Competencia
+        Tournament t = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new Exception("Torneo no encontrado"));
+        
+        Competition c = competitionRepository.findById(competitionId)
+                .orElseThrow(() -> new Exception("Competencia no encontrada"));
+
+        // Validar que la competencia sea del torneo indicado. Sin este if, un usuario podria entrar a una competencia de un torneo que no le corresponde
+        if (!c.getTournament_id().getIdTournament().equals(tournamentId)) {
+            throw new Exception("La competencia no pertenece al torneo indicado.");
+        }
+
+        if (!t.isPublished()) {
+            throw new Exception("No puedes inscribirte a un torneo no publicado.");
+        }
+
+        if (t.getStartDate().isBefore(LocalDate.now())) {
+            throw new Exception("El torneo ya ha comenzado o finalizado. No se permiten inscripciones.");
+        }
+
+        //Validar que haya cupo disponible
+        long currentRegistrations = registrationRepository.countByCompetitionId(competitionId);
+        if (currentRegistrations >= c.getQuota()) {
+            throw new Exception("No hay cupo disponible en esta competencia.");
+        }
+
+        //Validar que no este inscripto ya en la competencia
+        if (registrationRepository.existsByParticipantAndCompetition(participant.getIdParticipant(), competitionId)) {
+            throw new Exception("Ya estás inscripto en esta competencia.");
+        }
+
+        //Calcular Precio (Lógica del Descuento)
+        double price = c.getBase_price();
+        long otherRegistrationsInTournament = registrationRepository.countByParticipantAndTournament(participant.getIdParticipant(), tournamentId);
+        
+        //TODO Y si no tienen descuento? como era la logica de eso. O todos tienen descuento?
+
+        if (otherRegistrationsInTournament > 0) {
+            price = price * 0.5; 
+        }
+
+        //Guardar Inscripción
+        Registration registration = new Registration();
+        registration.setCompetition_id(c);
+        registration.setParticipant_id(participant);
+        registration.setDate(LocalDate.now());
+        registration.setPrice((float) price);   //Aca hay una inconsistencia de tipos de datos. Un poco mas arriba declaramos undouble price y aca float.
+                                                //Esto lleva a perder un poco de precision. Pero funciona igual, solo que en sistemas grandes es muy malo
+
+        Registration saved = registrationRepository.save(registration);
+
+        return new RegistrationResponseDTO(
+                saved.getIdregistration(),
+                c.getIdCompetition(),
+                participant.getIdParticipant(),
+                saved.getDate(),
+                saved.getPrice()
+        );
+    }
+    
     
 }

@@ -7,16 +7,20 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.edu.unnoba.poo2025.torneos.dto.RegistrationResponseDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.TournamentResponseDTO;
+import ar.edu.unnoba.poo2025.torneos.models.Participant;
 import ar.edu.unnoba.poo2025.torneos.models.Tournament;
 import ar.edu.unnoba.poo2025.torneos.service.AuthorizationService;
 import ar.edu.unnoba.poo2025.torneos.service.TournamentService;
+import ar.edu.unnoba.poo2025.torneos.service.RegistrationService;
 
 
 
@@ -26,13 +30,16 @@ public class TournamentResource {
     private final AuthorizationService authorizationService;
     private final TournamentService tournamentService;
     private final ModelMapper modelMapper;
+    private final RegistrationService registrationService;
 
     public TournamentResource(AuthorizationService authorizationService,
                             TournamentService tournamentService,
-                            ModelMapper modelMapper) {
+                            ModelMapper modelMapper,
+                            RegistrationService registrationService) {
     this.authorizationService = authorizationService;
     this.tournamentService = tournamentService;
     this.modelMapper = modelMapper;
+    this.registrationService = registrationService;
     }
 
     @GetMapping(produces = "application/json")
@@ -79,4 +86,33 @@ public class TournamentResource {
                 .body(null);
     }
 } 
+
+
+
+  @PostMapping(path = "/{tournamentId}/competitions/{competitionId}/inscription", produces = "application/json")
+  public ResponseEntity<?> registerToCompetition(
+          @RequestHeader("authentication") String authenticationHeader, // En el PDF dice "authentication" (a veces Authorization)
+          @PathVariable("tournamentId") Long tournamentId,
+          @PathVariable("competitionId") Integer competitionId) {
+      try {
+          // 1. Validar Token y obtener Participante (Reutiliza tu servicio de Auth)
+          Participant p = authorizationService.authorize(authenticationHeader);
+
+          // 2. Delegar al servicio
+          RegistrationResponseDTO dto = registrationService.registerParticipant(tournamentId, competitionId, p);
+
+          // 3. Retornar éxito
+          return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+
+      } catch (Exception e) {
+          HttpStatus status = HttpStatus.BAD_REQUEST;
+          if (e.getMessage().contains("no autorizado") || e.getMessage().contains("Token")) {
+              status = HttpStatus.UNAUTHORIZED;
+          } else if (e.getMessage().contains("no encontrado")) {
+              status = HttpStatus.NOT_FOUND;
+          }
+          
+          return ResponseEntity.status(status).body(Map.of("error", e.getMessage()));
+      }
+  }
 }
