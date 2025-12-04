@@ -19,7 +19,7 @@ import ar.edu.unnoba.poo2025.torneos.Util.JwtTokenUtil;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionCreateUpdateDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionRegistrationDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionSummaryDTO;
+import ar.edu.unnoba.poo2025.torneos.dto.CompetitionSummaryDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Admin;
 import ar.edu.unnoba.poo2025.torneos.models.Competition;
 import ar.edu.unnoba.poo2025.torneos.service.AdminService;
@@ -65,7 +65,8 @@ public class AdminCompetitionResource {
             getCurrentAdmin(authenticationHeader);
             
         // El servicio ya devuelve la lista de DTOs optimizada y lista para enviar
-        List<AdminCompetitionSummaryDTO> dtoList = competitionService.getCompetitionSummaries(tournamentId);
+        List<CompetitionSummaryDTO> dtoList = competitionService.getCompetitionSummaries(tournamentId); 
+        
         return ResponseEntity.ok(dtoList);
 
 
@@ -121,7 +122,7 @@ public class AdminCompetitionResource {
                     body.getBase_price()
             );
 
-            AdminCompetitionSummaryDTO dto = new AdminCompetitionSummaryDTO(
+            CompetitionSummaryDTO dto = new CompetitionSummaryDTO(
                     saved.getIdCompetition(),
                     saved.getName(),
                     saved.getQuota(),
@@ -158,7 +159,7 @@ public class AdminCompetitionResource {
                     body.getBase_price()
             );
 
-            AdminCompetitionSummaryDTO dto = new AdminCompetitionSummaryDTO(
+            CompetitionSummaryDTO dto = new CompetitionSummaryDTO(
                     saved.getIdCompetition(),
                     saved.getName(),
                     saved.getQuota(),

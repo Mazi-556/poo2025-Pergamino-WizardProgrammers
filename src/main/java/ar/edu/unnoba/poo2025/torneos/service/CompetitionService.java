@@ -4,7 +4,7 @@ import java.util.List;
 
 import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionRegistrationDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionSummaryDTO;
+import ar.edu.unnoba.poo2025.torneos.dto.CompetitionSummaryDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Competition;
 import ar.edu.unnoba.poo2025.torneos.models.Registration;
 
@@ -22,7 +22,7 @@ public interface CompetitionService {
     
     List<Registration> findRegistrationsByCompetition(Long tournamentId, Integer competitionId) throws Exception;
 
-    List<AdminCompetitionSummaryDTO> getCompetitionSummaries(Long tournamentId) throws Exception;
+    List<CompetitionSummaryDTO> getCompetitionSummaries(Long tournamentId) throws Exception;
 
     AdminCompetitionDetailDTO getCompetitionDetail(Long tournamentId, Integer competitionId) throws Exception;
 }

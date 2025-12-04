@@ -10,7 +10,7 @@ import ar.edu.unnoba.poo2025.torneos.Repository.RegistrationRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionRegistrationDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionSummaryDTO;
+import ar.edu.unnoba.poo2025.torneos.dto.CompetitionSummaryDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Competition;
 import ar.edu.unnoba.poo2025.torneos.models.Participant;
 import ar.edu.unnoba.poo2025.torneos.models.Registration;
@@ -127,14 +127,14 @@ public class CompetitionServiceImp implements CompetitionService {
         );
     }
     @Override
-    public List<AdminCompetitionSummaryDTO> getCompetitionSummaries(Long tournamentId) throws Exception {
+    public List<CompetitionSummaryDTO> getCompetitionSummaries(Long tournamentId) throws Exception {
 
         getTournamentOrThrow(tournamentId); 
         
         List<Competition> list = competitionRepository.findByTournamentId(tournamentId);
 
         return list.stream()
-                .map(c -> new AdminCompetitionSummaryDTO(
+                .map(c -> new CompetitionSummaryDTO(
                         c.getIdCompetition(),
                         c.getName(),
                         c.getQuota(),
