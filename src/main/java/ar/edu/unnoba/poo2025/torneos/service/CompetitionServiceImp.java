@@ -109,34 +109,7 @@ public class CompetitionServiceImp implements CompetitionService {
         return registrationRepository.findByCompetitionId(c.getIdCompetition());
     }
 
-
-    //nuevo
-    @Override
-    public List<AdminCompetitionRegistrationDTO> getCompetitionRegistrations(Long tournamentId, Integer competitionId) throws Exception {
-
-        Competition c = findByIdAndTournament(tournamentId, competitionId);
-
-        
-        List<Registration> registrations = registrationRepository.findByCompetitionIdWithParticipant(c.getIdCompetition());
-
-        return registrations.stream()
-                .map(r -> {
-                    Participant p = r.getParticipant_id();
-                    return new AdminCompetitionRegistrationDTO(
-                        r.getIdregistration(),
-                        r.getPrice(),
-                        r.getDate(),
-                        p.getIdParticipant(),
-                        p.getName(),
-                        p.getSurname(),
-                        p.getDni()
-                    );
-                })
-                .collect(Collectors.toList());
-    }
-
     
-    //nuevo
     @Override
     public AdminCompetitionDetailDTO getCompetitionDetail(Long tournamentId, Integer competitionId) throws Exception {
         Competition c = findByIdAndTournament(tournamentId, competitionId);

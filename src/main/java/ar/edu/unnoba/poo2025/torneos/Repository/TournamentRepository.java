@@ -11,4 +11,6 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long> {
     // Busca torneos donde published es true Y la fecha de fin (endDate) es DESPUÉS de la fecha dada
     List<Tournament> findByPublishedTrueAndEndDateAfter(LocalDate date);
     List<Tournament> findAllByOrderByStartDateDesc(); //admin, todos ordenados por fecha de inicio descendente
+
+    //TODO que es esto. No deberia haber consultas SQL?
 }

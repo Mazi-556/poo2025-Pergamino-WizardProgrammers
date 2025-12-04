@@ -24,6 +24,7 @@ import ar.edu.unnoba.poo2025.torneos.models.Admin;
 import ar.edu.unnoba.poo2025.torneos.models.Competition;
 import ar.edu.unnoba.poo2025.torneos.service.AdminService;
 import ar.edu.unnoba.poo2025.torneos.service.CompetitionService;
+import ar.edu.unnoba.poo2025.torneos.service.RegistrationService;
 
 @RestController
 @RequestMapping("/admin/tournaments/{tournamentId}/competitions")
@@ -33,13 +34,16 @@ public class AdminCompetitionResource {
     private final AdminService adminService;
     private final CompetitionService competitionService;
     private final JwtTokenUtil jwtTokenUtil;
+    private final RegistrationService registrationService;
 
     public AdminCompetitionResource(AdminService adminService,
                                     CompetitionService competitionService,
-                                    JwtTokenUtil jwtTokenUtil) {
+                                    JwtTokenUtil jwtTokenUtil, 
+                                    RegistrationService registrationService) {
         this.adminService = adminService;
         this.competitionService = competitionService;
         this.jwtTokenUtil = jwtTokenUtil;
+        this.registrationService = registrationService;
     }
     private Admin getCurrentAdmin(String authenticationHeader) throws Exception { // valida el token y obtiene el token del admin 
         jwtTokenUtil.validateToken(authenticationHeader); // verifica la firma y expiración
@@ -53,7 +57,7 @@ public class AdminCompetitionResource {
 
 
 
-    @GetMapping(produces = "application/json") //Por que estos son iguales? este y el de abajo?
+    @GetMapping(produces = "application/json") 
     public ResponseEntity<?> getCompetitions(
             @RequestHeader("authentication") String authenticationHeader,
             @PathVariable("tournamentId") Long tournamentId) {
@@ -205,7 +209,7 @@ public class AdminCompetitionResource {
         try {
             getCurrentAdmin(authenticationHeader);
 
-                List<AdminCompetitionRegistrationDTO> dtoList = competitionService.getCompetitionRegistrations(tournamentId, competitionId);
+                List<AdminCompetitionRegistrationDTO> dtoList = registrationService.getCompetitionRegistrations(tournamentId, competitionId);
 
                 return ResponseEntity.ok(dtoList);
 
