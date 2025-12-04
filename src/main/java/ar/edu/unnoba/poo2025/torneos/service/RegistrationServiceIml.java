@@ -3,6 +3,9 @@ package ar.edu.unnoba.poo2025.torneos.service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
 import jakarta.transaction.Transactional;
 
 import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionRegistrationDTO;
@@ -17,7 +20,7 @@ import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
 import ar.edu.unnoba.poo2025.torneos.service.CompetitionServiceImp;
 
 
-
+@Service
 public class RegistrationServiceIml implements RegistrationService {
     private final CompetitionService competitionService;
     private final RegistrationRepository registrationRepository;

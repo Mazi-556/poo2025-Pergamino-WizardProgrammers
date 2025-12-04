@@ -36,7 +36,7 @@ public class AdminAuthResource {
                     .body(Map.of("error", e.getMessage()));
         }
     }
-    @PostMapping("/register")
+    @PostMapping("/register")   //TODO sacar de aca y moverlo a AdminAccountResource
         public ResponseEntity<?> create(@RequestBody Admin admin) {
             try {
                 // Esto usa tu servicio existente que YA encripta la contraseña

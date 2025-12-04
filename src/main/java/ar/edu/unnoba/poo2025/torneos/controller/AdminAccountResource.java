@@ -67,7 +67,7 @@ public class AdminAccountResource {
 
             Admin admin = new Admin();
             admin.setEmail(dto.getEmail());
-            admin.setPassword(dto.getPassword());
+            admin.setPassword(dto.getPassword());   //TODO investigar si va en el service
 
             Admin created = adminService.create(admin);
             AdminAccountResponseDTO response = new AdminAccountResponseDTO(created.getIdAdmin(), created.getEmail());
@@ -85,7 +85,6 @@ public class AdminAccountResource {
 
 
 
-//nuevo
     @DeleteMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<?> delete(@RequestHeader("authentication") String authenticationHeader, 
                                     @PathVariable("id") Integer id) {
