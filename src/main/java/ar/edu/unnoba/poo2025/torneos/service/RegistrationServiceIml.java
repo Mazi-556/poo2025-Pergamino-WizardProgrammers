@@ -19,13 +19,12 @@ import ar.edu.unnoba.poo2025.torneos.service.CompetitionServiceImp;
 
 
 public class RegistrationServiceIml implements RegistrationService {
-    private final CompetitionService competitionService;    //TODO ver porque es final
+    private final CompetitionService competitionService;
     private final RegistrationRepository registrationRepository;
     private final TournamentRepository tournamentRepository;
     private final CompetitionRepository competitionRepository;
 
 
-    //TODO revisar lo de @Autowired. Cual usar
     public RegistrationServiceIml(CompetitionService competitionService, RegistrationRepository registrationRepository, TournamentRepository tournamentRepository, CompetitionRepository competitionRepository) {
         this.competitionService = competitionService;
         this.registrationRepository = registrationRepository;
@@ -34,12 +33,12 @@ public class RegistrationServiceIml implements RegistrationService {
     }
 
 
-   //Esto estaba en CompetitionServiceImp, pero me parecio mas apropiado moverlo aca, ya que el hecho de listar las inscripciones
+   //Este metodo estaba en CompetitionServiceImp, pero me parecio mas apropiado moverlo aca, ya que el hecho de listar las inscripciones
    //corresponde mas al servicio de inscripciones que al de competencias.
     @Override
     public List<AdminCompetitionRegistrationDTO> getCompetitionRegistrations(Long tournamentId, Integer competitionId) throws Exception {
 
-        Tournament t = tournamentRepository.findById(tournamentId)
+        Tournament t = tournamentRepository.findById(tournamentId)  //TODO aca me dice que no se usa esta variable. Revisar
                 .orElseThrow(() -> new Exception("Torneo no encontrado"));  //TODO hay que ver este tipo de exepciones
         
         Competition c = competitionRepository.findById(competitionId)
@@ -107,7 +106,7 @@ public class RegistrationServiceIml implements RegistrationService {
         double price = c.getBase_price();
         long otherRegistrationsInTournament = registrationRepository.countByParticipantAndTournament(participant.getIdParticipant(), tournamentId);
         
-        //TODO Y si no tienen descuento? como era la logica de eso. O todos tienen descuento?
+        //TODO Y si no tienen descuento? como era la logica de eso. O todos tienen descuento? Revisar
 
         if (otherRegistrationsInTournament > 0) {
             price = price * 0.5; 

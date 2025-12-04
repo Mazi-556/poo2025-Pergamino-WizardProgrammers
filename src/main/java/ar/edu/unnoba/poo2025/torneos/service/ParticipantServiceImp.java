@@ -11,7 +11,7 @@ import ar.edu.unnoba.poo2025.torneos.models.Participant;
 @Service
 public class ParticipantServiceImp implements ParticipantService {
 
-    @Autowired
+    @Autowired      //TODO cambiar por final y constructor
     private ParticipantRepository participantRepository;
 
     @Autowired

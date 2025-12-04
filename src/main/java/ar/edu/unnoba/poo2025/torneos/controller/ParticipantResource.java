@@ -21,7 +21,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/participants")
 public class ParticipantResource {
-    @Autowired
+    @Autowired  //TODO Es mejor usar Final y constructor para esto. Cambiar despues
     private ParticipantService participantService;
     @Autowired
     private AuthenticationService authenticationService;
