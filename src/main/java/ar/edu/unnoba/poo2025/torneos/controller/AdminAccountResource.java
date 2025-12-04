@@ -42,7 +42,7 @@ public class AdminAccountResource {
     }
 
 
-
+    //Lei que por defecto, spring pone lo de "(produces = "application/json")", pero que es buena practica ponerlo igualmente
     @GetMapping(produces = "application/json")
     public ResponseEntity<?> getAll(@RequestHeader("authentication") String authenticationHeader){
         try {

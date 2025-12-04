@@ -26,40 +26,40 @@ public class ParticipantResource {
     @Autowired
     private AuthenticationService authenticationService;
 
-    @PostMapping
+    @PostMapping(path = "/account", produces = "application/json")  //Creacion de cuenta Participant
     public ResponseEntity<?> create(@Valid @RequestBody CreateParticipantRequestDTO dto) {
-    try {
-        Participant p = new Participant();
-        p.setName(dto.getName());
-        p.setSurname(dto.getSurname());
-        p.setDni(dto.getDni());
-        p.setEmail(dto.getEmail());
-        p.setPassword(dto.getPassword());
+        try {
+            Participant p = new Participant();
+            p.setName(dto.getName());
+            p.setSurname(dto.getSurname());
+            p.setDni(dto.getDni());
+            p.setEmail(dto.getEmail());
+            p.setPassword(dto.getPassword());
 
-        participantService.create(p);
+            participantService.create(p);
 
-        Map<String, String> response = new HashMap<>();
-        response.put("mensaje", "Participante creado correctamente");
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            Map<String, String> response = new HashMap<>();
+            response.put("mensaje", "Participante creado correctamente");
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
-    } catch (Exception e) {
-        Map<String, String> errorResponse = new HashMap<>();
-        errorResponse.put("error", e.getMessage()); 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
-    }
+        } catch (Exception e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage()); 
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+        }
     }
     
-    @PostMapping(path = "/auth", produces = "application/json")
+    @PostMapping(path = "/auth", produces = "application/json") //Autenticacion
     public ResponseEntity<?> authentication(@RequestBody AuthenticationRequestDTO dto) {
-    try {
-        Participant tmp = new Participant();
-        tmp.setEmail(dto.getEmail());
-        tmp.setPassword(dto.getPassword());
+        try {
+            Participant tmp = new Participant();
+            tmp.setEmail(dto.getEmail());
+            tmp.setPassword(dto.getPassword());
 
-        String token = authenticationService.authenticate(tmp);
-        return ResponseEntity.ok(Map.of("token", token));
-    } catch (Exception e) {
-        return ResponseEntity.status(401).body(Map.of("error", e.getMessage()));
+            String token = authenticationService.authenticate(tmp);
+            return ResponseEntity.ok(Map.of("token", token));
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(Map.of("error", e.getMessage()));
+        }   
     }
-  }
 }
