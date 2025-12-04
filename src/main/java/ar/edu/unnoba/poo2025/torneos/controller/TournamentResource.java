@@ -99,7 +99,7 @@ public class TournamentResource {
 
     @PostMapping(path = "/{tournamentId}/competitions/{competitionId}/inscription", produces = "application/json")
     public ResponseEntity<?> registerToCompetition(
-          @RequestHeader("authentication") String authenticationHeader, // En el PDF dice "authentication" (a veces Authorization)
+          @RequestHeader("Authorization") String authenticationHeader, // En el PDF dice "authentication" (a veces Authorization)
           @PathVariable("tournamentId") Long tournamentId,
           @PathVariable("competitionId") Integer competitionId) {
       try {

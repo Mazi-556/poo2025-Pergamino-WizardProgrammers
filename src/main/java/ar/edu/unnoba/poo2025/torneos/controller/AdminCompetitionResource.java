@@ -59,7 +59,7 @@ public class AdminCompetitionResource {
 
     @GetMapping(produces = "application/json") 
     public ResponseEntity<?> getCompetitions(
-            @RequestHeader("authentication") String authenticationHeader,
+            @RequestHeader("Authorization") String authenticationHeader,
             @PathVariable("tournamentId") Long tournamentId) {
         try {
             getCurrentAdmin(authenticationHeader);
@@ -84,7 +84,7 @@ public class AdminCompetitionResource {
 
     @GetMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<?> getCompetition(
-            @RequestHeader("authentication") String authenticationHeader,
+            @RequestHeader("Authorization") String authenticationHeader,
             @PathVariable("tournamentId") Long tournamentId,
             @PathVariable("id") Integer competitionId) {
         try {
@@ -109,7 +109,7 @@ public class AdminCompetitionResource {
 
     @PostMapping(produces = "application/json")
     public ResponseEntity<?> createCompetition(
-            @RequestHeader("authentication") String authenticationHeader,
+            @RequestHeader("Authorization") String authenticationHeader,
             @PathVariable("tournamentId") Long tournamentId,
             @RequestBody AdminCompetitionCreateUpdateDTO body) {
         try {
@@ -144,7 +144,7 @@ public class AdminCompetitionResource {
 
     @PutMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<?> updateCompetition(
-            @RequestHeader("authentication") String authenticationHeader,
+            @RequestHeader("Authorization") String authenticationHeader,
             @PathVariable("tournamentId") Long tournamentId,
             @PathVariable("id") Integer competitionId,
             @RequestBody AdminCompetitionCreateUpdateDTO body) {
@@ -181,7 +181,7 @@ public class AdminCompetitionResource {
     
     @DeleteMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<?> deleteCompetition(
-            @RequestHeader("authentication") String authenticationHeader,
+            @RequestHeader("Authorization") String authenticationHeader,
             @PathVariable("tournamentId") Long tournamentId,
             @PathVariable("id") Integer competitionId) {
         try {

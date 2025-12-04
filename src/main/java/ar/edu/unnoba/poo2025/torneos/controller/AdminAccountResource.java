@@ -1,5 +1,5 @@
 package ar.edu.unnoba.poo2025.torneos.controller;
-
+//TODO investigar en que momentos se puede inscribir un participante. El codigo llego hasta la parte de inscripcioens.
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,7 +44,7 @@ public class AdminAccountResource {
 
     //Lei que por defecto, spring pone lo de "(produces = "application/json")", pero que es buena practica ponerlo igualmente
     @GetMapping(produces = "application/json")
-    public ResponseEntity<?> getAll(@RequestHeader("authentication") String authenticationHeader){
+    public ResponseEntity<?> getAll(@RequestHeader("Authorization") String authenticationHeader){
         try {
             getCurrentAdmin(authenticationHeader);
             List<Admin> admins = adminService.findAll();
@@ -61,7 +61,7 @@ public class AdminAccountResource {
 
 
     @PostMapping(produces = "application/json")
-    public ResponseEntity<?> create(@RequestHeader("authentication") String authenticationHeader, @RequestBody AuthenticationRequestDTO dto) {
+    public ResponseEntity<?> create(@RequestHeader("Authorization") String authenticationHeader, @RequestBody AuthenticationRequestDTO dto) {
         try {
             getCurrentAdmin(authenticationHeader);
 
@@ -86,7 +86,7 @@ public class AdminAccountResource {
 
 
     @DeleteMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<?> delete(@RequestHeader("authentication") String authenticationHeader, 
+    public ResponseEntity<?> delete(@RequestHeader("Authorization") String authenticationHeader, 
                                     @PathVariable("id") Integer id) {
         try {
             Admin current = getCurrentAdmin(authenticationHeader);

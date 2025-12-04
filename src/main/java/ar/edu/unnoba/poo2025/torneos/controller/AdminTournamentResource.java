@@ -53,7 +53,7 @@ public class AdminTournamentResource {
 
 
     @GetMapping(produces = "application/json")
-    public ResponseEntity<?> getAll(@RequestHeader("authentication") String authenticationHeader) {
+    public ResponseEntity<?> getAll(@RequestHeader("Authorization") String authenticationHeader) {
         try {
             getCurrentAdmin(authenticationHeader); //valida el token
 
@@ -77,7 +77,7 @@ public class AdminTournamentResource {
 
 
     @GetMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<?> getById(@RequestHeader("authentication") String authenticationHeader, @PathVariable("id") Long id){
+    public ResponseEntity<?> getById(@RequestHeader("Authorization") String authenticationHeader, @PathVariable("id") Long id){
         try {
             getCurrentAdmin(authenticationHeader);
 
@@ -86,36 +86,6 @@ public class AdminTournamentResource {
 
             return ResponseEntity.ok(dto);
             
-//-----------------------------------------------------------------------------------------
-        //     Tournament t = tournamentService.findById(id);
-
-        //     long totalRegistrations = 0L;
-        //     double totalAmount = 0.0;
-
-        //     if (t.getCompetition() != null) {
-        //         for (Competition c : t.getCompetition()) {
-        //             if (c.getRegistrations() != null){
-        //                 totalRegistrations += c.getRegistrations().size();
-        //                 for (Registration r : c.getRegistrations()) {
-        //                     if (r.getPrice() != null){
-        //                         totalAmount += r.getPrice();
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     AdminTournamentDetailDTO dto = new AdminTournamentDetailDTO(
-        //             t.getIdTournament(),
-        //             t.getName(),
-        //             t.getDescripction(),
-        //             t.getStartDate(),
-        //             t.getEndDate(),
-        //             t.isPublished(),
-        //             totalRegistrations,
-        //             totalAmount
-        //     );
-        //     return ResponseEntity.ok(dto);
-        //-----------------------------------------------------------------------------------------------------------
         } catch (Exception e) {
              HttpStatus status = e.getMessage() != null && e.getMessage().contains("not found")
                      ? HttpStatus.NOT_FOUND
@@ -131,7 +101,7 @@ public class AdminTournamentResource {
 
 
     @PostMapping(produces = "application/json")
-    public ResponseEntity<?> create(@RequestHeader("authentication") String authenticationHeader, @RequestBody AdminTournamentCreateUpdateDTO body){
+    public ResponseEntity<?> create(@RequestHeader("Authorization") String authenticationHeader, @RequestBody AdminTournamentCreateUpdateDTO body){
         try {
             Admin current = getCurrentAdmin(authenticationHeader);
 
@@ -165,7 +135,7 @@ public class AdminTournamentResource {
 
 
     @PutMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<?> update(@RequestHeader("authentication") String authenticationHeader, @PathVariable("id") Long id, @RequestBody AdminTournamentCreateUpdateDTO body) {
+    public ResponseEntity<?> update(@RequestHeader("Authorization") String authenticationHeader, @PathVariable("id") Long id, @RequestBody AdminTournamentCreateUpdateDTO body) {
         try {
             getCurrentAdmin(authenticationHeader);
             Tournament t = tournamentService.findById(id);
@@ -198,7 +168,7 @@ public class AdminTournamentResource {
 
 
     @DeleteMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<?> delete(@RequestHeader("authentication") String authenticationHeader,  @PathVariable("id") Long id) {
+    public ResponseEntity<?> delete(@RequestHeader("Authorization") String authenticationHeader,  @PathVariable("id") Long id) {
         try{
             getCurrentAdmin(authenticationHeader);
             tournamentService.deleteTournament(id);
