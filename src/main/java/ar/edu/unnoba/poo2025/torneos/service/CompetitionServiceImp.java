@@ -42,7 +42,7 @@ public class CompetitionServiceImp implements CompetitionService {
     
     @Override
     public List<Competition> findByTournamentId(Long tournamentId) throws Exception {
-        getTournamentOrThrow(tournamentId); // valida existencia
+        getTournamentOrThrow(tournamentId);
         return competitionRepository.findByTournamentId(tournamentId);
     }
     
@@ -192,7 +192,6 @@ public class CompetitionServiceImp implements CompetitionService {
         Competition c = competitionRepository.findById(competitionId)
                 .orElseThrow(() -> new Exception("Competencia no encontrada"));
 
-        //validar pertenencia
         if (!c.getTournament_id().getIdTournament().equals(tournamentId)) {
             throw new Exception("La competencia no pertenece al torneo indicado.");
         }

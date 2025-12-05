@@ -27,7 +27,6 @@ public class ParticipantServiceImp implements ParticipantService {
 
         //TODO:Podriamos meter una validacion para que el DNI sea de 8 digitos
 
-        // Verificar si el DNI ya existe
         Participant existingParticipantDNI = participantRepository.findByDNI(participant.getDni());
         if (existingParticipantDNI != null) {
             throw new ResourceAlreadyExistsException("Ya existe un participante con ese DNI.");

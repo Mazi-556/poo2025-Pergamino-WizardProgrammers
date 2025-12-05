@@ -38,6 +38,5 @@ public class Competition {
     private String name;
     private double basePrice;
     private int quota;
-
 }
 

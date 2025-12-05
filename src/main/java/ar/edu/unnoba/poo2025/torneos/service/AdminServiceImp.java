@@ -60,7 +60,6 @@ public class AdminServiceImp implements AdminService {
 
 
 
-// nuevo
     @Override
     public void deleteAdmin(Integer idToDelete, Integer requesterId) throws Exception { //TODO: exception
         // 1. Regla de Negocio: Autoprotección

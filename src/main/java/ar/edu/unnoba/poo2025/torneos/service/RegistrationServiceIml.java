@@ -74,7 +74,6 @@ public class RegistrationServiceIml implements RegistrationService {
     @Transactional
     public RegistrationResponseDTO registerParticipant(Long tournamentId, Integer competitionId, Participant participant) throws Exception {
         
-        //Validar existencia de Torneo y Competencia
         Tournament t = tournamentRepository.findById(tournamentId)
                 .orElseThrow(() -> new Exception("Torneo no encontrado"));
         
@@ -94,18 +93,15 @@ public class RegistrationServiceIml implements RegistrationService {
             throw new Exception("El torneo ya ha comenzado o finalizado. No se permiten inscripciones.");
         }
 
-        //Validar que haya cupo disponible
         long currentRegistrations = registrationRepository.countByCompetitionId(competitionId);
         if (currentRegistrations >= c.getQuota()) {
             throw new Exception("No hay cupo disponible en esta competencia.");
         }
 
-        //Validar que no este inscripto ya en la competencia
         if (registrationRepository.existsByParticipantAndCompetition(participant.getIdParticipant(), competitionId)) {
             throw new Exception("Ya estás inscripto en esta competencia.");
         }
 
-        //Calcular Precio (Lógica del Descuento)
         double price = c.getBasePrice();
         long otherRegistrationsInTournament = registrationRepository.countByParticipantAndTournament(participant.getIdParticipant(), tournamentId);
         
@@ -115,12 +111,12 @@ public class RegistrationServiceIml implements RegistrationService {
             price = price * 0.5; 
         }
 
-        //Guardar Inscripción
+
         Registration registration = new Registration();
         registration.setCompetition_id(c);
         registration.setParticipant_id(participant);
         registration.setDate(LocalDate.now());
-        registration.setPrice((float) price);   //Aca hay una inconsistencia de tipos de datos. Un poco mas arriba declaramos undouble price y aca float.
+        registration.setPrice((float) price);   //TODO Aca hay una inconsistencia de tipos de datos. Un poco mas arriba declaramos undouble price y aca float.
                                                 //Esto lleva a perder un poco de precision. Pero funciona igual, solo que en sistemas grandes es muy malo
 
         Registration saved = registrationRepository.save(registration);
