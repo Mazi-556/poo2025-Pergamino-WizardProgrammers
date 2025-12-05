@@ -106,9 +106,9 @@ public class AdminTournamentResource {
             Admin current = getCurrentAdmin(authenticationHeader);
 
             Tournament t = new Tournament();
-            t.setAdmin_id(current);               // campo Admin en tu entidad
+            t.setAdmin_id(current);              
             t.setName(body.getName());
-            t.setDescripction(body.getDescription());
+            t.setDescription(body.getDescription());
             t.setStartDate(body.getStartDate());
             t.setEndDate(body.getEndDate());
             t.setPublished(false); // por defecto no publicado
@@ -140,7 +140,7 @@ public class AdminTournamentResource {
             getCurrentAdmin(authenticationHeader);
             Tournament t = tournamentService.findById(id);
             t.setName(body.getName());
-            t.setDescripction(body.getDescription());
+            t.setDescription(body.getDescription());
             t.setStartDate(body.getStartDate());
             t.setEndDate(body.getEndDate());
 

@@ -119,14 +119,14 @@ public class AdminCompetitionResource {
                     tournamentId,
                     body.getName(),
                     body.getQuota(),
-                    body.getBase_price()
+                    body.getBasePrice()
             );
 
             CompetitionSummaryDTO dto = new CompetitionSummaryDTO(
                     saved.getIdCompetition(),
                     saved.getName(),
                     saved.getQuota(),
-                    saved.getBase_price()
+                    saved.getBasePrice()
             );
 
             return ResponseEntity.status(HttpStatus.CREATED).body(dto);
@@ -156,14 +156,14 @@ public class AdminCompetitionResource {
                     competitionId,
                     body.getName(),
                     body.getQuota(),
-                    body.getBase_price()
+                    body.getBasePrice()
             );
 
             CompetitionSummaryDTO dto = new CompetitionSummaryDTO(
                     saved.getIdCompetition(),
                     saved.getName(),
                     saved.getQuota(),
-                    saved.getBase_price()
+                    saved.getBasePrice()
             );
 
             return ResponseEntity.ok(dto);

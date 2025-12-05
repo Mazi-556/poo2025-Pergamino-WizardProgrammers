@@ -35,8 +35,8 @@ public class Competition {
     private List<Registration> registrations;
 
     private String name;
-    private double base_price;
-    private int quota; //cupo
+    private double basePrice; //TODO aca
+    private int quota;
 
 }
 

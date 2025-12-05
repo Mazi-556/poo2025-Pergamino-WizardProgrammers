@@ -70,7 +70,7 @@ public class TournamentServiceImp implements TournamentService  {
         return new AdminTournamentDetailDTO(
             t.getIdTournament(),
             t.getName(),
-            t.getDescripction(),
+            t.getDescription(),
             t.getStartDate(),
             t.getEndDate(),
             t.isPublished(),

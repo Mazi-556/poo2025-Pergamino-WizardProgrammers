@@ -86,7 +86,7 @@ public class TournamentResource {
         TournamentResponseDTO response = new TournamentResponseDTO(
             saved.getIdTournament(),
             saved.getName(),
-            saved.getDescripction() //Este metodo esta mal escrito xddd. mb
+            saved.getDescription()
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

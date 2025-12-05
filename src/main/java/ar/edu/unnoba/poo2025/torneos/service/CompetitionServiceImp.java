@@ -56,7 +56,7 @@ public class CompetitionServiceImp implements CompetitionService {
         c.setTournament_id(t);
         c.setName(name);
         c.setQuota(quota);
-        c.setBase_price(basePrice);
+        c.setBasePrice(basePrice);
 
         return competitionRepository.save(c);
     }
@@ -74,7 +74,7 @@ public class CompetitionServiceImp implements CompetitionService {
 
         c.setName(name);
         c.setQuota(quota);
-        c.setBase_price(basePrice);
+        c.setBasePrice(basePrice);
 
         return competitionRepository.save(c);
     }
@@ -129,7 +129,7 @@ public class CompetitionServiceImp implements CompetitionService {
                 c.getIdCompetition(),
                 c.getName(),
                 c.getQuota(),
-                c.getBase_price(),
+                c.getBasePrice(),
                 totalRegistrations,
                 totalAmount
         );
@@ -148,7 +148,7 @@ public class CompetitionServiceImp implements CompetitionService {
                         c.getIdCompetition(),
                         c.getName(),
                         c.getQuota(),
-                        c.getBase_price()
+                        c.getBasePrice()
                 ))
                 .collect(Collectors.toList());
     }
@@ -173,7 +173,7 @@ public class CompetitionServiceImp implements CompetitionService {
                         c.getIdCompetition(),
                         c.getName(),
                         c.getQuota(),
-                        c.getBase_price()
+                        c.getBasePrice()
                 ))
                 .collect(Collectors.toList());
     }
@@ -201,7 +201,7 @@ public class CompetitionServiceImp implements CompetitionService {
                 c.getIdCompetition(),
                 c.getName(),
                 c.getQuota(),
-                c.getBase_price()
+                c.getBasePrice()
         );
     }
 }

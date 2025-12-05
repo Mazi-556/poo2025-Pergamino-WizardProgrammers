@@ -14,6 +14,6 @@ public class CompetitionSummaryDTO { // Resumen para listar competencias de un t
     private Integer id;
     private String name;
     private int quota;
-    private double base_price;
+    private double basePrice;
 
 }

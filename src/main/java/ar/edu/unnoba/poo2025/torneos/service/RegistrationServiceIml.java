@@ -106,7 +106,7 @@ public class RegistrationServiceIml implements RegistrationService {
         }
 
         //Calcular Precio (Lógica del Descuento)
-        double price = c.getBase_price();
+        double price = c.getBasePrice();
         long otherRegistrationsInTournament = registrationRepository.countByParticipantAndTournament(participant.getIdParticipant(), tournamentId);
         
         //TODO Y si no tienen descuento? como era la logica de eso. O todos tienen descuento? Revisar
