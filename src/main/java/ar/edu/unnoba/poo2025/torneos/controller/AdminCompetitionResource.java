@@ -204,7 +204,7 @@ public class AdminCompetitionResource {
 
     @GetMapping(path = "/{competitionId}/inscripciones", produces = "application/json")
     public ResponseEntity<?> getCompetitionRegistrations(
-            @RequestHeader("authentication") String authenticationHeader,
+            @RequestHeader("Authorization") String authenticationHeader,
             @PathVariable("tournamentId") Long tournamentId,
             @PathVariable("competitionId") Integer competitionId) {
         try {

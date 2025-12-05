@@ -1,5 +1,5 @@
 package ar.edu.unnoba.poo2025.torneos.controller;
-//TODO investigar en que momentos se puede inscribir un participante. El codigo llego hasta la parte de inscripcioens.
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
