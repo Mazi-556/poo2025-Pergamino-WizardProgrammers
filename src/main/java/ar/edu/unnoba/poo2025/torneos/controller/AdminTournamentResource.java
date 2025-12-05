@@ -186,14 +186,18 @@ public class AdminTournamentResource {
 
 
 @PatchMapping("/{id}/published")
-    public ResponseEntity<?> publishTournament(@PathVariable Long id) {
+    public ResponseEntity<?> publishTournament(@RequestHeader("Authorization") String authenticationHeader, @PathVariable Long id) {
         try {
-       
+
+            getCurrentAdmin(authenticationHeader);
             tournamentService.publish(id);
             
             return ResponseEntity.ok(Map.of("message", "Torneo publicado exitosamente"));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
+            HttpStatus status = e.getMessage().contains("no encontrado") 
+                ? HttpStatus.NOT_FOUND 
+                : HttpStatus.UNAUTHORIZED;
+            return ResponseEntity.status(status).body(Map.of("error", e.getMessage()));
         }
     }
 }

@@ -78,24 +78,6 @@ public class TournamentResource {
     }
     }
 
-    @PostMapping
-    public ResponseEntity<TournamentResponseDTO> createTournament(@RequestBody Tournament newTournament) {
-    try {
-        Tournament saved = tournamentService.saveTournament(newTournament);
-
-        TournamentResponseDTO response = new TournamentResponseDTO(
-            saved.getIdTournament(),
-            saved.getName(),
-            saved.getDescription()
-        );
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(null);
-    }
-} 
-
 
     @PostMapping(path = "/{tournamentId}/competitions/{competitionId}/registrations", produces = "application/json")
     public ResponseEntity<?> registerToCompetition(
