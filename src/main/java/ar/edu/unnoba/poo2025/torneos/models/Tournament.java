@@ -2,6 +2,7 @@ package ar.edu.unnoba.poo2025.torneos.models;
 
 import java.time.LocalDate;
 import java.util.List;
+import jakarta.persistence.CascadeType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,7 +34,7 @@ public class Tournament {
     @JoinColumn(name="admin_id", nullable=true) 
     private Admin admin_id;
 
-    @OneToMany(mappedBy = "tournament_id")
+    @OneToMany(mappedBy = "tournament_id", cascade = CascadeType.REMOVE)
     private List<Competition> competitions;
     
     private String name;
