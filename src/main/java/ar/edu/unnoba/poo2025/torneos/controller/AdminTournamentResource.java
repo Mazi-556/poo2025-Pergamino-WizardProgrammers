@@ -188,12 +188,11 @@ public class AdminTournamentResource {
 @PatchMapping("/{id}/published")
     public ResponseEntity<?> publishTournament(@PathVariable Long id) {
         try {
-            // EL CONTROLLER YA NO PIENSA, SOLO DELEGA:
+       
             tournamentService.publish(id);
             
             return ResponseEntity.ok(Map.of("message", "Torneo publicado exitosamente"));
         } catch (Exception e) {
-            // Si el servicio falla (ej. no existe el ID), devolvemos error
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
         }
     }
