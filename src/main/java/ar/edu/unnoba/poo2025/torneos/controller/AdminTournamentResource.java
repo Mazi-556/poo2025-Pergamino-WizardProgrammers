@@ -135,16 +135,14 @@ public class AdminTournamentResource {
 
 
     @PutMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<?> update(@RequestHeader("Authorization") String authenticationHeader, @PathVariable("id") Long id, @RequestBody AdminTournamentCreateUpdateDTO body) {
+    public ResponseEntity<?> update(
+            @RequestHeader("Authorization") String authenticationHeader, 
+            @PathVariable("id") Long id, 
+            @RequestBody AdminTournamentCreateUpdateDTO body) {
         try {
-            getCurrentAdmin(authenticationHeader);
-            Tournament t = tournamentService.findById(id);
-            t.setName(body.getName());
-            t.setDescription(body.getDescription());
-            t.setStartDate(body.getStartDate());
-            t.setEndDate(body.getEndDate());
+            getCurrentAdmin(authenticationHeader); // Validar seguridad
 
-            Tournament saved = tournamentService.saveTournament(t);
+            Tournament saved = tournamentService.updateTournament(id, body);
             
             AdminTournamentSummaryDTO dto = new AdminTournamentSummaryDTO(
                     saved.getIdTournament(),
