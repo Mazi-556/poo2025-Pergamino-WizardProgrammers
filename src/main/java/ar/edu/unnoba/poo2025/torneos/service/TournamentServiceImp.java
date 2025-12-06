@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.unnoba.poo2025.torneos.exceptions.ResourceNotFoundException;
 import ar.edu.unnoba.poo2025.torneos.Repository.RegistrationRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentDetailDTO;
@@ -44,23 +45,22 @@ public class TournamentServiceImp implements TournamentService  {
 
     //admin
     @Override
-    public Tournament findById(Long id) throws Exception{ //TODO: Exception
+    public Tournament findById(Long id) throws Exception{
         return tournamentRepository.findById(id)
-               .orElseThrow(() -> new Exception("Torneo no encontrado")); 
+               .orElseThrow(() -> new ResourceNotFoundException("Torneo no encontrado con id: " + id)); 
     }
     
     
-    //admin
     @Override
-    public void deleteTournament(Long id) throws Exception { //TODO: Exception
+    public void deleteTournament(Long id) throws Exception {
         if (!tournamentRepository.existsById(id)){
-            throw new Exception("Torneo no encontrado");
+            throw new ResourceNotFoundException("No se puede eliminar. Torneo no encontrado con id: " + id);
         }
         tournamentRepository.deleteById(id);
     }
 
     @Override
-    public AdminTournamentDetailDTO getTournamentDetail(Long id) throws Exception { //TODO: Exception
+    public AdminTournamentDetailDTO getTournamentDetail(Long id) throws Exception {
         Tournament t = findById(id); 
         
         // En lugar de recorrer todas las listas de inscripciones, le pedimos a la base de datos que nos haga el conteo y la suma
@@ -97,16 +97,13 @@ public class TournamentServiceImp implements TournamentService  {
 
     @Override
     public Tournament updateTournament(Long id, AdminTournamentCreateUpdateDTO dto) throws Exception {
-        // 1. Buscamos el torneo (reutilizamos tu método que ya lanza excepción)
+
         Tournament t = this.findById(id);
 
-        // 2. Lógica de "Patch" / Actualización Parcial
-        // Solo actualizamos si el dato nuevo NO es nulo
         if (dto.getName() != null) {
             t.setName(dto.getName());
         }
         
-        // Cuidado con el typo 'descripction' si aún no lo arreglaste en la clase Tournament
         if (dto.getDescription() != null) {
             t.setDescription(dto.getDescription()); 
         }
@@ -118,11 +115,7 @@ public class TournamentServiceImp implements TournamentService  {
         if (dto.getEndDate() != null) {
             t.setEndDate(dto.getEndDate());
         }
-        
-        // Nota: 'published' no lo tocamos aquí para evitar que se ponga en false accidentalmente.
-        // Para publicar/despublicar ya tienes el método específico 'publish'.
 
-        // 3. Guardamos y retornamos
         return tournamentRepository.save(t);
     }
 }

@@ -20,6 +20,7 @@ import ar.edu.unnoba.poo2025.torneos.Util.JwtTokenUtil;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentCreateUpdateDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentSummaryDTO;
+import ar.edu.unnoba.poo2025.torneos.exceptions.UnauthorizedException;
 import ar.edu.unnoba.poo2025.torneos.models.Admin;
 import ar.edu.unnoba.poo2025.torneos.models.Tournament;
 import ar.edu.unnoba.poo2025.torneos.service.AdminService;
@@ -39,14 +40,18 @@ public class AdminTournamentResource {
     }
 
     //valida token y obtener el admin del token
-    private Admin getCurrentAdmin(String authenticationHeader) throws Exception {
-        jwtTokenUtil.validateToken(authenticationHeader); // verifica firma y expiración
-        String email = jwtTokenUtil.getSubject(authenticationHeader);
-        Admin current = adminService.findByEmail(email);
-        if (current == null) {
-            throw new Exception("Admin del token no encontrado");
+    private Admin getCurrentAdmin(String authenticationHeader) {
+        try {
+            jwtTokenUtil.validateToken(authenticationHeader);
+            String email = jwtTokenUtil.getSubject(authenticationHeader);
+            Admin current = adminService.findByEmail(email);
+            if (current == null) {
+                throw new UnauthorizedException("Admin del token no encontrado"); 
+            }
+            return current;
+        } catch (Exception e) {
+            throw new UnauthorizedException("Token inválido o expirado");
         }
-        return current;
     }
 
 
@@ -80,7 +85,6 @@ public class AdminTournamentResource {
     public ResponseEntity<?> getById(@RequestHeader("Authorization") String authenticationHeader, @PathVariable("id") Long id){
         try {
             getCurrentAdmin(authenticationHeader);
-
 
             AdminTournamentDetailDTO dto = tournamentService.getTournamentDetail(id);
 
