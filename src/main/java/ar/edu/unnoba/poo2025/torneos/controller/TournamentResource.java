@@ -83,7 +83,7 @@ public class TournamentResource {
     public ResponseEntity<?> registerToCompetition(
           @RequestHeader("Authorization") String authenticationHeader,
           @PathVariable("tournamentId") Long tournamentId,
-          @PathVariable("competitionId") Integer competitionId) {
+          @PathVariable("competitionId") Integer competitionId) {   //TODO revisar si en verdad no se esta usando competitionid
       try {
 
           Participant p = authorizationService.authorize(authenticationHeader);
