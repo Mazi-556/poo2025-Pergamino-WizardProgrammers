@@ -11,4 +11,5 @@ public interface AdminService {
     boolean existsByEmail(String email);
     List<Admin> findAll();
     void deleteById(Integer id) throws Exception;
+    void deleteAdmin(Integer idToDelete, Integer requesterId) throws Exception;
 }

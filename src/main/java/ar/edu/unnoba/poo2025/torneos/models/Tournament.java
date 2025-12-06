@@ -2,11 +2,12 @@ package ar.edu.unnoba.poo2025.torneos.models;
 
 import java.time.LocalDate;
 import java.util.List;
+import jakarta.persistence.CascadeType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id; // <-- AGREGA ESTA LÍNEA
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -33,14 +34,14 @@ public class Tournament {
     @JoinColumn(name="admin_id", nullable=true) 
     private Admin admin_id;
 
-    @OneToMany(mappedBy = "tournament_id")
-    private List<Competition> competition;
+    @OneToMany(mappedBy = "tournament_id", cascade = CascadeType.REMOVE)
+    private List<Competition> competitions;
     
     private String name;
-    private String descripction; // Mantenemos tu variable tal cual está en el JSON
+    private String description; 
     
-    private LocalDate startDate; // <-- CAMBIADO A LocalDate
-    private LocalDate endDate;   // <-- CAMBIADO A LocalDate
+    private LocalDate startDate; 
+    private LocalDate endDate;   
     
     private boolean published;
 }

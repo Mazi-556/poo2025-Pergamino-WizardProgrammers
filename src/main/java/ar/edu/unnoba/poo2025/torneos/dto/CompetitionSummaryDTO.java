@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminCompetitionSummaryDTO { // Resumen para listar competencias de un torneo
+public class CompetitionSummaryDTO { // Resumen para listar competencias de un torneo
 
     private Integer id;
     private String name;
     private int quota;
-    private double base_price;
+    private double basePrice;
 
 }

@@ -25,7 +25,7 @@ public class Registration {
     private int idregistration;
 
     private Float price;
-    private LocalDate date; // <-- CAMBIADO A LocalDate
+    private LocalDate date;
 
 
     @ManyToOne

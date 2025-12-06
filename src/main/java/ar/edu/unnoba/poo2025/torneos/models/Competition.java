@@ -2,6 +2,7 @@ package ar.edu.unnoba.poo2025.torneos.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import jakarta.persistence.CascadeType;
 
 import java.util.List;
 
@@ -31,12 +32,11 @@ public class Competition {
     @JoinColumn(name="tournament_id", nullable=false)
     private Tournament tournament_id;
 
-    @OneToMany(mappedBy = "competition_id")
+    @OneToMany(mappedBy = "competition_id", cascade = CascadeType.REMOVE)   //Esto nuevo es para que al borrar una competencia se borren sus inscripciones
     private List<Registration> registrations;
 
     private String name;
-    private double base_price;
-    private int quota; //cupo
-
+    private double basePrice;
+    private int quota;
 }
 

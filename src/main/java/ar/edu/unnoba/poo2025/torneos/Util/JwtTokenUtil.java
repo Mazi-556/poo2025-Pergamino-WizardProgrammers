@@ -23,7 +23,7 @@ public class JwtTokenUtil {
         .withIssuedAt(Instant.now())
         .withExpiresAt(Instant.now().plus(10, ChronoUnit.DAYS))
         .sign(ALG);
-    return "Bearer " + token;
+    return "Bearer " + token; //TODO acortdate
   }
 
   

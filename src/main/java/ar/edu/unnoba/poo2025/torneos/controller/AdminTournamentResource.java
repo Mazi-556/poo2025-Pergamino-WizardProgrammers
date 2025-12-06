@@ -2,7 +2,6 @@ package ar.edu.unnoba.poo2025.torneos.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +21,6 @@ import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentCreateUpdateDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentSummaryDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Admin;
-import ar.edu.unnoba.poo2025.torneos.models.Competition;
-import ar.edu.unnoba.poo2025.torneos.models.Registration;
 import ar.edu.unnoba.poo2025.torneos.models.Tournament;
 import ar.edu.unnoba.poo2025.torneos.service.AdminService;
 import ar.edu.unnoba.poo2025.torneos.service.TournamentService;
@@ -51,8 +48,12 @@ public class AdminTournamentResource {
         }
         return current;
     }
+
+
+
+
     @GetMapping(produces = "application/json")
-    public ResponseEntity<?> getAll(@RequestHeader("authentication") String authenticationHeader) {
+    public ResponseEntity<?> getAll(@RequestHeader("Authorization") String authenticationHeader) {
         try {
             getCurrentAdmin(authenticationHeader); //valida el token
 
@@ -71,56 +72,43 @@ public class AdminTournamentResource {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(Map.of("error", e.getMessage()));}
     }
+
+
+
+
     @GetMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<?> getById(@RequestHeader("authentication") String authenticationHeader, @PathVariable("id") Long id){
+    public ResponseEntity<?> getById(@RequestHeader("Authorization") String authenticationHeader, @PathVariable("id") Long id){
         try {
             getCurrentAdmin(authenticationHeader);
 
-            Tournament t = tournamentService.findById(id);
 
-            long totalRegistrations = 0L;
-            double totalAmount = 0.0;
+            AdminTournamentDetailDTO dto = tournamentService.getTournamentDetail(id);
 
-            if (t.getCompetition() != null) {
-                for (Competition c : t.getCompetition()) {
-                    if (c.getRegistrations() != null){
-                        totalRegistrations += c.getRegistrations().size();
-                        for (Registration r : c.getRegistrations()) {
-                            if (r.getPrice() != null){
-                                totalAmount += r.getPrice();
-                            }
-                        }
-                    }
-                }
-            }
-            AdminTournamentDetailDTO dto = new AdminTournamentDetailDTO(
-                    t.getIdTournament(),
-                    t.getName(),
-                    t.getDescripction(),
-                    t.getStartDate(),
-                    t.getEndDate(),
-                    t.isPublished(),
-                    totalRegistrations,
-                    totalAmount
-            );
             return ResponseEntity.ok(dto);
+            
         } catch (Exception e) {
-            HttpStatus status = e.getMessage() != null && e.getMessage().contains("not found")
-                    ? HttpStatus.NOT_FOUND
-                    : HttpStatus.UNAUTHORIZED;
+             HttpStatus status = e.getMessage() != null && e.getMessage().contains("not found")
+                     ? HttpStatus.NOT_FOUND
+                     : HttpStatus.UNAUTHORIZED;
+
+
             return ResponseEntity.status(status)
                     .body(Map.of("error", e.getMessage()));
         }
     }
+
+
+
+
     @PostMapping(produces = "application/json")
-    public ResponseEntity<?> create(@RequestHeader("authentication") String authenticationHeader, @RequestBody AdminTournamentCreateUpdateDTO body){
+    public ResponseEntity<?> create(@RequestHeader("Authorization") String authenticationHeader, @RequestBody AdminTournamentCreateUpdateDTO body){
         try {
             Admin current = getCurrentAdmin(authenticationHeader);
 
             Tournament t = new Tournament();
-            t.setAdmin_id(current);               // campo Admin en tu entidad
+            t.setAdmin_id(current);              
             t.setName(body.getName());
-            t.setDescripction(body.getDescription());
+            t.setDescription(body.getDescription());
             t.setStartDate(body.getStartDate());
             t.setEndDate(body.getEndDate());
             t.setPublished(false); // por defecto no publicado
@@ -141,13 +129,18 @@ public class AdminTournamentResource {
                     .body(Map.of("error", e.getMessage()));
         }      
     }
+
+
+
+
+
     @PutMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<?> update(@RequestHeader("authentication") String authenticationHeader, @PathVariable("id") Long id, @RequestBody AdminTournamentCreateUpdateDTO body) {
+    public ResponseEntity<?> update(@RequestHeader("Authorization") String authenticationHeader, @PathVariable("id") Long id, @RequestBody AdminTournamentCreateUpdateDTO body) {
         try {
             getCurrentAdmin(authenticationHeader);
             Tournament t = tournamentService.findById(id);
             t.setName(body.getName());
-            t.setDescripction(body.getDescription());
+            t.setDescription(body.getDescription());
             t.setStartDate(body.getStartDate());
             t.setEndDate(body.getEndDate());
 
@@ -170,8 +163,12 @@ public class AdminTournamentResource {
                     .body(Map.of("error", e.getMessage()));
         }
     }
+
+
+
+
     @DeleteMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<?> delete(@RequestHeader("authentication") String authenticationHeader,  @PathVariable("id") Long id) {
+    public ResponseEntity<?> delete(@RequestHeader("Authorization") String authenticationHeader,  @PathVariable("id") Long id) {
         try{
             getCurrentAdmin(authenticationHeader);
             tournamentService.deleteTournament(id);
@@ -181,33 +178,26 @@ public class AdminTournamentResource {
                     ? HttpStatus.NOT_FOUND
                     : HttpStatus.BAD_REQUEST;
             return ResponseEntity.status(status)
-                    .body(Map.of("error", e.getMessage()));  
+                    .body(Map.of("error", e.getMessage()));  // Estos catch se ven sospechosos, investigar si se puede llamar a una exception
         }
     }
-    @PatchMapping(path = "/{id}/published", produces = "application/json")
-    public ResponseEntity<?> publish(@RequestHeader("authentication") String authenticationHeader, @PathVariable("id") Long id) {
-        try{
+
+
+
+
+@PatchMapping("/{id}/published")
+    public ResponseEntity<?> publishTournament(@RequestHeader("Authorization") String authenticationHeader, @PathVariable Long id) {
+        try {
+
             getCurrentAdmin(authenticationHeader);
-
-            Tournament t = tournamentService.findById(id);
-            t.setPublished(true);
-            Tournament saved = tournamentService.saveTournament(t);
-
-            AdminTournamentSummaryDTO dto = new AdminTournamentSummaryDTO(
-                    saved.getIdTournament(),
-                    saved.getName(),
-                    saved.getStartDate(),
-                    saved.getEndDate(),
-                    saved.isPublished()
-            );
-
-            return ResponseEntity.ok(dto);
+            tournamentService.publish(id);
+            
+            return ResponseEntity.ok(Map.of("message", "Torneo publicado exitosamente"));
         } catch (Exception e) {
-            HttpStatus status = e.getMessage() != null && e.getMessage().contains("not found")
-                    ? HttpStatus.NOT_FOUND
-                    : HttpStatus.BAD_REQUEST;
-            return ResponseEntity.status(status)
-                    .body(Map.of("error", e.getMessage()));            
-        }    
-    } 
+            HttpStatus status = e.getMessage().contains("no encontrado") 
+                ? HttpStatus.NOT_FOUND 
+                : HttpStatus.UNAUTHORIZED;
+            return ResponseEntity.status(status).body(Map.of("error", e.getMessage()));
+        }
+    }
 }

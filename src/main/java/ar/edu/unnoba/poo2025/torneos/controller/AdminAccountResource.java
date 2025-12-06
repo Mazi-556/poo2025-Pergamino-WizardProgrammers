@@ -40,8 +40,10 @@ public class AdminAccountResource {
         }
         return current;
     }
+
+
     @GetMapping(produces = "application/json")
-    public ResponseEntity<?> getAll(@RequestHeader("authentication") String authenticationHeader){
+    public ResponseEntity<?> getAll(@RequestHeader("Authorization") String authenticationHeader){
         try {
             getCurrentAdmin(authenticationHeader);
             List<Admin> admins = adminService.findAll();
@@ -54,14 +56,17 @@ public class AdminAccountResource {
                 .body(Map.of("error", e.getMessage()));
         }
     }
+
+
+
     @PostMapping(produces = "application/json")
-    public ResponseEntity<?> create(@RequestHeader("authentication") String authenticationHeader, @RequestBody AuthenticationRequestDTO dto) {
+    public ResponseEntity<?> create(@RequestHeader("Authorization") String authenticationHeader, @RequestBody AuthenticationRequestDTO dto) {
         try {
             getCurrentAdmin(authenticationHeader);
 
             Admin admin = new Admin();
             admin.setEmail(dto.getEmail());
-            admin.setPassword(dto.getPassword());
+            admin.setPassword(dto.getPassword());   //TODO investigar si va en el service
 
             Admin created = adminService.create(admin);
             AdminAccountResponseDTO response = new AdminAccountResponseDTO(created.getIdAdmin(), created.getEmail());
@@ -76,20 +81,27 @@ public class AdminAccountResource {
                     .body(Map.of("error", e.getMessage()));
         }
     }
+
+
+
     @DeleteMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<?> delete(@RequestHeader("authentication") String authenticationHeader, @PathVariable("id") Integer id) {
-        try{
+    public ResponseEntity<?> delete(@RequestHeader("Authorization") String authenticationHeader, 
+                                    @PathVariable("id") Integer id) {
+        try {
             Admin current = getCurrentAdmin(authenticationHeader);
 
-            if (current.getIdAdmin() == id) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", "No puedes borrarte a ti mismo"));
-            }
-            adminService.deleteById(id);
+            //Delegar la acción al servicio
+            adminService.deleteAdmin(id, current.getIdAdmin());
+
             return ResponseEntity.noContent().build();
+            
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+            HttpStatus status = e.getMessage().contains("No puedes eliminar") 
+                    ? HttpStatus.BAD_REQUEST 
+                    : HttpStatus.UNAUTHORIZED;
+
+            return ResponseEntity.status(status)
                     .body(Map.of("error", e.getMessage()));
         }
-    } 
+    }
 }

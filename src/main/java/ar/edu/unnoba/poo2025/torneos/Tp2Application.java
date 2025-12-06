@@ -14,7 +14,7 @@ public class Tp2Application {
         // Esta linea inicia la app
         SpringApplication.run(Tp2Application.class, args); 
     }
-    @Bean
+    @Bean 
     public PasswordEncoder passwordEncoder() {
         return new PasswordEncoder();
     }

@@ -11,36 +11,31 @@ import ar.edu.unnoba.poo2025.torneos.models.Participant;
 @Service
 public class ParticipantServiceImp implements ParticipantService {
 
-    @Autowired
+    @Autowired      //TODO cambiar por final y constructor
     private ParticipantRepository participantRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;   
 
     @Override
-    public void create(Participant participant) throws Exception {
+    public void create(Participant participant) {
         // Verificar si el email ya existe
         Participant existingParticipant = participantRepository.findByEmail(participant.getEmail());
         if (existingParticipant != null) {
             throw new ResourceAlreadyExistsException("Ya existe un participante con ese email.");
         }
 
-        // TO DO
-        // Podriamos meter una validacion para que el DNI sea de 8 digitos
+        //TODO:Podriamos meter una validacion para que el DNI sea de 8 digitos
 
-        // Verificar si el DNI ya existe
         Participant existingParticipantDNI = participantRepository.findByDNI(participant.getDni());
         if (existingParticipantDNI != null) {
-            // Si encontramos uno, lanzamos una excepción
             throw new ResourceAlreadyExistsException("Ya existe un participante con ese DNI.");
         }
         
 
-        // Hashear la contraseña
         String hashedPassword = passwordEncoder.encode(participant.getPassword());
         participant.setPassword(hashedPassword);
 
-        // Guardar participante en la base de datos
         participantRepository.save(participant);
     }
     @Override
