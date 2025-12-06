@@ -1,5 +1,6 @@
 package ar.edu.unnoba.poo2025.torneos.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unnoba.poo2025.torneos.Repository.RegistrationRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
-import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentDetailDTO;
-import ar.edu.unnoba.poo2025.torneos.models.Tournament;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentCreateUpdateDTO;
-import java.time.LocalDate;
+import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentDetailDTO;
+import ar.edu.unnoba.poo2025.torneos.exceptions.ResourceNotFoundException;
+import ar.edu.unnoba.poo2025.torneos.models.Tournament;
 
 @Service
 public class TournamentServiceImp implements TournamentService  {
@@ -44,20 +45,21 @@ public class TournamentServiceImp implements TournamentService  {
 
     //admin
     @Override
-    public Tournament findById(Long id) throws Exception{ //TODO: Exception
+    public Tournament findById(Long id) {
         return tournamentRepository.findById(id)
-               .orElseThrow(() -> new Exception("Torneo no encontrado")); 
+            .orElseThrow(() -> new ResourceNotFoundException("Torneo no encontrado con id: " + id)); 
     }
     
     
     //admin
     @Override
-    public void deleteTournament(Long id) throws Exception { //TODO: Exception
-        if (!tournamentRepository.existsById(id)){
-            throw new Exception("Torneo no encontrado");
+        public void deleteTournament(Long id) { // Quitamos "throws Exception"
+            if (!tournamentRepository.existsById(id)){
+                // CORRECCIÓN: Usamos la excepción específica
+                throw new ResourceNotFoundException("Torneo no encontrado con id: " + id);
+            }
+            tournamentRepository.deleteById(id);
         }
-        tournamentRepository.deleteById(id);
-    }
 
     @Override
     public AdminTournamentDetailDTO getTournamentDetail(Long id) throws Exception { //TODO: Exception

@@ -3,30 +3,29 @@ package ar.edu.unnoba.poo2025.torneos.service;
 import java.util.List;
 
 import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionDetailDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionRegistrationDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.CompetitionSummaryDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Competition;
 import ar.edu.unnoba.poo2025.torneos.models.Registration;
 
 public interface CompetitionService {
     
-    List<Competition> findByTournamentId(Long tournamentId) throws Exception;
-
-    Competition createCompetition(Long tournamentId, String name, int quota, double basePrice) throws Exception;
-
-    Competition updateCompetition(Long tournamentId, Integer competitionId, String name, int quota, double basePrice) throws Exception;
+    public List<Competition> findByTournamentId(Long tournamentId);
     
-    Competition findByIdAndTournament(Long tournamentId, Integer competitionId) throws Exception;
+    public Competition createCompetition(Long tournamentId, String name, int quota, double basePrice);
 
-    void deleteCompetition(Long tournamentId, Integer competitionId) throws Exception;
+    public Competition updateCompetition(Long tournamentId, Integer competitionId, String name, int quota, double basePrice);
     
-    List<Registration> findRegistrationsByCompetition(Long tournamentId, Integer competitionId) throws Exception;
+    public void deleteCompetition(Long tournamentId, Integer competitionId);
+    
+    public Competition findByIdAndTournament(Long tournamentId, Integer competitionId);
 
-    List<CompetitionSummaryDTO> getCompetitionSummaries(Long tournamentId) throws Exception;
-
-    AdminCompetitionDetailDTO getCompetitionDetail(Long tournamentId, Integer competitionId) throws Exception;
-
-    List<CompetitionSummaryDTO> getPublicCompetitions(Long tournamentId) throws Exception;
-
-    CompetitionSummaryDTO getPublicCompetitionDetail(Long tournamentId, Integer competitionId) throws Exception;
+    public List<Registration> findRegistrationsByCompetition(Long tournamentId, Integer competitionId);
+    
+    public AdminCompetitionDetailDTO getCompetitionDetail(Long tournamentId, Integer competitionId);
+    
+    public List<CompetitionSummaryDTO> getCompetitionSummaries(Long tournamentId);
+    
+    public List<CompetitionSummaryDTO> getPublicCompetitions(Long tournamentId);
+    
+    public CompetitionSummaryDTO getPublicCompetitionDetail(Long tournamentId, Integer competitionId);
 }

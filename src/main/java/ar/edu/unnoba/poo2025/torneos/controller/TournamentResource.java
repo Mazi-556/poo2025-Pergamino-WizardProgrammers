@@ -9,22 +9,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.edu.unnoba.poo2025.torneos.dto.CompetitionSummaryDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.RegistrationResponseDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.TournamentResponseDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.CompetitionSummaryDTO;
+import ar.edu.unnoba.poo2025.torneos.exceptions.ResourceNotFoundException;
+import ar.edu.unnoba.poo2025.torneos.exceptions.TournamentNotReadyException;
 import ar.edu.unnoba.poo2025.torneos.models.Participant;
 import ar.edu.unnoba.poo2025.torneos.models.Tournament;
-import ar.edu.unnoba.poo2025.torneos.models.Competition;
 import ar.edu.unnoba.poo2025.torneos.service.AuthorizationService;
-import ar.edu.unnoba.poo2025.torneos.service.TournamentService;
-import ar.edu.unnoba.poo2025.torneos.service.RegistrationService;
 import ar.edu.unnoba.poo2025.torneos.service.CompetitionService;
-import ar.edu.unnoba.poo2025.torneos.models.Competition;
+import ar.edu.unnoba.poo2025.torneos.service.RegistrationService;
+import ar.edu.unnoba.poo2025.torneos.service.TournamentService;
 
 
 
@@ -117,18 +116,19 @@ public class TournamentResource {
             
             return ResponseEntity.ok(dtos);
 
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
+        } catch (TournamentNotReadyException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", e.getMessage()));
         } catch (Exception e) {
-            HttpStatus status = HttpStatus.BAD_REQUEST;
-            if (e.getMessage().contains("no se encuentra disponible")) status = HttpStatus.FORBIDDEN;
-            
-            return ResponseEntity.status(status).body(Map.of("error", e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Error inesperado: " + e.getMessage()));
         }
     }
 
     @GetMapping(path = "/{tournamentId}/competitions/{competitionId}", produces = "application/json")
     public ResponseEntity<?> getCompetitionDetail(
             @RequestHeader(name = "Authorization", required = false) String authorizationHeader,
-            @PathVariable("tournamentId") Long tournamentId, //TODO aca me dice "Unnecessary variable 'tournamentId'." investigar
+            @PathVariable("tournamentId") Long tournamentId,
             @PathVariable("competitionId") Integer competitionId) {
         try {
             authorizationService.authorize(authorizationHeader);
@@ -137,12 +137,12 @@ public class TournamentResource {
 
             return ResponseEntity.ok(dto);
 
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
+        } catch (TournamentNotReadyException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", e.getMessage()));
         } catch (Exception e) {
-            HttpStatus status = HttpStatus.BAD_REQUEST;
-            if (e.getMessage().contains("no encontrada")) status = HttpStatus.NOT_FOUND;
-            if (e.getMessage().contains("no se encuentra disponible")) status = HttpStatus.FORBIDDEN;
-
-            return ResponseEntity.status(status).body(Map.of("error", e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Error inesperado: " + e.getMessage()));
         }
     }
 
