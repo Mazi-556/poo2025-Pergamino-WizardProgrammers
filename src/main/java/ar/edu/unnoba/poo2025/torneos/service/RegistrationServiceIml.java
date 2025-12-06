@@ -44,7 +44,7 @@ public class RegistrationServiceIml implements RegistrationService {
     public List<AdminCompetitionRegistrationDTO> getCompetitionRegistrations(Long tournamentId, Integer competitionId) throws Exception {
 
         Tournament t = tournamentRepository.findById(tournamentId)  //TODO aca me dice que no se usa esta variable. Revisar
-                .orElseThrow(() -> new Exception("Torneo no encontrado"));  //TODO hay que ver este tipo de exepciones
+                .orElseThrow(() -> new Exception("Torneo no encontrado"));
         
         Competition c = competitionRepository.findById(competitionId)
                 .orElseThrow(() -> new Exception("Competencia no encontrada"));
@@ -82,7 +82,6 @@ public class RegistrationServiceIml implements RegistrationService {
         Competition c = competitionRepository.findById(competitionId)
                 .orElseThrow(() -> new Exception("Competencia no encontrada"));
 
-        // Validar que la competencia sea del torneo indicado. Sin este if, un usuario podria entrar a una competencia de un torneo que no le corresponde
         if (!c.getTournament_id().getIdTournament().equals(tournamentId)) {
             throw new Exception("La competencia no pertenece al torneo indicado.");
         }
@@ -107,7 +106,6 @@ public class RegistrationServiceIml implements RegistrationService {
         double price = c.getBasePrice();
         long otherRegistrationsInTournament = registrationRepository.countByParticipantAndTournament(participant.getIdParticipant(), tournamentId);
         
-        //TODO Y si no tienen descuento? como era la logica de eso. O todos tienen descuento? Revisar
 
         if (otherRegistrationsInTournament > 0) {
             price = price * 0.5; 

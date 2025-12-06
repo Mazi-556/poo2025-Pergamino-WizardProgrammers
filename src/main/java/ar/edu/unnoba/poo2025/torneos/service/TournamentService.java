@@ -23,7 +23,4 @@ public interface TournamentService {
     void publish (Long id) throws Exception;
 
     Tournament updateTournament(Long id, AdminTournamentCreateUpdateDTO dto) throws Exception;
-
-    //TODO: editar torneo
-    //TODO: Revisar las exepciones de aqui
 }

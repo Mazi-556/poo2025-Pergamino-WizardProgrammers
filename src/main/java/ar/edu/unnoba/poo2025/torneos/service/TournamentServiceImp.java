@@ -44,13 +44,13 @@ public class TournamentServiceImp implements TournamentService  {
 
     //admin
     @Override
-    public Tournament findById(Long id) throws Exception{ //TODO: Exception
+    public Tournament findById(Long id) throws Exception{
         return tournamentRepository.findById(id)
                .orElseThrow(() -> new Exception("Torneo no encontrado")); 
     }
     
     
-    //admin
+
     @Override
     public void deleteTournament(Long id) throws Exception { //TODO: Exception
         if (!tournamentRepository.existsById(id)){
@@ -83,13 +83,10 @@ public class TournamentServiceImp implements TournamentService  {
     
     @Override
     public void publish(Long id) throws Exception {
-        // 1. Buscamos el torneo (reutilizamos tu método findById que ya lanza excepción si no existe)
         Tournament t = this.findById(id); 
         
-        // 2. Aplicamos la lógica de negocio (cambiar estado)
         t.setPublished(true);
         
-        // 3. Guardamos los cambios
         tournamentRepository.save(t);
     }    
 
@@ -97,16 +94,13 @@ public class TournamentServiceImp implements TournamentService  {
 
     @Override
     public Tournament updateTournament(Long id, AdminTournamentCreateUpdateDTO dto) throws Exception {
-        // 1. Buscamos el torneo (reutilizamos tu método que ya lanza excepción)
+
         Tournament t = this.findById(id);
 
-        // 2. Lógica de "Patch" / Actualización Parcial
-        // Solo actualizamos si el dato nuevo NO es nulo
         if (dto.getName() != null) {
             t.setName(dto.getName());
         }
         
-        // Cuidado con el typo 'descripction' si aún no lo arreglaste en la clase Tournament
         if (dto.getDescription() != null) {
             t.setDescription(dto.getDescription()); 
         }
@@ -119,10 +113,7 @@ public class TournamentServiceImp implements TournamentService  {
             t.setEndDate(dto.getEndDate());
         }
         
-        // Nota: 'published' no lo tocamos aquí para evitar que se ponga en false accidentalmente.
-        // Para publicar/despublicar ya tienes el método específico 'publish'.
-
-        // 3. Guardamos y retornamos
+        //TODO probar si da error al intentar cambiar el atributo published desde aqui (con el metodo update tournament)
         return tournamentRepository.save(t);
     }
 }
