@@ -9,6 +9,7 @@ import ar.edu.unnoba.poo2025.torneos.Repository.RegistrationRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Tournament;
+import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentCreateUpdateDTO;
 import java.time.LocalDate;
 
 @Service
@@ -91,4 +92,37 @@ public class TournamentServiceImp implements TournamentService  {
         // 3. Guardamos los cambios
         tournamentRepository.save(t);
     }    
+
+
+
+    @Override
+    public Tournament updateTournament(Long id, AdminTournamentCreateUpdateDTO dto) throws Exception {
+        // 1. Buscamos el torneo (reutilizamos tu método que ya lanza excepción)
+        Tournament t = this.findById(id);
+
+        // 2. Lógica de "Patch" / Actualización Parcial
+        // Solo actualizamos si el dato nuevo NO es nulo
+        if (dto.getName() != null) {
+            t.setName(dto.getName());
+        }
+        
+        // Cuidado con el typo 'descripction' si aún no lo arreglaste en la clase Tournament
+        if (dto.getDescription() != null) {
+            t.setDescription(dto.getDescription()); 
+        }
+        
+        if (dto.getStartDate() != null) {
+            t.setStartDate(dto.getStartDate());
+        }
+        
+        if (dto.getEndDate() != null) {
+            t.setEndDate(dto.getEndDate());
+        }
+        
+        // Nota: 'published' no lo tocamos aquí para evitar que se ponga en false accidentalmente.
+        // Para publicar/despublicar ya tienes el método específico 'publish'.
+
+        // 3. Guardamos y retornamos
+        return tournamentRepository.save(t);
+    }
 }

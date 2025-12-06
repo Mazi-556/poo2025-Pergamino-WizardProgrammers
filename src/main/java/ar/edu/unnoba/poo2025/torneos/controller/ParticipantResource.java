@@ -26,7 +26,7 @@ public class ParticipantResource {
     @Autowired
     private AuthenticationService authenticationService;
 
-    @PostMapping(path = "/account", produces = "application/json")  //Creacion de cuenta Participant
+    @PostMapping(path = "/account", produces = "application/json")
     public ResponseEntity<?> create(@Valid @RequestBody CreateParticipantRequestDTO dto) {
         try {
             Participant p = new Participant();
