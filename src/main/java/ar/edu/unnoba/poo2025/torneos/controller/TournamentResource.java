@@ -81,17 +81,15 @@ public class TournamentResource {
 
     @PostMapping(path = "/{tournamentId}/competitions/{competitionId}/registrations", produces = "application/json")
     public ResponseEntity<?> registerToCompetition(
-          @RequestHeader("Authorization") String authenticationHeader, // En el PDF dice "authentication" (a veces Authorization)
+          @RequestHeader("Authorization") String authenticationHeader,
           @PathVariable("tournamentId") Long tournamentId,
           @PathVariable("competitionId") Integer competitionId) {
       try {
-          // 1. Validar Token y obtener Participante (Reutiliza tu servicio de Auth)
+
           Participant p = authorizationService.authorize(authenticationHeader);
 
-          // 2. Delegar al servicio
           RegistrationResponseDTO dto = registrationService.registerParticipant(tournamentId, competitionId, p);
 
-          // 3. Retornar éxito
           return ResponseEntity.status(HttpStatus.CREATED).body(dto);
 
       } catch (Exception e) {

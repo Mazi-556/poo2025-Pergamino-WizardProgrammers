@@ -39,5 +39,6 @@ public interface RegistrationRepository extends JpaRepository<Registration, Inte
     @Query("SELECT COUNT(r) FROM Registration r WHERE r.participant_id.idParticipant = :participantId AND r.competition_id.tournament_id.idTournament = :tournamentId")
     long countByParticipantAndTournament(@Param("participantId") Integer participantId, @Param("tournamentId") Long tournamentId);
     
-
+    @Query("SELECT r FROM Registration r WHERE r.participant_id.idParticipant = :participantId")
+    List<Registration> findByParticipantId(@Param("participantId") Integer participantId);
 }

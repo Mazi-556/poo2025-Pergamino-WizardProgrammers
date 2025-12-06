@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
 import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionRegistrationDTO;
+import ar.edu.unnoba.poo2025.torneos.dto.ParticipantRegistrationDTO;
+import ar.edu.unnoba.poo2025.torneos.dto.ParticipantRegistrationDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.RegistrationResponseDTO;
 import ar.edu.unnoba.poo2025.torneos.models.Competition;
 import ar.edu.unnoba.poo2025.torneos.models.Participant;
@@ -130,5 +132,47 @@ public class RegistrationServiceIml implements RegistrationService {
         );
     }
     
+    @Override
+    public List<ParticipantRegistrationDTO> getParticipantRegistrations(Integer participantId) {
+        List<Registration> list = registrationRepository.findByParticipantId(participantId);
+        
+        return list.stream().map(r -> new ParticipantRegistrationDTO(
+            r.getIdregistration(),
+            r.getDate(),
+            r.getPrice(),
+            r.getCompetition_id().getTournament_id().getIdTournament(),
+            r.getCompetition_id().getTournament_id().getName(),
+            r.getCompetition_id().getIdCompetition(),
+            r.getCompetition_id().getName()
+        )).collect(Collectors.toList());
+    }
+
+
+    @Override
+public ParticipantRegistrationDetailDTO getRegistrationDetail(Integer registrationId, Integer participantId) throws Exception {
+    
+    Registration r = registrationRepository.findById(registrationId)
+            .orElseThrow(() -> new Exception("Inscripción no encontrada"));
+
+    if (r.getParticipant_id().getIdParticipant() != participantId) {
+        throw new Exception("No tienes permiso para ver esta inscripción.");
+    }
+
+    Competition c = r.getCompetition_id();
+    Tournament t = c.getTournament_id();
+
+    return new ParticipantRegistrationDetailDTO(
+            r.getIdregistration(),
+            r.getPrice(),
+            r.getDate(),
+            c.getIdCompetition(),
+            c.getName(),
+            t.getIdTournament(),
+            t.getName(),
+            t.getDescription(),
+            t.getStartDate(),
+            t.getEndDate()
+    );
+}
     
 }
