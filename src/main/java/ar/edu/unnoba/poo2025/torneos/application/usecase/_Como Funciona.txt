@@ -1,0 +1,2 @@
+Un USECASE son las operaciones especifica que el usuario quiere realizar(ej "Inscribir participante" o "Crear torneo"). 
+Esto seria mas o menos lo que se hace en los ServiceImp
