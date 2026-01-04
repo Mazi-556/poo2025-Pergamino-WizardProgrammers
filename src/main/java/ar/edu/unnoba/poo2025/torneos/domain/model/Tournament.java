@@ -1,4 +1,4 @@
-package ar.edu.unnoba.poo2025.torneos.models; 
+package ar.edu.unnoba.poo2025.torneos.domain.model; 
 
 import java.time.LocalDate;
 import java.util.List;

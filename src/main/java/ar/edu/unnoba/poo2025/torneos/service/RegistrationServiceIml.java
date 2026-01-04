@@ -37,9 +37,6 @@ public class RegistrationServiceIml implements RegistrationService {
         this.competitionRepository = competitionRepository;
     }
 
-
-   //Este metodo estaba en CompetitionServiceImp, pero me parecio mas apropiado moverlo aca, ya que el hecho de listar las inscripciones
-   //corresponde mas al servicio de inscripciones que al de competencias.
     @Override
     public List<AdminCompetitionRegistrationDTO> getCompetitionRegistrations(Long tournamentId, Integer competitionId) throws Exception {
 

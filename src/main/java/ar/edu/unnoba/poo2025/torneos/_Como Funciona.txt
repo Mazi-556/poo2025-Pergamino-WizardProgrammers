@@ -1,0 +1,59 @@
+Estructura de arquitectura hexagonal resumida:
+
+📂 ar.edu.unnoba.poo2025.torneos
+│
+├── 📦 domain                 <-- EL CORAZÓN (Aislado)
+│   ├── 📂 model              (Tus clases puras: Participant, Tournament...)
+│   └── 📂 ports
+│       ├── 📂 in             (Interfaces de Casos de Uso)
+│       └── 📂 out            (Interfaces de Repositorios)
+│
+├── 📦 application            <-- EL CEREBRO (Orquestador)
+│   └── 📂 usecase            (La lógica de los servicios: implementan ports.in)
+│
+└── 📦 infrastructure         <-- EL CUERPO (Detalles técnicos)
+    ├── 📂 adapter
+    │   ├── 📂 in             (Controladores Web, Chatbot)
+    │   └── 📂 out            (Implementación JPA, MongoDB, Emails)
+    └── 📂 config             (Configuraciones de Beans de Spring)
+
+
+
+
+
+
+La misma estructura, pero mas detallada:
+
+📂 ar.edu.unnoba.poo2025.torneos
+├── 📦 domain                  <-- EL NÚCLEO (Solo Java puro, 0 anotaciones)
+│   ├── 📂 model
+│   │   └── Tournament.java         (POJO limpio: solo atributos y lógica)
+│   └── 📂 ports
+│       ├── 📂 in                   (Qué puede hacer el usuario)
+│       │   └── ManageTournamentUseCase.java
+│       └── 📂 out                  (Qué necesita el dominio guardar)
+│           └── TournamentRepositoryPort.java
+│
+├── 📦 application             <-- LOS CASOS DE USO (Orquestadores)
+│   └── 📂 usecase
+│       └── ManageTournamentService.java (Implementa la lógica sin saber de DB)
+│
+└── 📦 infrastructure          <-- EL MUNDO REAL (Frameworks y Adaptadores)
+    ├── 📂 adapter
+    │   ├── 📂 in              (Entrada: Quién usa la app)
+    │   │   ├── 📂 web
+    │   │   │   └── TournamentController.java  (Tu antiguo Resource, API REST)
+    │   │   └── 📂 chat
+    │   │       └── WhatsappChatAdapter.java(por ejemplo si quisieramos poner un chatbot)
+    │   │
+    │   └── 📂 out             (Salida: Adónde van los datos)
+    │       ├── 📂 persistence
+    │       │   ├── 📂 jpa     (Tu actual PostgreSQL)
+    │       │   │   ├── JpaTournamentAdapter.java
+    │       │   │   └── mapper/TournamentEntity.java (Aquí pones @Entity)
+    │       │   └── 📂 mongo   (Tu futuro MongoDB)
+    │       │       └── MongoTournamentAdapter.java
+    │       └── 📂 notification
+    │           └── EmailAdapter.java
+    │
+    └── 📂 config              (Configuración de Spring, Swagger, etc.)

@@ -1,0 +1,13 @@
+El port out se encarga de enviarle a los CASOS DE USO los datos necesarios para poder hacer logica, validaciones.
+Tambien decide que DTO devolver.
+
+Es como si fuese el REPOSITORY de springboot.
+En este caso, los CASOS DE USO serian los SERVICES
+
+Algunos metodos que antes tenian un nombre que JPA detectaba automaticamente y hacia la consulta se cambian (Justamente para no acoplar el sistema entero a una Base de datos)
+Por ejemplo: existsByParticipantAndCompetition() -> isParticipantRegisteredInCompetition()
+En este caso, existsByParticipantAndCompetition() se usaba para revisar si el participante estaba inscripto en un torneo.
+Estos nombres de metodos son mas descriptivos.
+
+
+
