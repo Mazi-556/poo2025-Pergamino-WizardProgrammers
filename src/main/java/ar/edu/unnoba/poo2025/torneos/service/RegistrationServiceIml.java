@@ -43,13 +43,13 @@ public class RegistrationServiceIml implements RegistrationService {
     @Override
     public List<AdminCompetitionRegistrationDTO> getCompetitionRegistrations(Long tournamentId, Integer competitionId) throws Exception {
 
-        Tournament t = tournamentRepository.findById(tournamentId)  //TODO aca me dice que no se usa esta variable. Revisar
+        Tournament t = tournamentRepository.findById(tournamentId)  
                 .orElseThrow(() -> new Exception("Torneo no encontrado"));
         
         Competition c = competitionRepository.findById(competitionId)
                 .orElseThrow(() -> new Exception("Competencia no encontrada"));
                 
-        if (!c.getTournament_id().getIdTournament().equals(tournamentId)) {
+        if (!c.getTournament_id().getIdTournament().equals(t.getIdTournament())) {
              throw new Exception("La competencia no pertenece al torneo.");
         }
 
