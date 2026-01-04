@@ -12,13 +12,13 @@ import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionRegistrationDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.ParticipantRegistrationDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.ParticipantRegistrationDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.RegistrationResponseDTO;
-import ar.edu.unnoba.poo2025.torneos.models.Competition;
-import ar.edu.unnoba.poo2025.torneos.models.Participant;
-import ar.edu.unnoba.poo2025.torneos.models.Registration;
-import ar.edu.unnoba.poo2025.torneos.models.Tournament;
 import ar.edu.unnoba.poo2025.torneos.Repository.RegistrationRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.CompetitionRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Competition;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Registration;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Tournament;
 import ar.edu.unnoba.poo2025.torneos.service.CompetitionServiceImp;
 
 

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unnoba.poo2025.torneos.Repository.RegistrationRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Tournament;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentDetailDTO;
-import ar.edu.unnoba.poo2025.torneos.models.Tournament;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentCreateUpdateDTO;
 import java.time.LocalDate;
 

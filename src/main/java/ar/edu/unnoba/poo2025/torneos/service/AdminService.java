@@ -2,7 +2,7 @@ package ar.edu.unnoba.poo2025.torneos.service;
 
 import java.util.List;
 
-import ar.edu.unnoba.poo2025.torneos.models.Admin;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Admin;
 
 public interface AdminService {
     Admin create(Admin admin);

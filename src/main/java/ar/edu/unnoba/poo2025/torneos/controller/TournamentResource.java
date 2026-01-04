@@ -16,15 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unnoba.poo2025.torneos.dto.RegistrationResponseDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.TournamentResponseDTO;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Competition;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Tournament;
 import ar.edu.unnoba.poo2025.torneos.dto.CompetitionSummaryDTO;
-import ar.edu.unnoba.poo2025.torneos.models.Participant;
-import ar.edu.unnoba.poo2025.torneos.models.Tournament;
-import ar.edu.unnoba.poo2025.torneos.models.Competition;
 import ar.edu.unnoba.poo2025.torneos.service.AuthorizationService;
 import ar.edu.unnoba.poo2025.torneos.service.TournamentService;
 import ar.edu.unnoba.poo2025.torneos.service.RegistrationService;
 import ar.edu.unnoba.poo2025.torneos.service.CompetitionService;
-import ar.edu.unnoba.poo2025.torneos.models.Competition;
 
 
 

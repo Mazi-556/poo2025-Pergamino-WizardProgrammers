@@ -2,11 +2,11 @@ package ar.edu.unnoba.poo2025.torneos.service;
 
 import java.util.List;
 
+import ar.edu.unnoba.poo2025.torneos.domain.model.Competition;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Registration;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionRegistrationDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.CompetitionSummaryDTO;
-import ar.edu.unnoba.poo2025.torneos.models.Competition;
-import ar.edu.unnoba.poo2025.torneos.models.Registration;
 
 public interface CompetitionService {
     

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import ar.edu.unnoba.poo2025.torneos.models.Competition;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Competition;
 
 @Repository
 public interface CompetitionRepository extends JpaRepository<Competition, Integer> {

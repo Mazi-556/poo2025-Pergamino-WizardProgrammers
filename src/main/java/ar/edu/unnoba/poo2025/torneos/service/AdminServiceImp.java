@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import ar.edu.unnoba.poo2025.torneos.Repository.AdminRepository;
 import ar.edu.unnoba.poo2025.torneos.Util.PasswordEncoder;
-import ar.edu.unnoba.poo2025.torneos.models.Admin;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Admin;
 import ar.edu.unnoba.poo2025.torneos.exceptions.ResourceAlreadyExistsException;
 
 @Service

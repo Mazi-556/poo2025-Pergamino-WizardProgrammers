@@ -2,7 +2,8 @@ package ar.edu.unnoba.poo2025.torneos.service;
 
 import ar.edu.unnoba.poo2025.torneos.Util.JwtTokenUtil;
 import ar.edu.unnoba.poo2025.torneos.Util.PasswordEncoder;
-import ar.edu.unnoba.poo2025.torneos.models.Participant;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unnoba.poo2025.torneos.Util.JwtTokenUtil;
 import ar.edu.unnoba.poo2025.torneos.Util.PasswordEncoder;
-import ar.edu.unnoba.poo2025.torneos.models.Participant;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
 
 @Service
 public class AuthenticationServiceImp implements AuthenticationService{

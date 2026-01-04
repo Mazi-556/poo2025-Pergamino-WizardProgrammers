@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unnoba.poo2025.torneos.Repository.ParticipantRepository;
 import ar.edu.unnoba.poo2025.torneos.Util.PasswordEncoder;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
 import ar.edu.unnoba.poo2025.torneos.exceptions.ResourceAlreadyExistsException;
-import ar.edu.unnoba.poo2025.torneos.models.Participant;
 
 @Service
 public class ParticipantServiceImp implements ParticipantService {

@@ -1,8 +1,8 @@
 package ar.edu.unnoba.poo2025.torneos.service;
 
 import ar.edu.unnoba.poo2025.torneos.controller.RegistrationResource;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
 import ar.edu.unnoba.poo2025.torneos.dto.ParticipantRegistrationDTO;
-import ar.edu.unnoba.poo2025.torneos.models.Participant;
 import ar.edu.unnoba.poo2025.torneos.service.AuthorizationService;
 import ar.edu.unnoba.poo2025.torneos.service.RegistrationService;
 import org.junit.jupiter.api.Test;

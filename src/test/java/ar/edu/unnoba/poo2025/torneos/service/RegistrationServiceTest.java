@@ -3,11 +3,12 @@ package ar.edu.unnoba.poo2025.torneos.service;
 import ar.edu.unnoba.poo2025.torneos.Repository.CompetitionRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.RegistrationRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Competition;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Registration;
+import ar.edu.unnoba.poo2025.torneos.domain.model.Tournament;
 import ar.edu.unnoba.poo2025.torneos.dto.RegistrationResponseDTO;
-import ar.edu.unnoba.poo2025.torneos.models.Competition;
-import ar.edu.unnoba.poo2025.torneos.models.Participant;
-import ar.edu.unnoba.poo2025.torneos.models.Registration;
-import ar.edu.unnoba.poo2025.torneos.models.Tournament;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
