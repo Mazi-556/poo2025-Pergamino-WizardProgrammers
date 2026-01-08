@@ -8,9 +8,9 @@ public interface CompetitionRepositoryPort {
 
     List<Competition> findByTournamentId(Long tournamentId);
 
-    void delete(Competition c);
+    void delete(Competition competition);
 
-    Competition save(Competition c);//TODO Mepa que aca va mejor competition en lugar de "c"
+    Competition save(Competition competition);
 
     Competition findById(int competitionId);
 

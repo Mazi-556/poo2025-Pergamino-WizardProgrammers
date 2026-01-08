@@ -19,7 +19,9 @@ Estructura de arquitectura hexagonal resumida:
 
 
 
-
+;
+En domain/ports/in y out, un puerto es para guardar y otro para hacer cosas?
+Vi que el TaskController usa createTaskUseCase.create(desc);. Esta usando el metodo create de CreateTaskService o de CreateTaskUseCase?
 
 
 La misma estructura, pero mas detallada:
@@ -57,3 +59,110 @@ La misma estructura, pero mas detallada:
     │           └── EmailAdapter.java
     │
     └── 📂 config              (Configuración de Spring, Swagger, etc.)
+
+
+
+    FLUJO DE COMUNICACION (Cortesia de Gemini):
+
+
+### 1. Capa de DOMINIO (El Corazón)
+
+Aquí no hay nada de Spring. Solo Java puro.
+
+**El Modelo (`domain/model/Task.java`):**
+
+
+public class Task {
+    private Long id;
+    private String description;
+    // Constructor, getters y setters
+}
+
+
+
+**El Puerto de Salida (`domain/ports/out/TaskRepositoryPort.java`):**
+*(Es la interfaz que dice: "necesito guardar tareas")*
+
+
+public interface TaskRepositoryPort {
+    Task save(Task task);
+}
+
+
+
+El Puerto de Entrada (`domain/ports/in/CreateTaskUseCase.java`):
+(Es la interfaz que dice: "esta es la acción que el mundo puede pedirme")
+
+public interface CreateTaskUseCase {
+    void create(String description);
+}
+
+
+### 2. Capa de APLICACIÓN (El Cerebro)
+
+Aquí se implementa la lógica. **Nota:** No usa la base de datos, usa el **Puerto**.
+
+El Caso de Uso (`application/usecase/CreateTaskService.java`):
+
+public class CreateTaskService implements CreateTaskUseCase {
+    private final TaskRepositoryPort repositoryPort; // Inyectamos la interfaz (puerto)
+
+    public CreateTaskService(TaskRepositoryPort repositoryPort) {
+        this.repositoryPort = repositoryPort;
+    }
+
+    @Override
+    public void create(String description) {
+        Task newTask = new Task();
+        newTask.setDescription(description);
+        
+        // Aquí podrías poner lógica: "Si la descripción es corta, dar error"
+        repositoryPort.save(newTask); // Se lo manda al puerto, no sabe qué DB hay
+    }
+}
+
+
+
+### 3. Capa de INFRAESTRUCTURA (Los Adaptadores)
+
+Aquí es donde conectamos con el mundo real (Spring, JPA, etc.).
+
+Adaptador de Entrada (Web - `infrastructure/adapter/in/web/TaskController.java`):
+
+@RestController
+@RequestMapping("/tasks")
+public class TaskController {
+    private final CreateTaskUseCase createTaskUseCase; // Usa la interfaz de entrada
+
+    public TaskController(CreateTaskUseCase createTaskUseCase) {
+        this.createTaskUseCase = createTaskUseCase;
+    }
+
+    @PostMapping
+    public void postTask(@RequestBody String desc) {
+        createTaskUseCase.create(desc); // El controlador solo "pasa la bola"
+    }
+}
+
+
+**Adaptador de Salida (Base de Datos - `infrastructure/adapter/out/persistence/JpaTaskAdapter.java`):
+
+@Component
+public class JpaTaskAdapter implements TaskRepositoryPort {
+    private final JpaTaskRepository jpaRepo; // El repo de Spring Data JPA
+
+    public JpaTaskAdapter(JpaTaskRepository jpaRepo) {
+        this.jpaRepo = jpaRepo;
+    }
+
+    @Override
+    public Task save(Task task) {
+        // 1. Convertimos el objeto Dominio a una Entidad de DB (@Entity)
+        TaskEntity entity = new TaskEntity(task.getDescription());
+        // 2. Guardamos físicamente
+        TaskEntity saved = jpaRepo.save(entity);
+        // 3. Devolvemos el objeto Dominio de nuevo
+        return new Task(saved.getId(), saved.getDescription());
+    }
+}
+
