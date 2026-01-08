@@ -3,9 +3,9 @@ package ar.edu.unnoba.poo2025.torneos.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.edu.unnoba.poo2025.torneos.Repository.ParticipantRepository;
 import ar.edu.unnoba.poo2025.torneos.Util.PasswordEncoder;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
+import ar.edu.unnoba.poo2025.torneos.infrastructure.adapter.out.persistence.jpa.ParticipantRepository;
 import ar.edu.unnoba.poo2025.torneos.xexceptions.ResourceAlreadyExistsException;
 
 @Service

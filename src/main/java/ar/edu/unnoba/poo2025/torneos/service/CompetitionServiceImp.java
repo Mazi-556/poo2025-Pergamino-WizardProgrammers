@@ -5,13 +5,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import ar.edu.unnoba.poo2025.torneos.Repository.CompetitionRepository;
-import ar.edu.unnoba.poo2025.torneos.Repository.RegistrationRepository;
-import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Competition;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Registration;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Tournament;
+import ar.edu.unnoba.poo2025.torneos.infrastructure.adapter.out.persistence.jpa.CompetitionRepository;
+import ar.edu.unnoba.poo2025.torneos.infrastructure.adapter.out.persistence.jpa.RegistrationRepository;
+import ar.edu.unnoba.poo2025.torneos.infrastructure.adapter.out.persistence.jpa.TournamentRepository;
 import ar.edu.unnoba.poo2025.torneos.xdto.AdminCompetitionDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.xdto.AdminCompetitionRegistrationDTO;
 import ar.edu.unnoba.poo2025.torneos.xdto.CompetitionSummaryDTO;

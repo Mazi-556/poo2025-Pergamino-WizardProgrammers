@@ -1,0 +1,6 @@
+Aca van las clases que tienen las consultas SQL (los archivos que estaban en Repository).
+Cuando hize esta parte me lleve la sorpresa de que no tuve que tocar ningun archivo de Repository.
+
+Si queremos pasar a otra base de datos como MongoDB, tendriamos esta carpeta: infrastructure/adapter/out/persistence/MongoDB y 
+    ahi pondriamos las consultas que necesita MongoDB.
+

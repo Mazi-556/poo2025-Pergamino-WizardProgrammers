@@ -1,8 +1,8 @@
 package ar.edu.unnoba.poo2025.torneos.service;
 
-import ar.edu.unnoba.poo2025.torneos.Repository.RegistrationRepository;
-import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Tournament;
+import ar.edu.unnoba.poo2025.torneos.infrastructure.adapter.out.persistence.jpa.RegistrationRepository;
+import ar.edu.unnoba.poo2025.torneos.infrastructure.adapter.out.persistence.jpa.TournamentRepository;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

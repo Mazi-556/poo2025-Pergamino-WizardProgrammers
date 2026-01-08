@@ -1,4 +1,4 @@
-package ar.edu.unnoba.poo2025.torneos.Repository;
+package ar.edu.unnoba.poo2025.torneos.infrastructure.adapter.out.persistence.jpa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

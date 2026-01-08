@@ -1,4 +1,4 @@
-package ar.edu.unnoba.poo2025.torneos.Repository;
+package ar.edu.unnoba.poo2025.torneos.infrastructure.adapter.out.persistence.jpa;
 
 import java.util.List;
 

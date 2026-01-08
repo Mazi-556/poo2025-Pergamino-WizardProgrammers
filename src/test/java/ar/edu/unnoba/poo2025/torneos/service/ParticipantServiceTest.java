@@ -1,8 +1,8 @@
 package ar.edu.unnoba.poo2025.torneos.service;
 
-import ar.edu.unnoba.poo2025.torneos.Repository.ParticipantRepository;
 import ar.edu.unnoba.poo2025.torneos.Util.PasswordEncoder;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
+import ar.edu.unnoba.poo2025.torneos.infrastructure.adapter.out.persistence.jpa.ParticipantRepository;
 import ar.edu.unnoba.poo2025.torneos.xexceptions.ResourceAlreadyExistsException;
 
 import org.junit.jupiter.api.Test;
