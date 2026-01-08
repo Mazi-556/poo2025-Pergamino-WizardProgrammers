@@ -1,4 +1,4 @@
-package ar.edu.unnoba.poo2025.torneos.controller;
+package ar.edu.unnoba.poo2025.torneos.xController;
 
 import java.util.List;
 import java.util.Map;
@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.edu.unnoba.poo2025.torneos.Util.JwtTokenUtil;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Admin;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Tournament;
-import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentCreateUpdateDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentDetailDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentSummaryDTO;
 import ar.edu.unnoba.poo2025.torneos.service.AdminService;
 import ar.edu.unnoba.poo2025.torneos.service.TournamentService;
+import ar.edu.unnoba.poo2025.torneos.xdto.AdminTournamentCreateUpdateDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.AdminTournamentDetailDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.AdminTournamentSummaryDTO;
 
 @RestController
 @RequestMapping("/admin/tournaments")

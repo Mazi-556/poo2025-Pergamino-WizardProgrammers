@@ -1,4 +1,4 @@
-package ar.edu.unnoba.poo2025.torneos.controller;
+package ar.edu.unnoba.poo2025.torneos.xController;
 
 import java.util.List;
 import java.util.Map;
@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.edu.unnoba.poo2025.torneos.Util.JwtTokenUtil;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Admin;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Competition;
-import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionCreateUpdateDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionDetailDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionRegistrationDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.CompetitionSummaryDTO;
 import ar.edu.unnoba.poo2025.torneos.service.AdminService;
 import ar.edu.unnoba.poo2025.torneos.service.CompetitionService;
 import ar.edu.unnoba.poo2025.torneos.service.RegistrationService;
+import ar.edu.unnoba.poo2025.torneos.xdto.AdminCompetitionCreateUpdateDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.AdminCompetitionDetailDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.AdminCompetitionRegistrationDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.CompetitionSummaryDTO;
 
 @RestController
 @RequestMapping("/admin/tournaments/{tournamentId}/competitions")

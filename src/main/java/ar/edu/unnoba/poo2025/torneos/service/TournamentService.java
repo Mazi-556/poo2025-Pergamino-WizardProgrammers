@@ -2,9 +2,9 @@ package ar.edu.unnoba.poo2025.torneos.service;
 
 import java.util.List;
 
-import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Tournament;
-import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentCreateUpdateDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.AdminTournamentCreateUpdateDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.AdminTournamentDetailDTO;
 
 public interface TournamentService {
     //participante

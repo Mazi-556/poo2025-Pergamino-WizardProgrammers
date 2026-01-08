@@ -12,9 +12,9 @@ import ar.edu.unnoba.poo2025.torneos.domain.model.Competition;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Registration;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Tournament;
-import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionDetailDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionRegistrationDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.CompetitionSummaryDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.AdminCompetitionDetailDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.AdminCompetitionRegistrationDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.CompetitionSummaryDTO;
 
 @Service
 public class CompetitionServiceImp implements CompetitionService {

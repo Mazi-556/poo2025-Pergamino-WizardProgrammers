@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ar.edu.unnoba.poo2025.torneos.Repository.AdminRepository;
 import ar.edu.unnoba.poo2025.torneos.Util.PasswordEncoder;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Admin;
-import ar.edu.unnoba.poo2025.torneos.exceptions.ResourceAlreadyExistsException;
+import ar.edu.unnoba.poo2025.torneos.xexceptions.ResourceAlreadyExistsException;
 
 @Service
 public class AdminServiceImp implements AdminService {

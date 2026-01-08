@@ -1,4 +1,4 @@
-package ar.edu.unnoba.poo2025.torneos.controller;
+package ar.edu.unnoba.poo2025.torneos.xController;
 
 import java.util.List;
 import java.util.Map;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
-import ar.edu.unnoba.poo2025.torneos.dto.ParticipantRegistrationDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.ParticipantRegistrationDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.service.AuthorizationService;
 import ar.edu.unnoba.poo2025.torneos.service.RegistrationService;
+import ar.edu.unnoba.poo2025.torneos.xdto.ParticipantRegistrationDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.ParticipantRegistrationDetailDTO;
 
 @RestController
 @RequestMapping("/inscriptions")    //TODO cambiar en path para que quede bien con el nombre de la clase

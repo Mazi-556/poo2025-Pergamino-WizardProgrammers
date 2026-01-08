@@ -1,4 +1,4 @@
-package ar.edu.unnoba.poo2025.torneos.dto;
+package ar.edu.unnoba.poo2025.torneos.xdto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

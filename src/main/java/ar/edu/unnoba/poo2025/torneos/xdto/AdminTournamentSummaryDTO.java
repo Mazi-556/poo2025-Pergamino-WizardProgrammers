@@ -1,5 +1,6 @@
-package ar.edu.unnoba.poo2025.torneos.dto;
-
+package ar.edu.unnoba.poo2025.torneos.xdto;
+//se crea este DTO para no romper lo que ya esta hecho, se cran para el admin
+//resumen para el listado
 import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
@@ -11,12 +12,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//se crea este DTO para no romper lo que ya esta hecho, se cran para el admin
-//es lo que recibe post y put
-public class AdminTournamentCreateUpdateDTO {
+
+public class AdminTournamentSummaryDTO {
+    private Long id;
     private String name;
-    private String description;
     private LocalDate startDate;
     private LocalDate endDate;
-    
+    private boolean published;
+
 }

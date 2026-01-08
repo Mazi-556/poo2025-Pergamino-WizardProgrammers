@@ -3,8 +3,8 @@ package ar.edu.unnoba.poo2025.torneos.application.usecase;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
 import ar.edu.unnoba.poo2025.torneos.domain.ports.in.CreateParticipantUseCase;
 import ar.edu.unnoba.poo2025.torneos.domain.ports.out.ParticipantRepositoryPort;
+import ar.edu.unnoba.poo2025.torneos.xexceptions.ResourceAlreadyExistsException;
 import ar.edu.unnoba.poo2025.torneos.Util.PasswordEncoder;
-import ar.edu.unnoba.poo2025.torneos.exceptions.ResourceAlreadyExistsException;
 
 public class CreateParticipantService implements CreateParticipantUseCase {
 

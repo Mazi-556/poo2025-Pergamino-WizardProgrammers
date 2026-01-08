@@ -7,11 +7,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-
-import ar.edu.unnoba.poo2025.torneos.dto.AdminCompetitionRegistrationDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.ParticipantRegistrationDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.ParticipantRegistrationDetailDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.RegistrationResponseDTO;
 import ar.edu.unnoba.poo2025.torneos.Repository.RegistrationRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.CompetitionRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
@@ -20,6 +15,10 @@ import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Registration;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Tournament;
 import ar.edu.unnoba.poo2025.torneos.service.CompetitionServiceImp;
+import ar.edu.unnoba.poo2025.torneos.xdto.AdminCompetitionRegistrationDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.ParticipantRegistrationDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.ParticipantRegistrationDetailDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.RegistrationResponseDTO;
 
 
 @Service

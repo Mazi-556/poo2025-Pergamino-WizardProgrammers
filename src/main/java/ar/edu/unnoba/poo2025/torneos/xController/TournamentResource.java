@@ -1,4 +1,4 @@
-package ar.edu.unnoba.poo2025.torneos.controller;
+package ar.edu.unnoba.poo2025.torneos.xController;
 
 import java.util.List;
 import java.util.Map;
@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.edu.unnoba.poo2025.torneos.dto.RegistrationResponseDTO;
-import ar.edu.unnoba.poo2025.torneos.dto.TournamentResponseDTO;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Competition;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Tournament;
-import ar.edu.unnoba.poo2025.torneos.dto.CompetitionSummaryDTO;
 import ar.edu.unnoba.poo2025.torneos.service.AuthorizationService;
 import ar.edu.unnoba.poo2025.torneos.service.TournamentService;
+import ar.edu.unnoba.poo2025.torneos.xdto.CompetitionSummaryDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.RegistrationResponseDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.TournamentResponseDTO;
 import ar.edu.unnoba.poo2025.torneos.service.RegistrationService;
 import ar.edu.unnoba.poo2025.torneos.service.CompetitionService;
 

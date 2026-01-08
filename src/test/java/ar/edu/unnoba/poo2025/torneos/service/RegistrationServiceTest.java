@@ -7,7 +7,7 @@ import ar.edu.unnoba.poo2025.torneos.domain.model.Competition;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Registration;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Tournament;
-import ar.edu.unnoba.poo2025.torneos.dto.RegistrationResponseDTO;
+import ar.edu.unnoba.poo2025.torneos.xdto.RegistrationResponseDTO;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -19,11 +19,6 @@ Estructura de arquitectura hexagonal resumida:
 
 
 
-;
-En domain/ports/in y out, un puerto es para guardar y otro para hacer cosas?
-Vi que el TaskController usa createTaskUseCase.create(desc);. Esta usando el metodo create de CreateTaskService o de CreateTaskUseCase?
-
-
 La misma estructura, pero mas detallada:
 
 📂 ar.edu.unnoba.poo2025.torneos
