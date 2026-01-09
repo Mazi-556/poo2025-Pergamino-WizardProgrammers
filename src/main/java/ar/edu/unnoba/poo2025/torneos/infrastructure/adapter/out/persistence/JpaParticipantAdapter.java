@@ -12,25 +12,25 @@ import ar.edu.unnoba.poo2025.torneos.domain.model.Participant;
 public class JpaParticipantAdapter implements ParticipantRepositoryPort {
 
 
-    private final ParticipantRepository jpaRepository;
+    private final ParticipantRepository ParticipantRepository;
 
-    public JpaParticipantAdapter(ParticipantRepository jpaRepository) {
-        this.jpaRepository = jpaRepository;
+    public JpaParticipantAdapter(ParticipantRepository ParticipantRepository) {
+        this.ParticipantRepository = ParticipantRepository;
     }
 
     @Override
     public Participant save(Participant participant) {  
-        return jpaRepository.save(participant);
+        return ParticipantRepository.save(participant);
     }
 
     @Override
     public Participant findByEmail(String email) {
-        return jpaRepository.findByEmail(email);
+        return ParticipantRepository.findByEmail(email);
     }
 
     @Override
     public Participant findByDni(int dni) { //Aca mapeamos el metodo del repositorio de la infraestructura
-        return jpaRepository.findByDNI(dni);//con el metodo del Repository (jpa springboot). Asi ParticipantRepositoryPort sabe que metodo usar de springboot
+        return ParticipantRepository.findByDNI(dni);//con el metodo del Repository (jpa springboot). Asi ParticipantRepositoryPort sabe que metodo usar de springboot
     }                                       //Es lo mismo con los demas metodos, solo que en este caso se llaman distinto. 
 
 
