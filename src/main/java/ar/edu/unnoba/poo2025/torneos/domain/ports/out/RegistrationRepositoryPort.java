@@ -16,9 +16,13 @@ public interface RegistrationRepositoryPort {
 
     Registration save(Registration registration);
 
-     List<Registration> findByParticipantId(int participantId);
+    List<Registration> findByParticipantId(int participantId);
 
-     Registration findById(int registrationId);
+    Registration findById(int registrationId);
+
+    long countByTournamentId(Long tournamentId);
+    
+    Double sumPriceByTournamentId(Long tournamentId);
 
 
 }

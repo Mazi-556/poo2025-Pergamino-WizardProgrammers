@@ -50,4 +50,14 @@ public class JpaRegistrationAdapter implements RegistrationRepositoryPort {
     public Registration findById(int registrationId) {
         return registrationRepository.findById(registrationId).orElse(null);
     }
+
+    @Override
+    public long countByTournamentId(Long tournamentId) {
+        return registrationRepository.countByTournamentId(tournamentId);
+    }
+
+    @Override
+    public Double sumPriceByTournamentId(Long tournamentId) {
+        return registrationRepository.sumPriceByTournamentId(tournamentId); //Aca se me pidio poner un caso de que devuelva null si no hay inscripciones. Despues lo veo
+    }
 }

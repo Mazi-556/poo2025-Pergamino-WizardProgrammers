@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unnoba.poo2025.torneos.Util.JwtTokenUtil;
+import ar.edu.unnoba.poo2025.torneos.application.dto.AdminTournamentDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Admin;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Tournament;
 import ar.edu.unnoba.poo2025.torneos.service.AdminService;
 import ar.edu.unnoba.poo2025.torneos.service.TournamentService;
 import ar.edu.unnoba.poo2025.torneos.xdto.AdminTournamentCreateUpdateDTO;
-import ar.edu.unnoba.poo2025.torneos.xdto.AdminTournamentDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.xdto.AdminTournamentSummaryDTO;
 
 @RestController

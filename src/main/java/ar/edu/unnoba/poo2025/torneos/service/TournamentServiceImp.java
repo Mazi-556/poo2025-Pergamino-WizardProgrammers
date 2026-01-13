@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.unnoba.poo2025.torneos.application.dto.AdminTournamentDetailDTO;
 import ar.edu.unnoba.poo2025.torneos.domain.model.Tournament;
 import ar.edu.unnoba.poo2025.torneos.infrastructure.adapter.out.persistence.jpa.RegistrationRepository;
 import ar.edu.unnoba.poo2025.torneos.infrastructure.adapter.out.persistence.jpa.TournamentRepository;
 import ar.edu.unnoba.poo2025.torneos.xdto.AdminTournamentCreateUpdateDTO;
-import ar.edu.unnoba.poo2025.torneos.xdto.AdminTournamentDetailDTO;
 
 import java.time.LocalDate;
 
