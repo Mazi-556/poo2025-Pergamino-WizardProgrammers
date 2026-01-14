@@ -1,0 +1,3 @@
+Los services no debería tener anotaciones de un framework específico como @Service de Spring para que en el futuro podamos
+cambiar el framework facilmente. Pero si no le ponemos esas anotaciones Spring no funciona. 
+Para esto esta esta parte. Aca intectamos las dependencias que necesita cada service.

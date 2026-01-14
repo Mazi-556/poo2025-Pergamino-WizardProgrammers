@@ -1,3 +1,11 @@
+
+
+
+
+
+
+
+
 El port out se encarga de enviarle a los CASOS DE USO los datos necesarios para poder hacer logica, validaciones.
 Tambien decide que DTO devolver.
 
