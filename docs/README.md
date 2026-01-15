@@ -1,1 +1,1 @@
-![WhatsApp Image 2025-10-17 at 18 44 33_9133881d](https://github.com/user-attachments/assets/09f6f9e6-e098-46e3-98b7-b5ce0b86d984)
+<img width="1536" height="1194" alt="diagrama-arquitectura-hexagonal-wata-factory-1536x1194" src="https://github.com/user-attachments/assets/d5f1964a-fa3e-4bc4-ae51-ecf6a46276c6" />
