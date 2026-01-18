@@ -8,7 +8,7 @@ import ar.edu.unnoba.poo2025.torneos.Util.PasswordEncoder;
 
 public class CreateParticipantService implements CreateParticipantUseCase {
 
-    private final ParticipantRepositoryPort repositoryPort; //Inteccion el puerto Paricipant, no el repositorio de participant
+    private final ParticipantRepositoryPort repositoryPort; //Inyeccion del puerto Paricipant, no el repositorio de participant
     private final PasswordEncoder passwordEncoder;
 
     public CreateParticipantService(ParticipantRepositoryPort repositoryPort, PasswordEncoder passwordEncoder) {

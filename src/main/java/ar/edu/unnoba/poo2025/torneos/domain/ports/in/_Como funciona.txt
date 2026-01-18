@@ -1,0 +1,14 @@
+
+
+
+
+Estos son interfaces que no tienen logica, solo los metodos.
+Son acciones que el usuario querie hacer. Ej CreateParticipantUserCase (crear un participante)
+
+En lugar de que los controllers dependan de los servicios, dependen de estas interfaces que son imprementadas por los servicios
+
+Flujo:
+Controller(infrastructure\adapter\in\web) -> Caso de uso(model/ports/in) -> Service (application/usercase)
+
+Asi, si la logica de un servicio cambia, el controller no se entera y todo funciona bien.
+

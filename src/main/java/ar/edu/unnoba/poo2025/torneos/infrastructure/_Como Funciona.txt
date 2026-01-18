@@ -1,0 +1,22 @@
+
+
+infraestructure 
+
+
+adapter:
+    in:
+        Aca van los controllers y DTOs. 
+        Basicamente aca se reciben las peticiones HTTP, convierte a JSON y llama
+        a los Port in (casos de uso).
+    
+    out:
+        Aca se guardan datos. Basicamente son implementacion de repositorios o herramientas
+        externas (como el JwtTokenUtil o PasswordEncoder)
+
+
+Configuracion: 
+    Tambien tiene Configuracion del framework
+
+
+Si borramos la carpeta de infraestrucure, la logica del negocio siguie funcionando y 
+compilando, pero no se podria ejecutar ni guardar en la base de datos  
