@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.tomcat.util.file.ConfigurationSource.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.edu.unnoba.poo2025.torneos.Util.JwtTokenUtil;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminAccountResponseDTO;
 import ar.edu.unnoba.poo2025.torneos.dto.AuthenticationRequestDTO;
+import ar.edu.unnoba.poo2025.torneos.exceptions.ResourceNotFoundException;
 import ar.edu.unnoba.poo2025.torneos.service.AdminService;
 import ar.edu.unnoba.poo2025.torneos.models.Admin;
 
@@ -36,7 +38,7 @@ public class AdminAccountResource {
         String email = jwtTokenUtil.getSubject(authenticationHeader);
         Admin current = adminService.findByEmail(email);
         if (current == null) {
-            throw new Exception("Admin del token no encontrado");
+            throw new ResourceNotFoundException("Admin del token no encontrado");
         }
         return current;
     }
