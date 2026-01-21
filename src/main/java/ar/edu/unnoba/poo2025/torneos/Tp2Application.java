@@ -15,8 +15,8 @@ public class Tp2Application {
         SpringApplication.run(Tp2Application.class, args); 
     }
     @Bean 
-    public PasswordEncoder passwordEncoder() {
-        return new PasswordEncoder();
+    public PasswordEncoder passwordEncoder() {      //TODO lei que este tipo de cosas ye le modelMapper van en una carpeta similar a
+        return new PasswordEncoder();                  //WebConfig.
     }
     @Bean
     public ModelMapper modelMapper() {
