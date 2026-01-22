@@ -14,15 +14,15 @@ public interface TournamentService {
 
     List<Tournament> getAllOrderByStartDateDesc();
 
-    Tournament findById(Long id) throws Exception;
+    Tournament findById(Long id);
 
-    void deleteTournament(Long id) throws Exception;
+    void deleteTournament(Long id);
 
-    AdminTournamentDetailDTO getTournamentDetail(Long id) throws Exception;
+    AdminTournamentDetailDTO getTournamentDetail(Long id);
 
-    void publish (Long id) throws Exception;
+    void publish (Long id);
 
-    Tournament updateTournament(Long id, AdminTournamentCreateUpdateDTO dto) throws Exception;
+    Tournament updateTournament(Long id, AdminTournamentCreateUpdateDTO dto);
 
     //TODO: editar torneo
     //TODO: Revisar las exepciones de aqui

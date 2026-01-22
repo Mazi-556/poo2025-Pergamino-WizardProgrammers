@@ -2,19 +2,11 @@ package ar.edu.unnoba.poo2025.torneos.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ar.edu.unnoba.poo2025.torneos.Util.JwtTokenUtil;
 import ar.edu.unnoba.poo2025.torneos.dto.AdminTournamentCreateUpdateDTO;
@@ -24,6 +16,7 @@ import ar.edu.unnoba.poo2025.torneos.models.Admin;
 import ar.edu.unnoba.poo2025.torneos.models.Tournament;
 import ar.edu.unnoba.poo2025.torneos.service.AdminService;
 import ar.edu.unnoba.poo2025.torneos.service.TournamentService;
+import ar.edu.unnoba.poo2025.torneos.exceptions.ResourceNotFoundException;
 
 @RestController
 @RequestMapping("/admin/tournaments")
@@ -38,164 +31,91 @@ public class AdminTournamentResource {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    //valida token y obtener el admin del token
-    private Admin getCurrentAdmin(String authenticationHeader) throws Exception {
-        jwtTokenUtil.validateToken(authenticationHeader); // verifica firma y expiración
+    private Admin getCurrentAdmin(String authenticationHeader) {
+        jwtTokenUtil.validateToken(authenticationHeader); 
         String email = jwtTokenUtil.getSubject(authenticationHeader);
         Admin current = adminService.findByEmail(email);
         if (current == null) {
-            throw new Exception("Admin del token no encontrado");
+            throw new ResourceNotFoundException("Admin del token no encontrado");
         }
         return current;
     }
 
-
-
-
     @GetMapping(produces = "application/json")
-    public ResponseEntity<?> getAll(@RequestHeader("Authorization") String authenticationHeader) {
-        try {
-            getCurrentAdmin(authenticationHeader); //valida el token
+    public ResponseEntity<List<AdminTournamentSummaryDTO>> getAll(@RequestHeader("Authorization") String authenticationHeader) {
+        getCurrentAdmin(authenticationHeader); 
 
-            List<Tournament> tournaments = tournamentService.getAllOrderByStartDateDesc();
-            List<AdminTournamentSummaryDTO> response = tournaments.stream()
-                    .map(t -> new AdminTournamentSummaryDTO(
-                            t.getIdTournament(),
-                            t.getName(),
-                            t.getStartDate(),
-                            t.getEndDate(),
-                            t.isPublished()
-                    ))
-                    .collect(java.util.stream.Collectors.toList());
-            return ResponseEntity.ok(response);        
-    } catch (Exception e){
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(Map.of("error", e.getMessage()));}
+        List<Tournament> tournaments = tournamentService.getAllOrderByStartDateDesc();
+        List<AdminTournamentSummaryDTO> response = tournaments.stream()
+                .map(t -> new AdminTournamentSummaryDTO(
+                        t.getIdTournament(),
+                        t.getName(),
+                        t.getStartDate(),
+                        t.getEndDate(),
+                        t.isPublished()
+                ))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
     }
-
-
-
 
     @GetMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<?> getById(@RequestHeader("Authorization") String authenticationHeader, @PathVariable("id") Long id){
-        try {
-            getCurrentAdmin(authenticationHeader);
-
-
-            AdminTournamentDetailDTO dto = tournamentService.getTournamentDetail(id);
-
-            return ResponseEntity.ok(dto);
-            
-        } catch (Exception e) {
-             HttpStatus status = e.getMessage() != null && e.getMessage().contains("not found")
-                     ? HttpStatus.NOT_FOUND
-                     : HttpStatus.UNAUTHORIZED;
-
-
-            return ResponseEntity.status(status)
-                    .body(Map.of("error", e.getMessage()));
-        }
+    public ResponseEntity<AdminTournamentDetailDTO> getById(@RequestHeader("Authorization") String authenticationHeader, @PathVariable("id") Long id){
+        getCurrentAdmin(authenticationHeader);
+        return ResponseEntity.ok(tournamentService.getTournamentDetail(id));
     }
-
-
-
 
     @PostMapping(produces = "application/json")
-    public ResponseEntity<?> create(@RequestHeader("Authorization") String authenticationHeader, @RequestBody AdminTournamentCreateUpdateDTO body){
-        try {
-            Admin current = getCurrentAdmin(authenticationHeader);
+    public ResponseEntity<AdminTournamentSummaryDTO> create(@RequestHeader("Authorization") String authenticationHeader, @RequestBody AdminTournamentCreateUpdateDTO body){
+        Admin current = getCurrentAdmin(authenticationHeader);
 
-            Tournament t = new Tournament();
-            t.setAdmin_id(current);              
-            t.setName(body.getName());
-            t.setDescription(body.getDescription());
-            t.setStartDate(body.getStartDate());
-            t.setEndDate(body.getEndDate());
-            t.setPublished(false); // por defecto no publicado
+        Tournament t = new Tournament();
+        t.setAdmin_id(current);              
+        t.setName(body.getName());
+        t.setDescription(body.getDescription());
+        t.setStartDate(body.getStartDate());
+        t.setEndDate(body.getEndDate());
+        t.setPublished(false); 
 
-            Tournament saved = tournamentService.saveTournament(t);
+        Tournament saved = tournamentService.saveTournament(t);
 
-            AdminTournamentSummaryDTO dto = new AdminTournamentSummaryDTO(
-                    saved.getIdTournament(),
-                    saved.getName(),
-                    saved.getStartDate(),
-                    saved.getEndDate(),
-                    saved.isPublished()
-            );
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(dto);
-        } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", e.getMessage()));
-        }      
+        return ResponseEntity.status(HttpStatus.CREATED).body(new AdminTournamentSummaryDTO(
+                saved.getIdTournament(),
+                saved.getName(),
+                saved.getStartDate(),
+                saved.getEndDate(),
+                saved.isPublished()
+        ));
     }
 
-
-
-
-
     @PutMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<?> update(
+    public ResponseEntity<AdminTournamentSummaryDTO> update(
             @RequestHeader("Authorization") String authenticationHeader, 
             @PathVariable("id") Long id, 
             @RequestBody AdminTournamentCreateUpdateDTO body) {
-        try {
-            getCurrentAdmin(authenticationHeader); // Validar seguridad
-
-            Tournament saved = tournamentService.updateTournament(id, body);
-            
-            AdminTournamentSummaryDTO dto = new AdminTournamentSummaryDTO(
-                    saved.getIdTournament(),
-                    saved.getName(),
-                    saved.getStartDate(),
-                    saved.getEndDate(),
-                    saved.isPublished()
-            );
-
-            return ResponseEntity.ok(dto);
-        } catch (Exception e) {
-            HttpStatus status = e.getMessage() != null && e.getMessage().contains("not found")
-                    ? HttpStatus.NOT_FOUND
-                    : HttpStatus.BAD_REQUEST;
-            return ResponseEntity.status(status)
-                    .body(Map.of("error", e.getMessage()));
-        }
+        
+        getCurrentAdmin(authenticationHeader); 
+        Tournament saved = tournamentService.updateTournament(id, body);
+        
+        return ResponseEntity.ok(new AdminTournamentSummaryDTO(
+                saved.getIdTournament(),
+                saved.getName(),
+                saved.getStartDate(),
+                saved.getEndDate(),
+                saved.isPublished()
+        ));
     }
 
-
-
-
-    @DeleteMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<?> delete(@RequestHeader("Authorization") String authenticationHeader,  @PathVariable("id") Long id) {
-        try{
-            getCurrentAdmin(authenticationHeader);
-            tournamentService.deleteTournament(id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            HttpStatus status = e.getMessage() != null && e.getMessage().contains("not found")
-                    ? HttpStatus.NOT_FOUND
-                    : HttpStatus.BAD_REQUEST;
-            return ResponseEntity.status(status)
-                    .body(Map.of("error", e.getMessage()));  // Estos catch se ven sospechosos, investigar si se puede llamar a una exception
-        }
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> delete(@RequestHeader("Authorization") String authenticationHeader, @PathVariable("id") Long id) {
+        getCurrentAdmin(authenticationHeader);
+        tournamentService.deleteTournament(id);
+        return ResponseEntity.noContent().build();
     }
 
-
-
-
-@PatchMapping("/{id}/published")
-    public ResponseEntity<?> publishTournament(@RequestHeader("Authorization") String authenticationHeader, @PathVariable Long id) {
-        try {
-
-            getCurrentAdmin(authenticationHeader);
-            tournamentService.publish(id);
-            
-            return ResponseEntity.ok(Map.of("message", "Torneo publicado exitosamente"));
-        } catch (Exception e) {
-            HttpStatus status = e.getMessage().contains("no encontrado") 
-                ? HttpStatus.NOT_FOUND 
-                : HttpStatus.UNAUTHORIZED;
-            return ResponseEntity.status(status).body(Map.of("error", e.getMessage()));
-        }
+    @PatchMapping("/{id}/published")
+    public ResponseEntity<Map<String, String>> publishTournament(@RequestHeader("Authorization") String authenticationHeader, @PathVariable Long id) {
+        getCurrentAdmin(authenticationHeader);
+        tournamentService.publish(id);
+        return ResponseEntity.ok(Map.of("message", "Torneo publicado exitosamente"));
     }
 }

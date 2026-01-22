@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -40,7 +41,14 @@ public class GlobalExceptionHandler {
                 .body(Map.of("error", ex.getMessage()));
     }
 
-    // 5. El error generico (Si se captura una excepcion que no está manejada específicamente, cae aca y devuelve error 500)
+    //5. Para MissingRequestHeaderException (cuando falta el header de Authorization)
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    public ResponseEntity<?> handleMissingHeader(MissingRequestHeaderException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(Map.of("error", "Falta el encabezado de autorización (Authorization)"));
+}
+
+    // El error generico (Si se captura una excepcion que no está manejada específicamente, cae aca y devuelve error 500)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGlobal(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

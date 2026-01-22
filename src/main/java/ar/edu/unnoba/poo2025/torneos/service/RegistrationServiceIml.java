@@ -19,7 +19,7 @@ import ar.edu.unnoba.poo2025.torneos.models.Tournament;
 import ar.edu.unnoba.poo2025.torneos.Repository.RegistrationRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.CompetitionRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
-import ar.edu.unnoba.poo2025.torneos.service.CompetitionServiceImp;
+
 
 
 @Service
