@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import ar.edu.unnoba.poo2025.torneos.Repository.AdminRepository;
 import ar.edu.unnoba.poo2025.torneos.Util.PasswordEncoder;
 import ar.edu.unnoba.poo2025.torneos.models.Admin;
+import ar.edu.unnoba.poo2025.torneos.exceptions.BadRequestException;
 import ar.edu.unnoba.poo2025.torneos.exceptions.ResourceAlreadyExistsException;
+import ar.edu.unnoba.poo2025.torneos.exceptions.ResourceNotFoundException;
 
 @Service
 public class AdminServiceImp implements AdminService {
@@ -29,17 +31,18 @@ public class AdminServiceImp implements AdminService {
         return adminRepository.save(admin);
     }
     @Override
-    public Admin authenticate(String email, String password) throws Exception {
-        Admin db = adminRepository.findByEmail(email);
-        if (db == null) {
-            throw new Exception("Admin no encontrado");
+    public Admin authenticate(String email, String password) {
+        Admin admin = adminRepository.findByEmail(email);
+        if (admin == null) {
+            // En lugar de una Exception generica, lanzamos la que definimos
+            throw new ResourceNotFoundException("Admin no encontrado");
         }
-        boolean ok = passwordEncoder.verify(password, db.getPassword());
-        if (!ok) {
-            throw new Exception("Password incorrecto");
+        
+        if (!passwordEncoder.verify(password, admin.getPassword())) {
+            // lo mismo aca.
+            throw new BadRequestException("Contraseña incorrecta");
         }
-
-        return db;
+        return admin;
     }
     @Override
     public Admin findByEmail(String email) {
@@ -61,18 +64,13 @@ public class AdminServiceImp implements AdminService {
 
 
     @Override
-    public void deleteAdmin(Integer idToDelete, Integer requesterId) throws Exception { //TODO: exception
-        // 1. Regla de Negocio: Autoprotección
+    public void deleteAdmin(Integer idToDelete, Integer requesterId) {
         if (idToDelete.equals(requesterId)) {
-            throw new Exception("No puedes eliminar tu propia cuenta de administrador.");
+            throw new BadRequestException("No puedes eliminar tu propia cuenta");
         }
-
-        // 2. Validación de existencia (opcional pero recomendada)
         if (!adminRepository.existsById(idToDelete)) {
-            throw new Exception("El administrador a eliminar no existe.");
+            throw new ResourceNotFoundException("El administrador no existe");
         }
-
-        // 3. Acción
         adminRepository.deleteById(idToDelete);
     }
 }

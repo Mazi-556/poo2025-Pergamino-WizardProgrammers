@@ -25,26 +25,16 @@ public class AdminAuthResource {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    @PostMapping (path = "/auth", produces = "application/json")
+    @PostMapping(path = "/auth", produces = "application/json")
     public ResponseEntity<?> authentication(@RequestBody AuthenticationRequestDTO dto) {
-        try {
-            Admin admin = adminService.authenticate(dto.getEmail(), dto.getPassword());
-            String token = jwtTokenUtil.generateToken(admin.getEmail());
-            return ResponseEntity.ok(Map.of("token", token));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("error", e.getMessage()));
+        Admin admin = adminService.authenticate(dto.getEmail(), dto.getPassword());
+        String token = jwtTokenUtil.generateToken(admin.getEmail());
+        return ResponseEntity.ok(Map.of("token", token));
         }
-    }
-    @PostMapping("/register")   //TODO sacar de aca y moverlo a AdminAccountResource
-        public ResponseEntity<?> create(@RequestBody Admin admin) {
-            try {
-                // Esto usa tu servicio existente que YA encripta la contraseña
-                Admin created = adminService.create(admin); 
-                return ResponseEntity.status(HttpStatus.CREATED).body(created);
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(Map.of("error", e.getMessage()));
-            }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> create(@RequestBody Admin admin) {
+        Admin created = adminService.create(admin); 
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
         }
 }

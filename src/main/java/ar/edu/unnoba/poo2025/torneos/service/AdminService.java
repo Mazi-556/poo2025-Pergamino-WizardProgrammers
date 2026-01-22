@@ -6,10 +6,10 @@ import ar.edu.unnoba.poo2025.torneos.models.Admin;
 
 public interface AdminService {
     Admin create(Admin admin);
-    Admin authenticate(String email, String password) throws Exception;
+    Admin authenticate(String email, String password);
     Admin findByEmail(String email);
     boolean existsByEmail(String email);
     List<Admin> findAll();
     void deleteById(Integer id) throws Exception;
-    void deleteAdmin(Integer idToDelete, Integer requesterId) throws Exception;
+    void deleteAdmin(Integer idToDelete, Integer requesterId);
 }
