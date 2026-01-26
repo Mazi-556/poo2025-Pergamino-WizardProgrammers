@@ -6,7 +6,6 @@ import jakarta.persistence.CascadeType;
 
 import java.util.List;
 
-import ar.edu.unnoba.poo2025.torneos.models.Registration;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

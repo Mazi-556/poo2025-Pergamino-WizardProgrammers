@@ -24,7 +24,7 @@ import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
 
 @Service
 public class RegistrationServiceIml implements RegistrationService {
-    private final CompetitionService competitionService;
+    private final CompetitionService competitionService;  
     private final RegistrationRepository registrationRepository;
     private final TournamentRepository tournamentRepository;
     private final CompetitionRepository competitionRepository;

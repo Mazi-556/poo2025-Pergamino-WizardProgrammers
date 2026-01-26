@@ -10,7 +10,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 
-import ar.edu.unnoba.poo2025.torneos.exceptions.BadRequestException; // Importamos tu excepción
+import ar.edu.unnoba.poo2025.torneos.exceptions.BadRequestException;
+import ar.edu.unnoba.poo2025.torneos.exceptions.UnauthorizedException;
 
 @Component
 public class JwtTokenUtil {
@@ -54,14 +55,9 @@ public class JwtTokenUtil {
     return token.startsWith("Bearer ") ? token.substring(7) : token;
   }
 
-  /**
-   * Versión limpia de validación.
-   * Lanza BadRequestException (Unchecked) para que el GlobalExceptionHandler la capture solo.
-   */
   public void validateToken(String token) {
-    if (!verify(token)) {
-        // Al lanzar BadRequestException, el IDE dejará de marcar error en rojo en tus Resources
-        throw new BadRequestException("Token inválido o expirado");
+      if (!verify(token)) {
+          throw new UnauthorizedException("Token inválido o expirado");
+      }
     }
-  }
 }

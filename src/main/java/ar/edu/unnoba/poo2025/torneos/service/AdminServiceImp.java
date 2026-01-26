@@ -57,7 +57,10 @@ public class AdminServiceImp implements AdminService {
         return adminRepository.findAll();
     }
     @Override
-    public void deleteById(Integer id) throws Exception {   //TODO: exeption
+    public void deleteById(Integer id) {
+        if (!adminRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Admin no encontrado");
+        }
         adminRepository.deleteById(id);
     }
 

@@ -10,6 +10,6 @@ public interface AdminService {
     Admin findByEmail(String email);
     boolean existsByEmail(String email);
     List<Admin> findAll();
-    void deleteById(Integer id) throws Exception;
+    void deleteById(Integer id);
     void deleteAdmin(Integer idToDelete, Integer requesterId);
 }
