@@ -31,15 +31,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(datosParaEnviar) // Convertimos la "caja" de JS a texto JSON
             });
 
-            // 6. Verificamos si el backend nos dio luz verde (Status 200 OK)
-            if (respuesta.ok) {
-                const resultado = await respuesta.json();
-                console.log("¡Éxito! Token recibido:", resultado.token);
+            if (response.ok) {
+                const result = await response.json();
                 
-                alert("Login exitoso. Revisa la consola (F12) para ver el token.");
-                // Aquí podrías guardar el token y redirigir a otra página
+                //Aca se guarda el token en el localStorage. Esto hace que el usuario no tenga que abrir la consola para obtener el
+                //token
+                localStorage.setItem('jwt_token', result.token);
+
+                //Luego de guardar el token, redirijimos a una pagina. (en este caso [pagina que se va a usar]) //TODO
+                window.location.href = "/panel.html"; 
+
             } else {
-                alert("Error: Usuario o contraseña incorrectos.");
+                alert("Error: Usuario o contraseña incorrectos");
             }
         } catch (error) {
             console.error("Error de conexión:", error);
