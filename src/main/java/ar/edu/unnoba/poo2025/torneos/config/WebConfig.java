@@ -23,7 +23,7 @@ public class WebConfig {
 
             @Override
             public void addViewControllers(ViewControllerRegistry registry) {
-                registry.addRedirectViewController("/", "/login/index.html");
+                registry.addRedirectViewController("/", "/login/login.html");
             }
         };
     }

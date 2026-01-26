@@ -21,32 +21,31 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            // 5. Usamos 'fetch' (el mensajero) para enviar los datos a Spring Boot
-            // Asumimos que tu backend corre en el puerto 8080
-            const respuesta = await fetch('http://localhost:8080/admin/auth', {
-                method: 'POST', // Método HTTP
+            // 1. La variable se llama 'respuesta'
+            const respuesta = await fetch('http://localhost:8080/admin/auth', { 
+                method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json' // Le avisamos al backend que le enviamos JSON
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(datosParaEnviar) // Convertimos la "caja" de JS a texto JSON
+                body: JSON.stringify(datosParaEnviar)
             });
 
-            if (response.ok) {
-                const result = await response.json();
+            // 2. Aquí DEBES usar 'respuesta', NO 'response'
+            if (respuesta.ok) { 
+                // 3. Aquí TAMBIÉN DEBES usar 'respuesta', NO 'response'
+                const result = await respuesta.json(); 
                 
-                //Aca se guarda el token en el localStorage. Esto hace que el usuario no tenga que abrir la consola para obtener el
-                //token
                 localStorage.setItem('jwt_token', result.token);
-
-                //Luego de guardar el token, redirijimos a una pagina. (en este caso [pagina que se va a usar]) //TODO
                 window.location.href = "/panel.html"; 
 
             } else {
+                // Si el backend dice 401 (no autorizado), cae acá.
                 alert("Error: Usuario o contraseña incorrectos");
             }
         } catch (error) {
-            console.error("Error de conexión:", error);
-            alert("No se pudo conectar con el servidor (¿Está encendido el Backend?).");
+            // Si hay un error de código arriba (como 'response is not defined'), cae acá.
+            console.error("Error real:", error); // Mira esto en la consola (F12)
+            alert("Ocurrió un error (Revisa la consola con F12 para ver el detalle).");
         }
     });
 });
