@@ -1,6 +1,5 @@
 package ar.edu.unnoba.poo2025.torneos.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unnoba.poo2025.torneos.Repository.ParticipantRepository;
@@ -11,33 +10,32 @@ import ar.edu.unnoba.poo2025.torneos.models.Participant;
 @Service
 public class ParticipantServiceImp implements ParticipantService {
 
-    @Autowired      //TODO cambiar por final y constructor
-    private ParticipantRepository participantRepository;
+    private final ParticipantRepository participantRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;   
+    public ParticipantServiceImp(ParticipantRepository participantRepository, PasswordEncoder passwordEncoder) {
+        this.participantRepository = participantRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public void create(Participant participant) {
-        // Verificar si el email ya existe
-        Participant existingParticipant = participantRepository.findByEmail(participant.getEmail());
-        if (existingParticipant != null) {
+        // Validación de email
+        if (participantRepository.findByEmail(participant.getEmail()) != null) {
             throw new ResourceAlreadyExistsException("Ya existe un participante con ese email.");
         }
 
-        //TODO:Podriamos meter una validacion para que el DNI sea de 8 digitos
-
-        Participant existingParticipantDNI = participantRepository.findByDNI(participant.getDni());
-        if (existingParticipantDNI != null) {
+        // Validación de DNI
+        if (participantRepository.findByDNI(participant.getDni()) != null) {
             throw new ResourceAlreadyExistsException("Ya existe un participante con ese DNI.");
         }
-        
 
         String hashedPassword = passwordEncoder.encode(participant.getPassword());
         participant.setPassword(hashedPassword);
 
         participantRepository.save(participant);
     }
+
     @Override
     public Participant findByEmail(String email) {
         return participantRepository.findByEmail(email);
