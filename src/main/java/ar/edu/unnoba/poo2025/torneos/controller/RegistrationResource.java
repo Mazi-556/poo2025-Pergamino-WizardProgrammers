@@ -1,10 +1,7 @@
 package ar.edu.unnoba.poo2025.torneos.controller;
 
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,28 +16,24 @@ import ar.edu.unnoba.poo2025.torneos.service.AuthorizationService;
 import ar.edu.unnoba.poo2025.torneos.service.RegistrationService;
 
 @RestController
-@RequestMapping("/inscriptions")    //TODO cambiar en path para que quede bien con el nombre de la clase
+@RequestMapping("/registrations") 
 public class RegistrationResource {
 
-    @Autowired
-    private RegistrationService registrationService;
-    
-    @Autowired
-    private AuthorizationService authorizationService;
+    private final RegistrationService registrationService;
+    private final AuthorizationService authorizationService;
+
+    public RegistrationResource(RegistrationService registrationService, AuthorizationService authorizationService) {
+        this.registrationService = registrationService;
+        this.authorizationService = authorizationService;
+    }
 
     @GetMapping(produces = "application/json")
     public ResponseEntity<?> getMyInscriptions(@RequestHeader("Authorization") String token) {
-        try {
-            Participant p = authorizationService.authorize(token);
-            
-            List<ParticipantRegistrationDTO> dtos = registrationService.getParticipantRegistrations(p.getIdParticipant());
-            
-            return ResponseEntity.ok(dtos);
-            
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("error", e.getMessage()));
-        }
+        // authorize lanzará UnauthorizedException si el token falla
+        Participant p = authorizationService.authorize(token);
+        
+        List<ParticipantRegistrationDTO> dtos = registrationService.getParticipantRegistrations(p.getIdParticipant());
+        return ResponseEntity.ok(dtos);
     }
 
 
@@ -48,20 +41,11 @@ public class RegistrationResource {
     public ResponseEntity<?> getInscriptionDetail(
             @RequestHeader("Authorization") String token,
             @PathVariable("id") Integer id) {
-        try {
-
-            Participant p = authorizationService.authorize(token);
-
-            ParticipantRegistrationDetailDTO dto = registrationService.getRegistrationDetail(id, p.getIdParticipant());
-
-            return ResponseEntity.ok(dto);
-
-        } catch (Exception e) {
-            HttpStatus status = HttpStatus.BAD_REQUEST;
-            if (e.getMessage().contains("no encontrada")) status = HttpStatus.NOT_FOUND;
-            if (e.getMessage().contains("No tienes permiso")) status = HttpStatus.FORBIDDEN;
-            
-            return ResponseEntity.status(status).body(Map.of("error", e.getMessage()));
-        }
+        
+        Participant p = authorizationService.authorize(token);
+        
+        // getRegistrationDetail va a lanzar una UnauthorizedException si la inscripcion no es del usuario
+        ParticipantRegistrationDetailDTO dto = registrationService.getRegistrationDetail(id, p.getIdParticipant());
+        return ResponseEntity.ok(dto);
     }
 }
