@@ -10,6 +10,7 @@ import TournamentsPage from './pages/participant/TournamentsPage';
 import TournamentDetailPage from './pages/participant/TournamentDetailPage';
 import CompetitionDetailPage from './pages/participant/CompetitionDetailPage';
 import RegistrationsPage from './pages/participant/RegistrationsPage';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 function App() {
   return (
@@ -41,6 +42,11 @@ function App() {
               <ProtectedRoute role="participant">
                 <RegistrationsPage />
               </ProtectedRoute>
+            } />
+            <Route path="/admin" element={
+            <ProtectedRoute role="admin">
+                <AdminDashboard />
+            </ProtectedRoute>
             } />
           </Routes>
         </MainLayout>
