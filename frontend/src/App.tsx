@@ -14,6 +14,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminTournaments from './pages/admin/AdminTournaments';
 import AdminTournamentCreate from './pages/admin/AdminTournamentCreate';
 import AdminTournamentDetail from './pages/admin/AdminTournamentDetail';
+import AdminCompetitionCreate from './pages/admin/AdminCompetitionCreate';
 
 function App() {
   return (
@@ -68,6 +69,12 @@ function App() {
             </ProtectedRoute>
             } />
             
+            <Route path="/admin/torneos/:id/competencia/nueva" element={
+            <ProtectedRoute role="admin">
+                <AdminCompetitionCreate />
+            </ProtectedRoute>
+            } />
+
             
           </Routes>
         </MainLayout>
