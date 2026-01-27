@@ -14,10 +14,4 @@ public class AdminCompetitionCreateUpdateDTO { //se utiliza para crear/actualiza
     private String name;
     private int quota;
     private double basePrice;  
-    //TODO En lugar de tener este dto, podriamos usar el dto de AdminCompetitionDetailDTO
-    // Y en lugar de pasarle todos los atributos que tiene (id, total_registrations, total_amount, etc), pasarle solo lo que queremos de aqui (name, quota, base_price).
-    // El problema que me imagino es que 1-deberiamos cambiarle el nombre al dto que usemos. 2-Si no le ponemos todos los atributos al dto, los demas atributos apareceran como null? eso afectara en algo? Para pensar
-
-
-    //Investigue un poco y parece que hay que tener cuidao con los dtos que sean de salida y los de entrada. 
 }
