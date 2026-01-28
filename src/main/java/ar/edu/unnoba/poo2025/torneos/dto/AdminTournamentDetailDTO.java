@@ -1,6 +1,8 @@
 package ar.edu.unnoba.poo2025.torneos.dto;
 
 import java.time.LocalDate;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +23,6 @@ public class AdminTournamentDetailDTO {
     private boolean published;
     private long totalRegistrations;
     private double totalAmount;
+    private List<CompetitionSummaryDTO> competitions;
 
 }
