@@ -107,12 +107,12 @@ class ApiService {
   }
 
   // ==================== TOURNAMENTS ====================
-  // Admin - Get all tournaments
+
   getAdminTournaments() {
     return this.request('/admin/tournaments');
   }
 
-  // Admin - Create tournament
+
   createTournament(data: {
     name: string;
     description: string;
@@ -125,12 +125,12 @@ class ApiService {
     });
   }
 
-  // Admin - Get tournament detail
+
   getAdminTournamentDetail(tournamentId: number) {
     return this.request(`/admin/tournaments/${tournamentId}`);
   }
 
-  // Admin - Update tournament
+
   updateTournament(
     tournamentId: number,
     data: {
@@ -146,37 +146,36 @@ class ApiService {
     });
   }
 
-  // Admin - Delete tournament
+
   deleteTournament(tournamentId: number) {
     return this.request(`/admin/tournaments/${tournamentId}`, {
       method: 'DELETE',
     });
   }
 
-  // Admin - Publish tournament
+
   publishTournament(tournamentId: number) {
     return this.request(`/admin/tournaments/${tournamentId}/published`, {
       method: 'PATCH',
     });
   }
 
-  // Participant - Get published tournaments
+
   getTournaments() {
     return this.request('/tournaments');
   }
 
-  // Participant - Get tournament competitions
+
   getTournamentCompetitions(tournamentId: number) {
     return this.request(`/tournaments/${tournamentId}/competitions`);
   }
 
   // ==================== COMPETITIONS ====================
-  // Admin - Get competitions
+
   getAdminCompetitions(tournamentId: number) {
     return this.request(`/admin/tournaments/${tournamentId}/competitions`);
   }
 
-  // Admin - Create competition
   createCompetition(
     tournamentId: number,
     data: {
@@ -191,14 +190,12 @@ class ApiService {
     });
   }
 
-  // Admin - Get competition detail
   getAdminCompetitionDetail(tournamentId: number, competitionId: number) {
     return this.request(
       `/admin/tournaments/${tournamentId}/competitions/${competitionId}`
     );
   }
 
-  // Admin - Update competition
   updateCompetition(
     tournamentId: number,
     competitionId: number,
@@ -217,7 +214,6 @@ class ApiService {
     );
   }
 
-  // Admin - Delete competition
   deleteCompetition(tournamentId: number, competitionId: number) {
     return this.request(
       `/admin/tournaments/${tournamentId}/competitions/${competitionId}`,
@@ -227,14 +223,12 @@ class ApiService {
     );
   }
 
-  // Admin - Get competition registrations
   getCompetitionRegistrations(tournamentId: number, competitionId: number) {
     return this.request(
       `/admin/tournaments/${tournamentId}/competitions/${competitionId}/registrations`
     );
   }
 
-  // Participant - Get competition detail
   getCompetitionDetail(tournamentId: number, competitionId: number) {
     return this.request(
       `/tournaments/${tournamentId}/competitions/${competitionId}`
@@ -242,7 +236,7 @@ class ApiService {
   }
 
   // ==================== REGISTRATIONS ====================
-  // Create registration
+
   createRegistration(tournamentId: number, competitionId: number) {
     return this.request(
       `/tournaments/${tournamentId}/competitions/${competitionId}/registrations`,
@@ -252,15 +246,15 @@ class ApiService {
     );
   }
 
-  // Get my registrations
+
   getMyRegistrations() {
     return this.request('/registrations');
   }
 
-  // Get registration detail
   getRegistrationDetail(registrationId: number) {
     return this.request(`/registrations/${registrationId}`);
   }
 }
-export default ApiService;
+
 export const apiService = new ApiService();
+export default ApiService;

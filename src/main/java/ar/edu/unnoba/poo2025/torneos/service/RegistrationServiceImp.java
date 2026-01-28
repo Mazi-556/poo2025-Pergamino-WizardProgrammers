@@ -28,12 +28,12 @@ import ar.edu.unnoba.poo2025.torneos.exceptions.ResourceAlreadyExistsException;
 import ar.edu.unnoba.poo2025.torneos.exceptions.UnauthorizedException;
 
 @Service
-public class RegistrationServiceIml implements RegistrationService { 
+public class RegistrationServiceImp implements RegistrationService { 
     private final RegistrationRepository registrationRepository;
     private final TournamentRepository tournamentRepository;
     private final CompetitionRepository competitionRepository;
 
-    public RegistrationServiceIml(RegistrationRepository registrationRepository, TournamentRepository tournamentRepository, CompetitionRepository competitionRepository) {
+    public RegistrationServiceImp(RegistrationRepository registrationRepository, TournamentRepository tournamentRepository, CompetitionRepository competitionRepository) {
         this.registrationRepository = registrationRepository;
         this.tournamentRepository = tournamentRepository;
         this.competitionRepository = competitionRepository;

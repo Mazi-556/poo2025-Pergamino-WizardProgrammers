@@ -8,7 +8,7 @@ export const HomePage: React.FC = () => {
 
   return (
     <div className="w-full">
-      {/* Hero Section */}
+      {}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-accent-900 text-white py-20 md:py-32">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-accent-500 rounded-full opacity-10 blur-3xl"></div>
@@ -63,7 +63,7 @@ export const HomePage: React.FC = () => {
               </div>
             </div>
 
-            {/* Hero Image */}
+            {}
             <div className="hidden md:flex justify-center">
               <div className="relative w-full max-w-md">
                 <div className="absolute inset-0 bg-gradient-to-r from-accent-400 to-primary-400 rounded-3xl blur-2xl opacity-30"></div>
@@ -84,7 +84,7 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Features Section */}
+      {}
       <section className="py-20 md:py-32 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -140,7 +140,7 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* For Admins Section */}
+      {}
       <section className="py-20 md:py-32 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -188,7 +188,7 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* For Participants Section */}
+      {}
       <section className="py-20 md:py-32 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -237,7 +237,7 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {}
       <section className="py-20 md:py-32 bg-gradient-to-r from-primary-600 to-accent-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">¿Listo para Comenzar?</h2>
@@ -262,7 +262,7 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Info Section */}
+      {}
       <section className="py-16 bg-gray-900 text-gray-100 border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8 text-center">

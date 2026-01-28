@@ -75,12 +75,12 @@ export const RegistrationDetailPage: React.FC = () => {
         />
       )}
 
-      {/* Main Card */}
+      {}
       <Card className="mb-8">
         <CardHeader title="Detalles de la Inscripción" />
         <CardBody className="p-8">
           <div className="space-y-8">
-            {/* Tournament Info */}
+            {}
             <div>
               <p className="text-sm text-gray-600 uppercase font-semibold mb-2">
                 Torneo
@@ -90,7 +90,7 @@ export const RegistrationDetailPage: React.FC = () => {
               </h2>
             </div>
 
-            {/* Competition Info */}
+            {}
             <div>
               <p className="text-sm text-gray-600 uppercase font-semibold mb-2">
                 Competencia
@@ -100,7 +100,7 @@ export const RegistrationDetailPage: React.FC = () => {
               </h3>
             </div>
 
-            {/* Details Grid */}
+            {}
             <div className="grid md:grid-cols-3 gap-6 py-6 border-y border-gray-200">
               <div>
                 <p className="text-sm text-gray-600 uppercase font-semibold mb-2">
@@ -133,7 +133,7 @@ export const RegistrationDetailPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Info Box */}
+            {}
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
               <h4 className="font-semibold text-blue-900 mb-3">
                 ℹ️ Información Importante
@@ -157,7 +157,7 @@ export const RegistrationDetailPage: React.FC = () => {
         </CardBody>
       </Card>
 
-      {/* Additional Info */}
+      {}
       <Card>
         <CardBody className="p-6">
           <p className="text-sm text-gray-600 mb-2">ID de Inscripción</p>

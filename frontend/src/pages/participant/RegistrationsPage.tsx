@@ -7,7 +7,7 @@ interface Registration {
   price: number; // Viene como 'price' del backend
   tournamentName: string;
   competitionName: string;
-  quota: number; // El campo nuevo que agregamos
+  quota: number;
 }
 
 const RegistrationsPage: React.FC = () => {

@@ -24,5 +24,4 @@ public interface TournamentService {
 
     Tournament updateTournament(Long id, AdminTournamentCreateUpdateDTO dto);
 
-    //TODO: editar torneo
 }

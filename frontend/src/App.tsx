@@ -8,6 +8,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/auth/LoginPage';
 import { SignupPage } from './pages/auth/SignupPage';
+import { EditTournamentPage } from './pages/admin/EditTournamentPage';
 
 // Admin Pages
 import { AdminDashboard } from './pages/admin/AdminDashboard';
@@ -22,6 +23,7 @@ import { TournamentDetailPage } from './pages/participant/TournamentDetailPage';
 import { CompetitionDetailPage } from './pages/participant/CompetitionDetailPage';
 import RegistrationsPage from './pages/participant/RegistrationsPage';
 import { RegistrationDetailPage } from './pages/participant/RegistrationDetailPage';
+
 
 function App() {
   return (
@@ -66,6 +68,14 @@ function App() {
                 element={
                   <ProtectedRoute requiredRole="admin">
                     <AdminCompetitions />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/tournaments/:tournamentId/edit"
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <EditTournamentPage />
                   </ProtectedRoute>
                 }
               />
