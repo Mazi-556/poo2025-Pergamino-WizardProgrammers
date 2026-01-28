@@ -56,12 +56,13 @@ public class RegistrationServiceIml implements RegistrationService {
                     Participant p = r.getParticipant_id();
                     return new AdminCompetitionRegistrationDTO(
                         r.getIdregistration(),
-                        r.getPrice(),
-                        r.getDate(),
+                        r.getPrice(), // Va a finalPrice
+                        r.getDate(),  // Va a registrationDate
                         p.getIdParticipant(),
-                        p.getName(),
-                        p.getSurname(),
-                        p.getDni()
+                        p.getName(),    // Va a participantFirstName
+                        p.getSurname(), // Va a participantLastName
+                        p.getDni(),
+                        p.getEmail()   
                     );
                 })
                 .collect(Collectors.toList());

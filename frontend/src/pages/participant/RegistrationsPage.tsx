@@ -46,7 +46,7 @@ const RegistrationsPage: React.FC = () => {
           <p className="text-blue-100 text-sm italic">panel de control unnoba</p>
         </div>
         <div className="text-right">
-          <p className="text-xs uppercase opacity-70 font-semibold">total pagado</p>
+          <p className="text-xs uppercase opacity-70 font-semibold">total a pagar</p>
           <p className="text-3xl font-black">${total.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</p>
         </div>
       </div>

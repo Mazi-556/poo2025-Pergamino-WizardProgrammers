@@ -251,8 +251,13 @@ export const AdminCompetitionDetail: React.FC = () => {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200">
+                    {/* SEPARADO: Columna Nombre */}
                     <th className="text-left py-3 px-4 font-semibold text-gray-900">
                       Nombre
+                    </th>
+                    {/* SEPARADO: Columna Apellido (Nueva) */}
+                    <th className="text-left py-3 px-4 font-semibold text-gray-900">
+                      Apellido
                     </th>
                     <th className="text-left py-3 px-4 font-semibold text-gray-900">
                       Email
@@ -271,13 +276,18 @@ export const AdminCompetitionDetail: React.FC = () => {
                 <tbody>
                   {registrations.map((reg, idx) => (
                     <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
+                      {/* SEPARADO: Celda Nombre */}
                       <td className="py-3 px-4 text-gray-900">
-                        {reg.participantFirstName} {reg.participantLastName}
+                        {reg.participantFirstName}
+                      </td>
+                      {/* SEPARADO: Celda Apellido */}
+                      <td className="py-3 px-4 text-gray-900">
+                        {reg.participantLastName}
                       </td>
                       <td className="py-3 px-4 text-gray-600">{reg.participantEmail}</td>
                       <td className="py-3 px-4 text-gray-600">{reg.participantDni}</td>
                       <td className="py-3 px-4 text-gray-600">
-                        {new Date(reg.registrationDate).toLocaleDateString()}
+                        {new Date(reg.registrationDate).toLocaleDateString('es-AR')}
                       </td>
                       <td className="py-3 px-4 text-right font-semibold text-gray-900">
                         ${reg.finalPrice}
