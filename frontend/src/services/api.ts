@@ -262,5 +262,5 @@ class ApiService {
     return this.request(`/registrations/${registrationId}`);
   }
 }
-
+export default ApiService;
 export const apiService = new ApiService();

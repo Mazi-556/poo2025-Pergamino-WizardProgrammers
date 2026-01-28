@@ -137,7 +137,8 @@ public class RegistrationServiceIml implements RegistrationService {
             r.getCompetition_id().getTournament_id().getIdTournament(),
             r.getCompetition_id().getTournament_id().getName(),
             r.getCompetition_id().getIdCompetition(),
-            r.getCompetition_id().getName()
+            r.getCompetition_id().getName(),
+            r.getCompetition_id().getQuota()
         )).collect(Collectors.toList());
     }
 

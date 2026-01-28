@@ -20,7 +20,7 @@ import { AdminCompetitionDetail } from './pages/admin/AdminCompetitionDetail';
 import { TournamentsPage } from './pages/participant/TournamentsPage';
 import { TournamentDetailPage } from './pages/participant/TournamentDetailPage';
 import { CompetitionDetailPage } from './pages/participant/CompetitionDetailPage';
-import { RegistrationsPage } from './pages/participant/RegistrationsPage';
+import RegistrationsPage from './pages/participant/RegistrationsPage';
 import { RegistrationDetailPage } from './pages/participant/RegistrationDetailPage';
 
 function App() {

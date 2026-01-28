@@ -91,11 +91,13 @@ public class AdminCompetitionResource {
                 body.getBasePrice()
         );
 
+        // FIX: Agregamos 0L como quinto argumento porque es nueva y no tiene inscriptos
         CompetitionSummaryDTO dto = new CompetitionSummaryDTO(
                 saved.getIdCompetition(),
                 saved.getName(),
                 saved.getQuota(),
-                saved.getBasePrice()
+                saved.getBasePrice(),
+                0L 
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
@@ -118,11 +120,15 @@ public class AdminCompetitionResource {
                 body.getBasePrice()
         );
 
+        // FIX: Calculamos los inscriptos actuales para pasarlos al DTO
+        long count = registrationService.getCompetitionRegistrations(tournamentId, competitionId).size();
+
         CompetitionSummaryDTO dto = new CompetitionSummaryDTO(
                 saved.getIdCompetition(),
                 saved.getName(),
                 saved.getQuota(),
-                saved.getBasePrice()
+                saved.getBasePrice(),
+                count
         );
 
         return ResponseEntity.ok(dto);

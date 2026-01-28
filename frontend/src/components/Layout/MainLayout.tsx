@@ -1,8 +1,7 @@
 import React from 'react';
-// @ts-ignore
-import Header from './Header';
-// @ts-ignore
-import Footer from './Footer';
+// Cambiamos a named imports con llaves para que Vite no rebote el build
+import { Header } from './Header';
+import { Footer } from './Footer';
 
 interface MainLayoutProps {
   children: React.ReactNode;

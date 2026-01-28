@@ -124,7 +124,6 @@ public class CompetitionServiceImp implements CompetitionService {
                 totalAmount
         );
     }
-    
     @Override
     public List<CompetitionSummaryDTO> getCompetitionSummaries(Long tournamentId) {
         getTournamentOrThrow(tournamentId); 
@@ -132,16 +131,22 @@ public class CompetitionServiceImp implements CompetitionService {
         List<Competition> list = competitionRepository.findByTournamentId(tournamentId);
 
         return list.stream()
-                .map(c -> new CompetitionSummaryDTO(
+                .map(c -> {
+                    // Fix: Agregamos el conteo tambien aca para que no falle el constructor
+                    long count = registrationRepository.countByCompetitionId(c.getIdCompetition());
+                    
+                    return new CompetitionSummaryDTO(
                         c.getIdCompetition(),
                         c.getName(),
                         c.getQuota(),
-                        c.getBasePrice()
-                ))
+                        c.getBasePrice(),
+                        count // <--- El parametro que faltaba
+                    );
+                })
                 .collect(Collectors.toList());
     }
-
-    @Override
+    
+@Override
     public List<CompetitionSummaryDTO> getPublicCompetitions(Long tournamentId) {
         Tournament t = tournamentRepository.findById(tournamentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Torneo no encontrado"));
@@ -153,16 +158,21 @@ public class CompetitionServiceImp implements CompetitionService {
         List<Competition> list = competitionRepository.findByTournamentId(tournamentId);
         
         return list.stream()
-                .map(c -> new CompetitionSummaryDTO(
+                .map(c -> {
+                    // Contamos cuantos inscriptos hay en esta competencia
+                    long count = registrationRepository.countByCompetitionId(c.getIdCompetition());
+                    
+                    return new CompetitionSummaryDTO(
                         c.getIdCompetition(),
                         c.getName(),
                         c.getQuota(),
-                        c.getBasePrice()
-                ))
+                        c.getBasePrice(),
+                        count // Pasamos el contador al DTO
+                    );
+                })
                 .collect(Collectors.toList());
     }
-
-    @Override
+@Override
     public CompetitionSummaryDTO getPublicCompetitionDetail(Long tournamentId, Integer competitionId) {
         Tournament t = tournamentRepository.findById(tournamentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Torneo no encontrado"));
@@ -178,11 +188,15 @@ public class CompetitionServiceImp implements CompetitionService {
             throw new ResourceNotFoundException("La competencia no pertenece al torneo indicado.");
         }
 
+        // Contamos los inscriptos
+        long count = registrationRepository.countByCompetitionId(c.getIdCompetition());
+
         return new CompetitionSummaryDTO(
                 c.getIdCompetition(),
                 c.getName(),
                 c.getQuota(),
-                c.getBasePrice()
+                c.getBasePrice(),
+                count // Pasamos el contador al DTO
         );
     }
 }

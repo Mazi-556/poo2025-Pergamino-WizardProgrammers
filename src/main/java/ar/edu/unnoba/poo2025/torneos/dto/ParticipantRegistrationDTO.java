@@ -17,4 +17,5 @@ public class ParticipantRegistrationDTO {
 
     private Integer competitionId;
     private String competitionName;
+    private int quota;
 }
