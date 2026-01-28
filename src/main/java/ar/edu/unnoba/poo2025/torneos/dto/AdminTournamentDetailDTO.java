@@ -12,8 +12,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//se crea este DTO para no romper lo que ya esta hecho, se cran para el admin
-//es un dto donde se encuentra el detalle completyo de los torneos
 public class AdminTournamentDetailDTO {
     private Long id;
     private String name;
@@ -22,7 +20,7 @@ public class AdminTournamentDetailDTO {
     private LocalDate endDate;
     private boolean published;
     private long totalRegistrations;
-    private double totalAmount;
+    private double totalRaised; 
+    
     private List<CompetitionSummaryDTO> competitions;
-
 }
