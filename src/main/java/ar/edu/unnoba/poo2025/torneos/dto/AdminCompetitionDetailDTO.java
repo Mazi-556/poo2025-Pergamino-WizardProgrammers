@@ -9,14 +9,18 @@ import lombok.AllArgsConstructor;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class AdminCompetitionDetailDTO { //detalle/resumen de una competencia de torneo
+public class AdminCompetitionDetailDTO { 
 
     private int id;
     private String name;
     private int quota;
-    private double base_price;
+    
+    //precio base, sin descuentos
+    private double basePrice; 
+    
+    //cantidad de inscriptos
     private long totalRegistrations;
-    private double totalAmount;
-    //TO DO: Juntar los dtos similares
+   
+    //monto total recaudado en la competencia
+    private double totalRaised; 
 }
