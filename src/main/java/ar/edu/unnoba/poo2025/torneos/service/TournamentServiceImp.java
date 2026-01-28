@@ -58,7 +58,7 @@ public class TournamentServiceImp implements TournamentService {
 
     @Override
     public AdminTournamentDetailDTO getTournamentDetail(Long id) { 
-        Tournament t = findById(id); // Reutiliza findById que ya lanza la excepción
+        Tournament t = findById(id); // Reutiliza findById que ya lanza la excepcion
         
         long totalRegistrations = registrationRepository.countByTournamentId(id);
         
@@ -110,7 +110,7 @@ public class TournamentServiceImp implements TournamentService {
         }
         
         if (dto.getEndDate() != null) {
-            // Validación: Fecha fin no puede ser antes que inicio
+            // Validacion: Fecha fin no puede ser antes que inicio
             if (dto.getEndDate().isBefore(t.getStartDate())) {
                 throw new BadRequestException("La fecha de fin no puede ser anterior a la de inicio");
             }

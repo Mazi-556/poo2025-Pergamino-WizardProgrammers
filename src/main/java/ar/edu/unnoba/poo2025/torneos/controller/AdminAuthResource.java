@@ -25,12 +25,22 @@ public class AdminAuthResource {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    @PostMapping(path = "/auth", produces = "application/json")
+@PostMapping(path = "/auth", produces = "application/json")
     public ResponseEntity<?> authentication(@RequestBody AuthenticationRequestDTO dto) {
         Admin admin = adminService.authenticate(dto.getEmail(), dto.getPassword());
         String token = jwtTokenUtil.generateToken(admin.getEmail());
-        return ResponseEntity.ok(Map.of("token", token));
-        }
+        
+        java.util.Map<String, Object> userMap = new java.util.HashMap<>();
+        userMap.put("id", admin.getIdAdmin());
+        userMap.put("email", admin.getEmail());
+        userMap.put("name", admin.getName());
+        userMap.put("role", "admin");
+
+        return ResponseEntity.ok(Map.of(
+            "token", token,
+            "user", userMap
+        ));
+    }
 
     @PostMapping("/register")
     public ResponseEntity<?> create(@RequestBody Admin admin) {

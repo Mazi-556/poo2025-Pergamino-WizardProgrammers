@@ -28,14 +28,12 @@ import ar.edu.unnoba.poo2025.torneos.exceptions.ResourceAlreadyExistsException;
 import ar.edu.unnoba.poo2025.torneos.exceptions.UnauthorizedException;
 
 @Service
-public class RegistrationServiceIml implements RegistrationService {
-    private final CompetitionService competitionService;  
+public class RegistrationServiceIml implements RegistrationService { 
     private final RegistrationRepository registrationRepository;
     private final TournamentRepository tournamentRepository;
     private final CompetitionRepository competitionRepository;
 
-    public RegistrationServiceIml(CompetitionService competitionService, RegistrationRepository registrationRepository, TournamentRepository tournamentRepository, CompetitionRepository competitionRepository) {
-        this.competitionService = competitionService;
+    public RegistrationServiceIml(RegistrationRepository registrationRepository, TournamentRepository tournamentRepository, CompetitionRepository competitionRepository) {
         this.registrationRepository = registrationRepository;
         this.tournamentRepository = tournamentRepository;
         this.competitionRepository = competitionRepository;
@@ -43,9 +41,7 @@ public class RegistrationServiceIml implements RegistrationService {
 
     @Override
     public List<AdminCompetitionRegistrationDTO> getCompetitionRegistrations(Long tournamentId, Integer competitionId) {
-        Tournament t = tournamentRepository.findById(tournamentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Torneo no encontrado"));
-        
+
         Competition c = competitionRepository.findById(competitionId)
                 .orElseThrow(() -> new ResourceNotFoundException("Competencia no encontrada"));
                 

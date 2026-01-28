@@ -44,15 +44,28 @@ public class ParticipantResource {
                 .body(Map.of("mensaje", "Participante creado correctamente"));
     }
     
-    @PostMapping(path = "/auth", produces = "application/json")
+@PostMapping(path = "/auth", produces = "application/json")
     public ResponseEntity<?> authentication(@RequestBody AuthenticationRequestDTO dto) {
         Participant tmp = new Participant();
         tmp.setEmail(dto.getEmail());
         tmp.setPassword(dto.getPassword());
 
-        // Si falla (password mal), lanzamos el UnauthorizedException -> GlobalHandler devuelve 401
         String token = authenticationService.authenticate(tmp);
         
-        return ResponseEntity.ok(Map.of("token", token));
+        Participant p = participantService.findByEmail(dto.getEmail());
+        
+
+        java.util.Map<String, Object> userMap = new java.util.HashMap<>();
+        userMap.put("id", p.getIdParticipant());
+        userMap.put("firstName", p.getName());
+        userMap.put("lastName", p.getSurname());
+        userMap.put("email", p.getEmail());
+        userMap.put("dni", p.getDni());
+        userMap.put("role", "participant");
+
+        return ResponseEntity.ok(Map.of(
+            "token", token,
+            "user", userMap
+        ));
     }
 }
