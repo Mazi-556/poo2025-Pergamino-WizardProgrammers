@@ -1,6 +1,7 @@
 import type { ApiError } from '../types';
 
-const API_BASE_URL = 'http://localhost:8080';
+// si el host (railway) nos da una url de api, la usamos, sino usamos localhost
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
 class ApiService {
   private token: string | null = null;
