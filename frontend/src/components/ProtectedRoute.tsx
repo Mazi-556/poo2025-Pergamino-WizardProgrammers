@@ -1,29 +1,28 @@
+import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { JSX } from 'react/jsx-runtime';
+import type { UserRole } from '../types';
 
-interface Props {
-  children: JSX.Element;
-  role?: 'admin' | 'participant'; // el rol que necesitamos para entrar
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+  requiredRole?: UserRole;
 }
 
-const ProtectedRoute = ({ children, role }: Props) => {
-  const { user, loading } = useAuth();
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole }) => {
+  const { isAuthenticated, userRole, isInitializing } = useAuth();
 
-  // mientras carga la sesion no mostramos nada
-  if (loading) return <div>Cargando...</div>;
-
-  // si no esta logueado, mandamos al login
-  if (!user) {
-    return <Navigate to="/login" />;
+  // Espera a que se inicialice la autenticación
+  if (isInitializing) {
+    return <div className="flex items-center justify-center min-h-screen">Cargando...</div>;
   }
 
-  // si el rol no coincide (ej: participante queriendo entrar a admin), al home
-  if (role && user.role !== role) {
-    return <Navigate to="/" />;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
   }
 
-  return children;
+  if (requiredRole && userRole !== requiredRole) {
+    return <Navigate to="/" replace />;
+  }
+
+  return <>{children}</>;
 };
-
-export default ProtectedRoute;

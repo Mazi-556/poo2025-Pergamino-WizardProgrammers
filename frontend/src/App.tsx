@@ -1,92 +1,133 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './contexts/authContext';
-import MainLayout from './components/Layout/MainLayout';
-import ProtectedRoute from './components/ProtectedRoute';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { Header } from './components/Layout/Header';
+import { Footer } from './components/Layout/Footer';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
-// Importacion de paginas
-import LoginPage from './pages/auth/LoginPage';
-import SignupPage from './pages/auth/SignupPage';
-import TournamentsPage from './pages/participant/TournamentsPage';
-import TournamentDetailPage from './pages/participant/TournamentDetailPage';
-import CompetitionDetailPage from './pages/participant/CompetitionDetailPage';
-import RegistrationsPage from './pages/participant/RegistrationsPage';
-import AdminDashboard from './pages/admin/AdminDashboard';
-import AdminTournaments from './pages/admin/AdminTournaments';
-import AdminTournamentCreate from './pages/admin/AdminTournamentCreate';
-import AdminTournamentDetail from './pages/admin/AdminTournamentDetail';
-import AdminCompetitionCreate from './pages/admin/AdminCompetitionCreate';
-import AdminRegistrationList from './pages/admin/AdminRegistrationList';
+// Pages
+import { HomePage } from './pages/HomePage';
+import { LoginPage } from './pages/auth/LoginPage';
+import { SignupPage } from './pages/auth/SignupPage';
+
+// Admin Pages
+import { AdminDashboard } from './pages/admin/AdminDashboard';
+import { AdminTournaments } from './pages/admin/AdminTournaments';
+import { AdminTournamentDetail } from './pages/admin/AdminTournamentDetail';
+import { AdminCompetitions } from './pages/admin/AdminCompetitions';
+import { AdminCompetitionDetail } from './pages/admin/AdminCompetitionDetail';
+
+// Participant Pages
+import { TournamentsPage } from './pages/participant/TournamentsPage';
+import { TournamentDetailPage } from './pages/participant/TournamentDetailPage';
+import { CompetitionDetailPage } from './pages/participant/CompetitionDetailPage';
+import { RegistrationsPage } from './pages/participant/RegistrationsPage';
+import { RegistrationDetailPage } from './pages/participant/RegistrationDetailPage';
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <MainLayout>
-          <Routes>
-            {/* Rutas publicas */}
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
+    <BrowserRouter>
+      <AuthProvider>
+        <div className="flex flex-col min-h-screen bg-gray-50">
+          <Header />
+          <main className="flex-grow">
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignupPage />} />
 
-            {/* Rutas protegidas para participantes */}
-            <Route path="/" element={
-              <ProtectedRoute role="participant">
-                <TournamentsPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/torneos/:id" element={
-              <ProtectedRoute role="participant">
-                <TournamentDetailPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/torneos/:tournamentId/competencia/:competitionId" element={
-              <ProtectedRoute role="participant">
-                <CompetitionDetailPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/mis-inscripciones" element={
-              <ProtectedRoute role="participant">
-                <RegistrationsPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/admin" element={
-            <ProtectedRoute role="admin">
-                <AdminDashboard />
-            </ProtectedRoute>
-            } />
-            <Route path="/admin/torneos" element={
-            <ProtectedRoute role="admin">
-                <AdminTournaments />
-            </ProtectedRoute>
-            } />
-            <Route path="/admin/torneos/nuevo" element={
-            <ProtectedRoute role="admin">
-                <AdminTournamentCreate />
-            </ProtectedRoute>
-            } />
+              {/* Admin Routes */}
+              <Route
+                path="/admin/dashboard"
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/tournaments"
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <AdminTournaments />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/tournaments/:tournamentId"
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <AdminTournamentDetail />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/tournaments/:tournamentId/competitions"
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <AdminCompetitions />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/tournaments/:tournamentId/competitions/:competitionId"
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <AdminCompetitionDetail />
+                  </ProtectedRoute>
+                }
+              />
 
-            <Route path="/admin/torneos/:id" element={
-            <ProtectedRoute role="admin">
-                <AdminTournamentDetail />
-            </ProtectedRoute>
-            } />
-            
-            <Route path="/admin/torneos/:id/competencia/nueva" element={
-            <ProtectedRoute role="admin">
-                <AdminCompetitionCreate />
-            </ProtectedRoute>
-            } />
+              {/* Participant Routes */}
+              <Route
+                path="/tournaments"
+                element={
+                  <ProtectedRoute requiredRole="participant">
+                    <TournamentsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/tournaments/:tournamentId"
+                element={
+                  <ProtectedRoute requiredRole="participant">
+                    <TournamentDetailPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/tournaments/:tournamentId/competitions/:competitionId"
+                element={
+                  <ProtectedRoute requiredRole="participant">
+                    <CompetitionDetailPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/registrations"
+                element={
+                  <ProtectedRoute requiredRole="participant">
+                    <RegistrationsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/registrations/:registrationId"
+                element={
+                  <ProtectedRoute requiredRole="participant">
+                    <RegistrationDetailPage />
+                  </ProtectedRoute>
+                }
+              />
 
-            <Route path="/admin/competencias/:competitionId/inscriptos" element={
-            <ProtectedRoute role="admin">
-                <AdminRegistrationList />
-            </ProtectedRoute>
-            } />
-
-            
-          </Routes>
-        </MainLayout>
-      </BrowserRouter>
-    </AuthProvider>
+              {/* 404 */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
