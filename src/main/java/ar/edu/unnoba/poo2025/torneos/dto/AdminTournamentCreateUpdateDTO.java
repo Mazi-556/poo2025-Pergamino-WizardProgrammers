@@ -1,7 +1,7 @@
 package ar.edu.unnoba.poo2025.torneos.dto;
 
-import java.time.LocalDate;
-
+import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat; // <--- IMPORTANTE
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,12 +11,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//se crea este DTO para no romper lo que ya esta hecho, se cran para el admin
-//es lo que recibe post y put
 public class AdminTournamentCreateUpdateDTO {
     private String name;
     private String description;
-    private LocalDate startDate;
-    private LocalDate endDate;
     
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm") 
+    private LocalDateTime startDate;
+    
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime endDate;
 }

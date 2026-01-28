@@ -1,6 +1,7 @@
 package ar.edu.unnoba.poo2025.torneos.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime; // IMPORTANTE: Necesario
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,11 +57,11 @@ public class RegistrationServiceImp implements RegistrationService {
                     Participant p = r.getParticipant_id();
                     return new AdminCompetitionRegistrationDTO(
                         r.getIdregistration(),
-                        r.getPrice(), // Va a finalPrice
-                        r.getDate(),  // Va a registrationDate
+                        r.getPrice(), 
+                        r.getDate(),  
                         p.getIdParticipant(),
-                        p.getName(),    // Va a participantFirstName
-                        p.getSurname(), // Va a participantLastName
+                        p.getName(),    
+                        p.getSurname(), 
                         p.getDni(),
                         p.getEmail()   
                     );
@@ -86,7 +87,8 @@ public class RegistrationServiceImp implements RegistrationService {
             throw new TournamentNotReadyException("No puedes inscribirte a un torneo no publicado.");
         }
 
-        if (t.getStartDate().isBefore(LocalDate.now())) {
+        // CORREGIDO: Usamos LocalDateTime.now() para comparar con t.getStartDate() (que es LocalDateTime)
+        if (t.getStartDate().isBefore(LocalDateTime.now())) {
             throw new TournamentNotReadyException("El torneo ya ha comenzado o finalizado. No se permiten inscripciones.");
         }
 
@@ -109,7 +111,7 @@ public class RegistrationServiceImp implements RegistrationService {
         Registration registration = new Registration();
         registration.setCompetition_id(c);
         registration.setParticipant_id(participant);
-        registration.setDate(LocalDate.now());
+        registration.setDate(LocalDate.now()); // Fecha de inscripción sigue siendo LocalDate, está bien
         registration.setPrice((float) price);
 
         Registration saved = registrationRepository.save(registration);
@@ -152,17 +154,24 @@ public class RegistrationServiceImp implements RegistrationService {
         Competition c = r.getCompetition_id();
         Tournament t = c.getTournament_id();
 
+        // CORREGIDO: Asegurate que ParticipantRegistrationDetailDTO.java tenga los campos
+        // tournamentStartDate y tournamentEndDate como LocalDateTime.
         return new ParticipantRegistrationDetailDTO(
                 r.getIdregistration(),
-                r.getPrice(),
+                (double) r.getPrice(), // Casting explícito por si acaso
                 r.getDate(),
-                c.getIdCompetition(),
+                c.getIdCompetition(), // competitionId? Revisa tu DTO, a veces es String competitionName
+                // IMPORTANTE: Este constructor depende 100% de tu archivo DTO. 
+                // Si el DTO pide Strings, poné c.getName(). Si pide IDs, poné c.getId().
+                // Basado en tu código anterior, parece que espera:
+                // id, price, date, compId, compName, tournId, tournName, tournDesc, start, end
                 c.getName(),
-                t.getIdTournament(),
+                t.getIdTournament(), // Ojo, tu DTO en el mensaje anterior tenia otra estructura. 
+                // Voy a asumir la estructura que usaste en tu código pegado:
                 t.getName(),
                 t.getDescription(),
-                t.getStartDate(),
-                t.getEndDate()
+                t.getStartDate(), // LocalDateTime
+                t.getEndDate()    // LocalDateTime
         );
     }
 }

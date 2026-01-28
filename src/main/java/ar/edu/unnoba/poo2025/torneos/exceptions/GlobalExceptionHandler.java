@@ -55,6 +55,14 @@ public class GlobalExceptionHandler {
                 .body(Map.of("error", ex.getMessage()));
     }
 
+    // 7. Para errores de parseo de JSON (por ejemplo, formato de fecha incorrecto)
+    @ExceptionHandler(org.springframework.http.converter.HttpMessageNotReadableException.class)
+    public ResponseEntity<?> handleJsonErrors(org.springframework.http.converter.HttpMessageNotReadableException ex) {
+        // Devolvemos BAD_REQUEST (400) con un mensaje
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("error", "Error en el formato de los datos enviados (probablemente la fecha): " + ex.getMessage()));
+    }
+
     // El error generico (Si se captura una excepcion que no está manejada específicamente, cae aca y devuelve error 500)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGlobal(Exception ex) {

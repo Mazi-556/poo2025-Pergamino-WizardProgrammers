@@ -1,13 +1,12 @@
 package ar.edu.unnoba.poo2025.torneos.service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime; // <--- Usamos LocalDateTime
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-// Importamos los repos y DTOs que faltaban
 import ar.edu.unnoba.poo2025.torneos.Repository.CompetitionRepository; 
 import ar.edu.unnoba.poo2025.torneos.Repository.RegistrationRepository;
 import ar.edu.unnoba.poo2025.torneos.Repository.TournamentRepository;
@@ -23,9 +22,8 @@ public class TournamentServiceImp implements TournamentService {
     
     private final TournamentRepository tournamentRepository;
     private final RegistrationRepository registrationRepository;
-    private final CompetitionRepository competitionRepository; // Nuevo campo
+    private final CompetitionRepository competitionRepository;
 
-    // Constructor actualizado con los 3 repositorios
     public TournamentServiceImp(TournamentRepository tournamentRepository, 
                                 RegistrationRepository registrationRepository,
                                 CompetitionRepository competitionRepository) {
@@ -36,7 +34,8 @@ public class TournamentServiceImp implements TournamentService {
 
     @Override
     public List<Tournament> getPublishedTournaments() {
-        return tournamentRepository.findByPublishedTrueAndEndDateAfter(LocalDate.now());
+        // FIX: Cambiamos LocalDate.now() por LocalDateTime.now()
+        return tournamentRepository.findByPublishedTrueAndEndDateAfter(LocalDateTime.now());
     }
 
     @Override
@@ -69,11 +68,9 @@ public class TournamentServiceImp implements TournamentService {
         Tournament t = findById(id); 
         
         long totalRegistrations = registrationRepository.countByTournamentId(id);
-        
         Double totalAmount = registrationRepository.sumPriceByTournamentId(id);
         double finalAmount = (totalAmount != null) ? totalAmount : 0.0;
 
-        // FIX: Buscamos las competencias, calculamos sus inscriptos y armamos la lista
         List<CompetitionSummaryDTO> competitions = competitionRepository.findByTournamentId(id).stream()
             .map(c -> {
                 long regs = registrationRepository.countByCompetitionId(c.getIdCompetition());
@@ -86,7 +83,7 @@ public class TournamentServiceImp implements TournamentService {
                 );
             }).collect(Collectors.toList());
 
-        // Ahora si llamamos al constructor con los 9 argumentos (la lista al final)
+        // El constructor ahora recibe LocalDateTime, asi que esto funciona directo
         return new AdminTournamentDetailDTO(
             t.getIdTournament(),
             t.getName(),
@@ -105,7 +102,8 @@ public class TournamentServiceImp implements TournamentService {
     public void publish(Long id) { 
         Tournament t = this.findById(id); 
         
-        if (t.getEndDate().isBefore(LocalDate.now())) {
+        // FIX: Validacion contra fecha y hora actual
+        if (t.getEndDate().isBefore(LocalDateTime.now())) {
             throw new BadRequestException("No se puede publicar un torneo que ya finalizó");
         }
         
@@ -126,6 +124,7 @@ public class TournamentServiceImp implements TournamentService {
             t.setDescription(dto.getDescription()); 
         }
         
+        // Como aca estamos usando LocalDateTime, la fecha tiene hora incluida
         if (dto.getStartDate() != null) {
             t.setStartDate(dto.getStartDate());
         }

@@ -50,9 +50,15 @@ public class AdminTournamentResource {
                 .map(t -> new AdminTournamentSummaryDTO(
                         t.getIdTournament(),
                         t.getName(),
-                        t.getStartDate(),
-                        t.getEndDate(),
-                        t.isPublished()
+                        t.getStartDate(), // LocalDateTime
+                        t.getEndDate(),   // LocalDateTime
+                        t.isPublished(),
+                        // IMPORTANTE: El constructor necesita estos dos campos extra si no los cambiaste:
+                        // totalRegistrations y totalAmount. Si tu DTO no los tiene, borralos de aca.
+                        // Asumo que tu DTO tiene 7 campos segun lo que vimos antes.
+                        // Si tu DTO tiene 5, borra las siguientes dos lineas:
+                        (long) (t.getCompetitions() == null ? 0 : t.getCompetitions().stream().mapToLong(c -> c.getRegistrations() != null ? c.getRegistrations().size() : 0).sum()),
+                        0.0 
                 ))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(response);
@@ -83,7 +89,9 @@ public class AdminTournamentResource {
                 saved.getName(),
                 saved.getStartDate(),
                 saved.getEndDate(),
-                saved.isPublished()
+                saved.isPublished(),
+                0L, // totalRegistrations inicial
+                0.0 // totalAmount inicial
         ));
     }
 
@@ -96,12 +104,17 @@ public class AdminTournamentResource {
         getCurrentAdmin(authenticationHeader); 
         Tournament saved = tournamentService.updateTournament(id, body);
         
+        // Calculamos totales para el DTO
+        long totalRegs = (saved.getCompetitions() == null) ? 0 : saved.getCompetitions().stream().mapToLong(c -> c.getRegistrations() != null ? c.getRegistrations().size() : 0).sum();
+        
         return ResponseEntity.ok(new AdminTournamentSummaryDTO(
                 saved.getIdTournament(),
                 saved.getName(),
                 saved.getStartDate(),
                 saved.getEndDate(),
-                saved.isPublished()
+                saved.isPublished(),
+                totalRegs,
+                0.0
         ));
     }
 

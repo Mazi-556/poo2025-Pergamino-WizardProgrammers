@@ -1,9 +1,8 @@
 package ar.edu.unnoba.poo2025.torneos.models; 
 
-import java.time.LocalDate;
+import java.time.LocalDateTime; // <--- CAMBIO IMPORTANTE
 import java.util.List;
 import jakarta.persistence.CascadeType;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,8 +39,8 @@ public class Tournament {
     private String name;
     private String description; 
     
-    private LocalDate startDate; 
-    private LocalDate endDate;   
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;  
     
     private boolean published;
 }

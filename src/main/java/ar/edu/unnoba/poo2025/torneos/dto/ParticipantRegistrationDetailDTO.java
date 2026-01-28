@@ -1,6 +1,7 @@
 package ar.edu.unnoba.poo2025.torneos.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,16 +12,19 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ParticipantRegistrationDetailDTO {
-    private int registrationId;
-    private float price;
-    private LocalDate date;
-
+    
+    private Integer id;
+    private double price;
+    private LocalDate registrationDate;
+    
+    // Datos de la competencia
     private Integer competitionId;
     private String competitionName;
-
+    
+    // Datos del torneo
     private Long tournamentId;
     private String tournamentName;
     private String tournamentDescription;
-    private LocalDate tournamentStartDate;
-    private LocalDate tournamentEndDate;
+    private LocalDateTime tournamentStartDate;
+    private LocalDateTime tournamentEndDate;
 }

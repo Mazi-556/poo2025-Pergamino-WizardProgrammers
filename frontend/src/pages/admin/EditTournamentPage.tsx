@@ -99,16 +99,16 @@ export const EditTournamentPage: React.FC = () => {
               <Input
                 label="Fecha de Inicio"
                 name="startDate"
-                type="date"
-                value={formData.startDate}
+                type="datetime-local"
+                value={formData.startDate ? formData.startDate.slice(0, 16) : ''} // Cortamos segundos si vienen
                 onChange={handleChange}
                 required
               />
               <Input
                 label="Fecha de Fin"
                 name="endDate"
-                type="date"
-                value={formData.endDate}
+                type="datetime-local" 
+                value={formData.endDate ? formData.endDate.slice(0, 16) : ''} // Cortamos segundos si vienen
                 onChange={handleChange}
                 required
               />
