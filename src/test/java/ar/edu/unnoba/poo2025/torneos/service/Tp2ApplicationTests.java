@@ -1,4 +1,4 @@
-package ar.edu.unnoba.poo2025.torneos;
+package ar.edu.unnoba.poo2025.torneos.service;
 
 /*
 @SpringBootTest

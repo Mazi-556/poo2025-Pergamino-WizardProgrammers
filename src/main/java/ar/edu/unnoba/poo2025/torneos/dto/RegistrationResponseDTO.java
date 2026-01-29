@@ -15,5 +15,9 @@ public class RegistrationResponseDTO {
     private int competitionId;
     private int participantId;
     private LocalDate date;
-    private float price;  
+    private float price;
+
+    public Integer getIdRegistration() {
+    return registrationId;
+}
 }
