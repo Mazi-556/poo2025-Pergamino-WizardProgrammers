@@ -111,14 +111,6 @@ export const LoginPage: React.FC = () => {
             </Link>
           </p>
         </div>
-
-        <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-sm text-blue-800 mb-2">
-            <strong>Credenciales de prueba (Admin):</strong>
-          </p>
-          <p className="text-xs text-blue-700 font-mono">Email: admin@test.com</p>
-          <p className="text-xs text-blue-700 font-mono">Pass: password123</p>
-        </div>
       </div>
     </div>
   );
