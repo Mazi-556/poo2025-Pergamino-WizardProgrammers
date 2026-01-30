@@ -61,8 +61,8 @@ public class AdminTournamentResourceTest {
     void testCrearTorneoExitoso() throws Exception {
 
         AdminTournamentCreateUpdateDTO dto = new AdminTournamentCreateUpdateDTO();
-        dto.setName("Torneo Java 2026");
-        dto.setDescription("Competicion de Spring Boot");
+        dto.setName("Torneo 2026");
+        dto.setDescription("Competicion de padle");
         dto.setStartDate(LocalDateTime.now().plusDays(1));
         dto.setEndDate(LocalDateTime.now().plusDays(2));        
         doNothing().when(jwtTokenUtil).validateToken(anyString());
@@ -71,7 +71,7 @@ public class AdminTournamentResourceTest {
 
         Tournament torneoGuardado = new Tournament();
         torneoGuardado.setIdTournament(10L);
-        torneoGuardado.setName("Torneo Java 2026");
+        torneoGuardado.setName("Torneo 2026");
         torneoGuardado.setStartDate(dto.getStartDate());
         torneoGuardado.setEndDate(dto.getEndDate());
         torneoGuardado.setPublished(false);
@@ -84,7 +84,7 @@ public class AdminTournamentResourceTest {
                 .content(objectMapper.writeValueAsString(dto))) // DTO a JSON
                 .andExpect(status().isCreated()) // 201 Created
                 .andExpect(jsonPath("$.id").value(10))
-                .andExpect(jsonPath("$.name").value("Torneo Java 2026"))
+                .andExpect(jsonPath("$.name").value("Torneo 2026"))
                 .andExpect(jsonPath("$.published").value(false));
     }
 
@@ -110,12 +110,10 @@ public class AdminTournamentResourceTest {
 
     @Test
     void testListarTodosLosTorneos() throws Exception {
-        // Mock Auth
         doNothing().when(jwtTokenUtil).validateToken(anyString());
         when(jwtTokenUtil.getSubject(anyString())).thenReturn("admin@test.com");
         when(adminService.findByEmail("admin@test.com")).thenReturn(adminMock);
 
-        // Mock Servicio
         Tournament t1 = new Tournament();
         t1.setIdTournament(1L);
         t1.setName("Torneo 1");
@@ -130,37 +128,32 @@ public class AdminTournamentResourceTest {
 
         when(tournamentService.getAllOrderByStartDateDesc()).thenReturn(java.util.Arrays.asList(t1, t2));
 
-        // Ejecutar GET /admin/tournaments
         mockMvc.perform(get("/admin/tournaments")
                 .header("Authorization", "Bearer token"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.size()").value(2)) // Esperamos 2 elementos
+                .andExpect(jsonPath("$.size()").value(2))
                 .andExpect(jsonPath("$[0].name").value("Torneo 1"))
                 .andExpect(jsonPath("$[1].name").value("Torneo 2"));
     }
 
     @Test
     void testActualizarTorneo() throws Exception {
-        // Mock Auth
         doNothing().when(jwtTokenUtil).validateToken(anyString());
         when(jwtTokenUtil.getSubject(anyString())).thenReturn("admin@test.com");
         when(adminService.findByEmail("admin@test.com")).thenReturn(adminMock);
 
-        // Datos de entrada (lo que queremos cambiar)
         AdminTournamentCreateUpdateDTO dto = new AdminTournamentCreateUpdateDTO();
         dto.setName("Nombre Cambiado");
         
-        // Mock respuesta del servicio
         Tournament torneoActualizado = new Tournament();
         torneoActualizado.setIdTournament(1L);
-        torneoActualizado.setName("Nombre Cambiado"); // El servicio ya lo actualizó
+        torneoActualizado.setName("Nombre Cambiado");
         torneoActualizado.setStartDate(LocalDateTime.now());
         torneoActualizado.setEndDate(LocalDateTime.now().plusDays(5));
         
         when(tournamentService.updateTournament(eq(1L), any(AdminTournamentCreateUpdateDTO.class)))
             .thenReturn(torneoActualizado);
 
-        // Ejecutar PUT /admin/tournaments/1
         mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put("/admin/tournaments/{id}", 1L)
                 .header("Authorization", "Bearer token")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -171,31 +164,25 @@ public class AdminTournamentResourceTest {
 
     @Test
     void testEliminarTorneo() throws Exception {
-        // Mock Auth
         doNothing().when(jwtTokenUtil).validateToken(anyString());
         when(jwtTokenUtil.getSubject(anyString())).thenReturn("admin@test.com");
         when(adminService.findByEmail("admin@test.com")).thenReturn(adminMock);
 
-        // Mock Servicio (void)
         doNothing().when(tournamentService).deleteTournament(1L);
 
-        // Ejecutar DELETE /admin/tournaments/1
         mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete("/admin/tournaments/{id}", 1L)
                 .header("Authorization", "Bearer token"))
-                .andExpect(status().isNoContent()); // Esperamos 204
+                .andExpect(status().isNoContent()); // 204
     }
 
     @Test
     void testPublicarTorneo() throws Exception {
-        // Mock Auth
         doNothing().when(jwtTokenUtil).validateToken(anyString());
         when(jwtTokenUtil.getSubject(anyString())).thenReturn("admin@test.com");
         when(adminService.findByEmail("admin@test.com")).thenReturn(adminMock);
 
-        // Mock Servicio
         doNothing().when(tournamentService).publish(1L);
 
-        // Ejecutar PATCH /admin/tournaments/1/published
         mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch("/admin/tournaments/{id}/published", 1L)
                 .header("Authorization", "Bearer token"))
                 .andExpect(status().isOk())
