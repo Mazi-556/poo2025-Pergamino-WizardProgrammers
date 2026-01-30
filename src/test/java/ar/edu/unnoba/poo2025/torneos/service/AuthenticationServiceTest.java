@@ -83,9 +83,9 @@ public class AuthenticationServiceTest {
         assertEquals("Credenciales inválidas", ex.getMessage());
     }
 
+    //Test por si falla no deberia generar el token para el password
     @Test
-    void noDeberiaGenerarTokenSiElPasswordFalla() {
-        // Arrange
+    void testTokenSiElPasswordFalla() {
         Participant incoming = new Participant();
         incoming.setEmail("test@test.com");
         incoming.setPassword("clave_erronea");
@@ -96,20 +96,17 @@ public class AuthenticationServiceTest {
         when(participantService.findByEmail("test@test.com")).thenReturn(db);
         when(passwordEncoder.verify("clave_erronea", "hash_real")).thenReturn(false);
 
-        // Act
         assertThrows(UnauthorizedException.class, () -> authService.authenticate(incoming));
 
-        // Assert: Verificamos que NUNCA se llamó al generador de token
         verify(jwtTokenUtil, never()).generateToken(anyString());
     }
 
+    //test si el email es nulo debe de lanzar la exception
     @Test
-    void deberiaLanzarExcepcionSiElEmailEsNulo() {
-        // Arrange
+    void testSiElEmailEsNulo() {
         Participant incoming = new Participant();
         incoming.setEmail(null);
 
-        // Act & Assert
         assertThrows(Exception.class, () -> authService.authenticate(incoming));
     }
 }
