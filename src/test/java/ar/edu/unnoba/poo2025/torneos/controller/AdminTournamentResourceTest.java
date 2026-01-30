@@ -81,8 +81,8 @@ public class AdminTournamentResourceTest {
         mockMvc.perform(post("/admin/tournaments")
                 .header("Authorization", "Bearer fake-token")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto))) // DTO a JSON
-                .andExpect(status().isCreated()) // 201 Created
+                .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(10))
                 .andExpect(jsonPath("$.name").value("Torneo 2026"))
                 .andExpect(jsonPath("$.published").value(false));
@@ -172,7 +172,7 @@ public class AdminTournamentResourceTest {
 
         mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete("/admin/tournaments/{id}", 1L)
                 .header("Authorization", "Bearer token"))
-                .andExpect(status().isNoContent()); // 204
+                .andExpect(status().isNoContent());
     }
 
     @Test
